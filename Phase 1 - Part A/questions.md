@@ -21,7 +21,8 @@
     17) How would you like those interactions to be designed? 
     18) If you encountered an issue or had a suggestion while using the app, how would you prefer to provide feedback?
 
-    (eric)
+
+(eric)
     Eric Wnorowski
 Below is a revised set of interview questions, designed to be more detailed and focused on key aspects of
 human-computer interaction (HCI), such as usability, accessibility, user satisfaction, and interaction
