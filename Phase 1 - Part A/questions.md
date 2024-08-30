@@ -26,20 +26,27 @@
     Eric Wnorowski
     Below is a revised set of interview questions, designed to be more detailed and focused on key aspects of human-computer interaction (HCI), such as usability, accessibility, user satisfaction, and interaction design.
     1. Student ID Management:
+    
     a. User Expectations & Satisfaction:
+    
         i. When you think about the process of getting a new or replacement student ID,
             what specific expectations do you have in terms of time, effort, and ease of use?
             Can you describe a situation where these expectations were not met?
+        
         ii. How do you feel about the steps involved in obtaining a new student ID? What
 emotions do you associate with this process (e.g., frustration, satisfaction,
 indifference)?
+
     b. Interaction Design:
+    
         i. Imagine using an app to request a new or replacement student ID. What kind of
 interactions (e.g., buttons, forms, progress indicators) would make the process
 straightforward and intuitive for you?
+
         ii. How would you like to receive updates or notifications about the status of your
 ID request? What medium would be most effective (e.g., push notifications,
 email)?
+
     c. Accessibility & Usability:
 
 Eric Wnorowski
