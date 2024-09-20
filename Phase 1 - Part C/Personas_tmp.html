@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Personas.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h3 id="persona-1-jordan-matthews">Persona 1: <strong>Jordan Matthews</strong></h3>
+<p><img src="file:///home/poe/CSIS672/student-service-center/Phase 1 - Part C/JordanMatthews.webp" alt="Jordan Mathews"></p>
+<h4 id="demographics">Demographics:</h4>
+<ul>
+<li><strong>Age</strong>: 20</li>
+<li><strong>Gender</strong>: Female</li>
+<li><strong>Year</strong>: Junior</li>
+<li><strong>Major</strong>: Business Administration</li>
+<li><strong>Location</strong>: College of Charleston, On-campus housing</li>
+<li><strong>Hometown</strong>: Greenville, SC</li>
+</ul>
+<h4 id="background">Background:</h4>
+<p>Jordan is a full-time undergraduate student at the College of Charleston. She lives on-campus in one of the residence halls and enjoys the close proximity to her classes, the library, and other campus resources. She’s from a mid-sized town in South Carolina and chose College of Charleston for its vibrant downtown and reputation for strong business programs. Jordan receives financial aid and is a work-study student in the student services office.</p>
+<h4 id="goals">Goals:</h4>
+<ul>
+<li>Graduate in four years with a Business Administration degree.</li>
+<li>Secure a summer internship related to her major.</li>
+<li>Maximize her use of campus services to streamline daily life.</li>
+<li>Stay informed about campus activities and make the most of student resources.</li>
+</ul>
+<h4 id="daily-activities">Daily Activities:</h4>
+<ul>
+<li><strong>Morning</strong>: Jordan starts her day by grabbing breakfast from the dining hall and checking her campus app to see her meal plan balance and schedule for the day. She often stops by the student ID office to reload her Cougar Card with funds for campus activities.</li>
+<li><strong>Afternoon</strong>: Between classes, Jordan frequently visits the student service center to inquire about academic advising or upcoming events. She often checks for parking availability for friends visiting the campus or pays parking tickets through the app.</li>
+<li><strong>Evening</strong>: She attends club meetings and uses the campus fitness center, relying on the student services app for access and updates on facility hours. Before heading back to her dorm, she checks her meal plan balance and card status.</li>
+</ul>
+<h4 id="pain-points">Pain Points:</h4>
+<ul>
+<li>Jordan sometimes finds it difficult to locate available parking for herself or friends on busy days, and the campus parking system lacks real-time updates.</li>
+<li>She finds navigating the campus service website to be cumbersome, especially when trying to reload her meal plan or resolve issues with her Cougar Card.</li>
+<li>Confusion about deadlines for academic advising, especially when coordinating with her work-study schedule.</li>
+<li>She occasionally experiences delays in obtaining services, such as long wait times to replace a lost student ID or for student housing requests.</li>
+</ul>
+<h4 id="technology-usage">Technology Usage:</h4>
+<ul>
+<li><strong>Devices</strong>: iPhone and laptop.</li>
+<li><strong>Apps</strong>: Heavily relies on the College of Charleston student services app for meal plan reloading, paying parking tickets, and checking campus events. Uses social media apps (Instagram, TikTok) to stay connected with peers and campus life.</li>
+<li><strong>Platforms</strong>: Frequently checks email for updates from her academic advisor, as well as campus notifications for deadlines or opportunities.</li>
+<li><strong>Expectations</strong>: She expects real-time updates and seamless access to all student services, with a simple, user-friendly interface for essential tasks like parking, meal plans, and ID services.</li>
+</ul>
+<h4 id="personality">Personality:</h4>
+<ul>
+<li><strong>Motivations</strong>: Jordan is highly motivated by convenience and efficiency. With a busy schedule of classes, work-study, and extracurriculars, she looks for solutions that help her manage her time effectively and reduce stress.</li>
+<li><strong>Frustrations</strong>: She’s frustrated by inefficient systems, long wait times, and unclear instructions for accessing services. If she has to go in person to resolve issues, she wants the process to be fast and hassle-free.</li>
+</ul>
+<h4 id="quote">Quote:</h4>
+<p><em>&quot;I don’t have time to wait in line or navigate a complicated website. I just want to reload my meal plan, pay for parking, and get on with my day.&quot;</em></p>
+<hr>
+<h3 id="persona-2-andrew-collins">Persona 2: <strong>Andrew Collins</strong></h3>
+<p><img src="file:///home/poe/CSIS672/student-service-center/Phase 1 - Part C/AndrewCollins.webp" alt="Andrew Collins"></p>
+<h4 id="demographics">Demographics:</h4>
+<ul>
+<li><strong>Age</strong>: 21</li>
+<li><strong>Gender</strong>: Male</li>
+<li><strong>Year</strong>: Senior</li>
+<li><strong>Major</strong>: Computer Science</li>
+<li><strong>Location</strong>: Off-campus apartment near College of Charleston</li>
+<li><strong>Hometown</strong>: Charleston, SC</li>
+</ul>
+<h4 id="background">Background:</h4>
+<p>Andrew is a senior studying Computer Science at the College of Charleston. He grew up in Charleston and lives in an apartment off-campus with a few roommates. Andrew is passionate about software development and is currently interning at a local tech startup while completing his degree. He balances his academic work with the responsibilities of his internship and is looking forward to launching his career post-graduation.</p>
+<h4 id="goals">Goals:</h4>
+<ul>
+<li>Graduate with honors and secure a full-time software engineering job.</li>
+<li>Build a strong portfolio of projects, including work from his internship and personal coding projects.</li>
+<li>Balance his internship and coursework effectively.</li>
+<li>Network with local tech professionals and participate in coding competitions.</li>
+</ul>
+<h4 id="daily-activities">Daily Activities:</h4>
+<ul>
+<li><strong>Morning</strong>: Andrew typically starts his day by coding a bit before heading to his classes. He uses project management tools like GitHub to track his progress on various coding assignments and projects.</li>
+<li><strong>Afternoon</strong>: After attending his classes, he heads to his internship for the rest of the afternoon, where he works on backend development and cloud services.</li>
+<li><strong>Evening</strong>: After work, he often spends time with his roommates, watches coding tutorials, and works on personal coding challenges on platforms like LeetCode.</li>
+</ul>
+<h4 id="pain-points">Pain Points:</h4>
+<ul>
+<li>Andrew finds it difficult to manage his time between a full course load and his internship.</li>
+<li>He occasionally experiences stress when deadlines overlap between his academic work and his job responsibilities.</li>
+<li>He wants better career guidance from the university, especially regarding industry trends and interview preparation for tech companies.</li>
+<li>Lack of support for students balancing internships and academics.</li>
+</ul>
+<h4 id="technology-usage">Technology Usage:</h4>
+<ul>
+<li><strong>Devices</strong>: Laptop and tablet.</li>
+<li><strong>Apps</strong>: Uses GitHub, VS Code, Slack, and various coding platforms. He also uses LinkedIn for networking and job searching.</li>
+<li><strong>Platforms</strong>: He’s an active user of online coding platforms like LeetCode, HackerRank, and Stack Overflow.</li>
+<li><strong>Expectations</strong>: Expects seamless collaboration tools for team projects and coding assignments. He values systems that help him keep track of deadlines and deliverables.</li>
+</ul>
+<h4 id="personality">Personality:</h4>
+<ul>
+<li><strong>Motivations</strong>: Andrew is driven by a love for coding and problem-solving. He’s highly focused on building a solid foundation for his career and enjoys learning new technologies.</li>
+<li><strong>Frustrations</strong>: Time management is his biggest frustration, particularly when juggling schoolwork and internship commitments. He also finds it frustrating when the university’s resources for tech students feel outdated or irrelevant to current industry needs.</li>
+</ul>
+<h4 id="quote">Quote:</h4>
+<p><em>&quot;I love coding, but sometimes it feels like there aren’t enough hours in the day to do it all—school, work, and personal projects.&quot;</em></p>
+<hr>
+<h3 id="persona-3-ella-martinez">Persona 3: <strong>Ella Martinez</strong></h3>
+<p><img src="file:///home/poe/CSIS672/student-service-center/Phase 1 - Part C/EllaMartinez.webp" alt="Ella Martinez"></p>
+<h4 id="demographics">Demographics:</h4>
+<ul>
+<li><strong>Age</strong>: 26</li>
+<li><strong>Gender</strong>: Female</li>
+<li><strong>Year</strong>: First-year Master's Student</li>
+<li><strong>Major</strong>: Data Science</li>
+<li><strong>Location</strong>: Charleston, SC (commutes from nearby town)</li>
+<li><strong>Hometown</strong>: Columbia, SC</li>
+</ul>
+<h4 id="background">Background:</h4>
+<p>Ella recently returned to school to pursue a master's degree in Data Science after working for a few years as a business analyst. She lives in a nearby town and commutes to campus for classes. Ella is passionate about data-driven decision-making and wants to transition into a role as a data scientist. She is also a part-time teaching assistant for undergraduate statistics classes.</p>
+<h4 id="goals">Goals:</h4>
+<ul>
+<li>Complete her master’s degree and transition into a full-time data science role.</li>
+<li>Build strong relationships with her professors and peers to expand her professional network.</li>
+<li>Develop advanced skills in machine learning and AI.</li>
+<li>Balance school and her teaching assistantship effectively.</li>
+</ul>
+<h4 id="daily-activities">Daily Activities:</h4>
+<ul>
+<li><strong>Morning</strong>: Ella begins her day with a commute to campus for classes. She often uses the time to listen to data science podcasts or review course materials.</li>
+<li><strong>Afternoon</strong>: After classes, she holds office hours for the undergraduate statistics students she assists and works on her own coursework.</li>
+<li><strong>Evening</strong>: She spends time working on data projects or preparing for her classes the next day. Ella also attends virtual meetups for women in tech and data science groups.</li>
+</ul>
+<h4 id="pain-points">Pain Points:</h4>
+<ul>
+<li>Ella struggles with the long commute to campus, which sometimes affects her ability to participate in extracurricular activities.</li>
+<li>She finds the balance between her teaching assistant responsibilities and her coursework to be challenging at times.</li>
+<li>She feels like she needs more hands-on experience with machine learning projects to feel confident in her skills.</li>
+<li>Finding time for networking and professional development events is difficult.</li>
+</ul>
+<h4 id="technology-usage">Technology Usage:</h4>
+<ul>
+<li><strong>Devices</strong>: Laptop and smartphone.</li>
+<li><strong>Apps</strong>: Uses Jupyter Notebooks, RStudio, Python, and Tableau for her data work. She also uses LinkedIn for networking and GitHub for sharing her projects.</li>
+<li><strong>Platforms</strong>: Regularly uses online courses and tutorials on platforms like Coursera and Udemy to deepen her understanding of machine learning.</li>
+<li><strong>Expectations</strong>: She expects her school’s data science resources to provide real-world applications and projects that can be added to her portfolio.</li>
+</ul>
+<h4 id="personality">Personality:</h4>
+<ul>
+<li><strong>Motivations</strong>: Ella is motivated by a desire to advance her career and break into the data science field. She’s highly focused and organized, with a passion for learning and professional growth.</li>
+<li><strong>Frustrations</strong>: The long commute and the time management challenges of balancing school and work are her biggest frustrations. She also feels that she could use more guidance on machine learning tools and career preparation.</li>
+</ul>
+<h4 id="quote">Quote:</h4>
+<p><em>&quot;I love learning new techniques, but I need more hands-on experience with real data to really feel confident in my abilities.&quot;</em></p>
+<hr>
+<p>These three personas capture the different goals, challenges, and motivations of students at various stages in their academic careers, each with unique needs and expectations from technology and university resources.</p>
+
+</body>
+</html>
