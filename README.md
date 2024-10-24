@@ -5,6 +5,14 @@ The student service center project for Human Computer Interaction (CSIS 672 - Fa
 - This is the initial, bare-bones repository
 - Please join the organization to contribute
 
+# Install Node
+
+# Install Dependencies
+
+```
+npm install next react react-dom
+```
+
 # Run The App
 
 cd app/ssc
