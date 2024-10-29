@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc  -noEmit",
+    "compile": "tsc",
+    "prebuild": "npm run type-ceck"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
