@@ -13,7 +13,7 @@ const BottomNavBar: React.FC = () => {
     <div className="fixed bottom-0 left-0 right-0 bg-red-800 p-4 flex justify-between items-center rounded-t-3xl">
       <button
         className="text-white flex-1 flex justify-center"
-        onClick={() => handleNavigation("/")}
+        onClick={() => handleNavigation("/HomeScreen")}
       >
         <Home size={32} />
       </button>
