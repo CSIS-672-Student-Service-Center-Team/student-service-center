@@ -39,18 +39,47 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
 
         <div className="flex justify-between pt-16">
           <SquareButton
-            icon="P"
+            icon={
+              <Image
+                src="/parking-button.png"
+                alt="parking button logo"
+                width={50}
+                height={50}
+              />
+            }
             label="Parking"
-            onClick={handleParking}
+            onClick={handleID}
             size={120}
+            labelStyle={{ fontSize: "20px" }}
           />
           <SquareButton
-            icon="🍽️"
+            icon={
+              <Image
+                src="/dining-button.png"
+                alt="dining button logo"
+                width={50}
+                height={50}
+              />
+            }
             label="Dining"
-            onClick={handleDining}
+            onClick={handleID}
             size={120}
+            labelStyle={{ fontSize: "20px" }}
           />
-          <SquareButton icon="🆔" label="ID" onClick={handleID} size={120} />
+          <SquareButton
+            icon={
+              <Image
+                src="/id-button.png"
+                alt="id button logo"
+                width={50}
+                height={50}
+              />
+            }
+            label="ID"
+            onClick={handleID}
+            size={120}
+            labelStyle={{ fontSize: "20px" }}
+          />
         </div>
       </main>
 

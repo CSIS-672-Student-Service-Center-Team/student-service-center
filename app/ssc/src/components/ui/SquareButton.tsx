@@ -6,6 +6,7 @@ interface SquareButtonProps {
   label: string;
   onClick: () => void;
   size?: number; // Size in pixels
+  labelStyle?: React.CSSProperties;
 }
 
 const SquareButton: React.FC<SquareButtonProps> = ({
@@ -13,6 +14,7 @@ const SquareButton: React.FC<SquareButtonProps> = ({
   label,
   onClick,
   size = 100, // Default size of 100px
+  labelStyle,
 }) => {
   return (
     <button
@@ -25,7 +27,9 @@ const SquareButton: React.FC<SquareButtonProps> = ({
       ) : (
         <div className="mb-1">{icon}</div>
       )}
-      <span className="text-xs">{label}</span>
+      <span className="text-xs" style={labelStyle}>
+        {label}
+      </span>
     </button>
   );
 };
