@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({
   const router = useRouter();
 
   const handleBackClick = () => {
-    router.push("/"); // Navigate to home screen
+    router.back(); // Navigate to home screen
   };
 
   return (
