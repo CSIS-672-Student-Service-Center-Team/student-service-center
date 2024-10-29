@@ -9,7 +9,7 @@
     "lint": "next lint",
     "type-check": "tsc  -noEmit",
     "compile": "tsc",
-    "prebuild": "npm run type-ceck"
+    "prebuild": "npm run type-check"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",

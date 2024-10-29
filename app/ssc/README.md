@@ -1,4 +1,4 @@
-# Student Service Center Application
+# Student Service Center Application Contribution Guidelines
 
 This is the README for contributing application itself.
 
