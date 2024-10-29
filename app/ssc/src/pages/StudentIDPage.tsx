@@ -33,29 +33,51 @@ const StudentIDPage: React.FC = () => {
           email="johndoe@cofc.edu"
           photoUrl="/ssc-logo.png"
         />
-
         <div className="flex justify-between">
           <SquareButton
-            icon={<UserSquare2 size={24} />}
+            icon={
+              <Image
+                src="/id-button.png"
+                alt="id button logo"
+                width={50}
+                height={50}
+              />
+            }
             label="Get New ID"
             onClick={handleGetNewID}
-            size={100}
+            size={120}
+            labelStyle={{ fontSize: "20px" }}
           />
           <SquareButton
-            icon={<Mail size={24} />}
+            icon={
+              <Image
+                src="/mail-button.png"
+                alt="mail button logo"
+                width={50}
+                height={50}
+              />
+            }
             label="Replace ID"
             onClick={handleReplaceID}
-            size={100}
+            size={120}
+            labelStyle={{ fontSize: "20px" }}
           />
           <SquareButton
-            icon={<Banknote size={24} />}
+            icon={
+              <Image
+                src="/cash-button.png"
+                alt="cash button logo"
+                width={50}
+                height={50}
+              />
+            }
             label="Card Balance"
-            onClick={handleCardBalance}
-            size={100}
+            onClick={handleReplaceID}
+            size={120}
+            labelStyle={{ fontSize: "20px" }}
           />
         </div>
       </main>
-
       <BottomNavBar />
     </div>
   );
