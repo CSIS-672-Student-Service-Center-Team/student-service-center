@@ -1,9 +1,9 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import SquareButton from "@/components/ui/SquareButton";
-import BottomNavBar from "@/components/ui/BottomNavBar";
-import Header from "@/components/ui/Header";
-import StudentIDCard from "@/components/ui/StudentIDCard";
+import SquareButton from "@/components/ui/squareButton";
+import BottomNavBar from "@/components/ui/bottomNavBar";
+import Header from "@/components/ui/header";
+import StudentIDCard from "@/components/ui/studentIdCard";
 
 export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const router = useRouter();
@@ -11,18 +11,18 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const handleParking = () => {
     console.log("Parking clicked");
     // TODO: Implement parking navigation logic
-    // router.push('/parking');
+    router.push("/parking");
   };
 
   const handleDining = () => {
     console.log("Dining clicked");
     // TODO: Implement dining navigation logic
-    // router.push('/dining');
+    router.push("/dining");
   };
 
   const handleID = () => {
     console.log("ID clicked");
-    router.push("/StudentIDPage"); // Updated to match the correct route
+    router.push("/id"); // Updated to match the correct route
   };
 
   return (
@@ -48,7 +48,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
               />
             }
             label="Parking"
-            onClick={handleID}
+            onClick={handleParking}
             size={120}
             labelStyle={{ fontSize: "20px" }}
           />
@@ -62,7 +62,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
               />
             }
             label="Dining"
-            onClick={handleID}
+            onClick={handleDining}
             size={120}
             labelStyle={{ fontSize: "20px" }}
           />
