@@ -1,19 +1,14 @@
 import React from "react";
 import Image from "next/image";
 
-interface StudentIDCardProps {
+interface IdCardProps {
   name: string;
   idNumber: string;
   email: string;
   photoUrl: string;
 }
 
-const StudentIDCard: React.FC<StudentIDCardProps> = ({
-  name,
-  idNumber,
-  email,
-  photoUrl,
-}) => {
+const IdCard: React.FC<IdCardProps> = ({ name, idNumber, email, photoUrl }) => {
   return (
     <div className="bg-red-800 p-4 rounded-2xl flex items-center w-[380px] h-[190px]">
       <Image
@@ -32,7 +27,7 @@ const StudentIDCard: React.FC<StudentIDCardProps> = ({
   );
 };
 
-export default StudentIDCard;
+export default IdCard;
 
 // Note: This component currently uses placeholder data.
 // In the future, it will display the logged-in user's actual information:

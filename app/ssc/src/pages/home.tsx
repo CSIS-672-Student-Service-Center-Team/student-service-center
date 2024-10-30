@@ -1,9 +1,9 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import SquareButton from "@/components/ui/sqButton";
-import BottomNavBar from "@/components/ui/navBar";
+import NavBar from "@/components/ui/navBar";
 import Header from "@/components/ui/pageHeader";
-import StudentIDCard from "@/components/ui/idCard";
+import IdCard from "@/components/ui/idCard";
 
 export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
       <Header title="Home" isHomeScreen={true} onLogout={onLogout} />
 
       <main className="flex-grow p-4 pt-16 space-y-6">
-        <StudentIDCard
+        <IdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
@@ -83,7 +83,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
         </div>
       </main>
 
-      <BottomNavBar />
+      <NavBar />
     </div>
   );
 }

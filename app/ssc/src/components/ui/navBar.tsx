@@ -2,7 +2,7 @@ import React from "react";
 import { Home, Bell, User } from "lucide-react";
 import { useRouter } from "next/router";
 
-const BottomNavBar: React.FC = () => {
+const NavBar: React.FC = () => {
   const router = useRouter();
 
   const handleNavigation = (path: string) => {
@@ -35,4 +35,4 @@ const BottomNavBar: React.FC = () => {
   );
 };
 
-export default BottomNavBar;
+export default NavBar;

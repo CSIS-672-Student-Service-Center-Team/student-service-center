@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
-import BottomNavBar from "@/components/ui/navBar";
+import NavBar from "@/components/ui/navBar";
 import ParkingActionButton from "@/components/ui/parkingActionButton";
 
 interface TicketEntryProps {
@@ -75,7 +75,7 @@ export default function ParkingTicketsPage() {
         </div>
       </main>
 
-      <BottomNavBar />
+      <NavBar />
     </div>
   );
 }

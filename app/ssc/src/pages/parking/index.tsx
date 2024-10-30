@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
-import BottomNavBar from "@/components/ui/navBar";
+import NavBar from "@/components/ui/navBar";
 import ParkingActionButton from "@/components/ui/parkingActionButton";
 
 export default function ParkingPage() {
@@ -29,7 +29,7 @@ export default function ParkingPage() {
         />
       </main>
 
-      <BottomNavBar />
+      <NavBar />
     </div>
   );
 }

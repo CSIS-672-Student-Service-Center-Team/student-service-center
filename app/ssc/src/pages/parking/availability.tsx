@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
-import BottomNavBar from "@/components/ui/navBar";
+import NavBar from "@/components/ui/navBar";
 import ParkingActionButton from "@/components/ui/parkingActionButton";
 
 interface ViewToggleProps {
@@ -101,7 +101,7 @@ export default function ParkingAvailabilityPage() {
         </div>
       </main>
 
-      <BottomNavBar />
+      <NavBar />
     </div>
   );
 }

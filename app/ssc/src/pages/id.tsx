@@ -2,9 +2,9 @@ import React from "react";
 import Image from "next/image";
 import { UserSquare2, Mail, Banknote } from "lucide-react";
 import Header from "@/components/ui/pageHeader";
-import StudentIDCard from "@/components/ui/idCard";
+import IdCard from "@/components/ui/idCard";
 import SquareButton from "@/components/ui/sqButton";
-import BottomNavBar from "@/components/ui/navBar";
+import NavBar from "@/components/ui/navBar";
 
 const StudentIDPage: React.FC = () => {
   const handleGetNewID = () => {
@@ -27,7 +27,7 @@ const StudentIDPage: React.FC = () => {
       <Header title="Student ID" isHomeScreen={false} />
 
       <main className="flex-grow p-4 space-y-6 pt-16">
-        <StudentIDCard
+        <IdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
@@ -78,7 +78,7 @@ const StudentIDPage: React.FC = () => {
           />
         </div>
       </main>
-      <BottomNavBar />
+      <NavBar />
     </div>
   );
 };
