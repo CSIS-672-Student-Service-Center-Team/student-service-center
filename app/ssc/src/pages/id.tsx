@@ -3,7 +3,7 @@ import Image from "next/image";
 import { UserSquare2, Mail, Banknote } from "lucide-react";
 import Header from "@/components/ui/pageHeader";
 import StudentIDCard from "@/components/ui/idCard";
-import SquareButton from "@/components/ui/square";
+import SquareButton from "@/components/ui/sqButton";
 import BottomNavBar from "@/components/ui/navBar";
 
 const StudentIDPage: React.FC = () => {
