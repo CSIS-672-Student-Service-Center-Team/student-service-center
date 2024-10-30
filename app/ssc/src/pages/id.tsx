@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import { UserSquare2, Mail, Banknote } from "lucide-react";
-import Header from "@/components/ui/header";
-import StudentIDCard from "@/components/ui/studentIdCard";
-import SquareButton from "@/components/ui/squareButton";
-import BottomNavBar from "@/components/ui/bottomNavBar";
+import Header from "@/components/ui/pageHeader";
+import StudentIDCard from "@/components/ui/idCard";
+import SquareButton from "@/components/ui/square";
+import BottomNavBar from "@/components/ui/navBar";
 
 const StudentIDPage: React.FC = () => {
   const handleGetNewID = () => {

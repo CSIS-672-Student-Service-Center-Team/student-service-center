@@ -1,9 +1,9 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import SquareButton from "@/components/ui/squareButton";
-import BottomNavBar from "@/components/ui/bottomNavBar";
-import Header from "@/components/ui/header";
-import StudentIDCard from "@/components/ui/studentIdCard";
+import SquareButton from "@/components/ui/sqButton";
+import BottomNavBar from "@/components/ui/navBar";
+import Header from "@/components/ui/pageHeader";
+import StudentIDCard from "@/components/ui/idCard";
 
 export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const router = useRouter();
