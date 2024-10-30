@@ -20,7 +20,7 @@ const BottomNavBar: React.FC = () => {
       <div className="w-px h-12 bg-white"></div>
       <button
         className="text-white flex-1 flex justify-center"
-        onClick={() => handleNavigation("/notifications")}
+        onClick={() => handleNavigation("/notification")}
       >
         <Bell size={32} />
       </button>
