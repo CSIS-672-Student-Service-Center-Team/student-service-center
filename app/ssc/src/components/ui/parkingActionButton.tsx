@@ -1,9 +1,9 @@
-interface ParkingPassButtonProps {
+interface ParkingActionButtonProps {
   label: string;
   onClick: () => void;
 }
 
-const ParkingPassButton: React.FC<ParkingPassButtonProps> = ({
+const ParkingActionButton: React.FC<ParkingActionButtonProps> = ({
   label,
   onClick,
 }) => (
@@ -15,4 +15,4 @@ const ParkingPassButton: React.FC<ParkingPassButtonProps> = ({
   </button>
 );
 
-export default ParkingPassButton;
+export default ParkingActionButton;

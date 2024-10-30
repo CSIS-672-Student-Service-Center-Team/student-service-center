@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import BottomNavBar from "@/components/ui/navBar";
+import ParkingActionButton from "@/components/ui/parkingActionButton";
 
 interface ViewToggleProps {
   activeView: "map" | "list";
@@ -47,18 +48,6 @@ const GarageLot: React.FC<GarageLotProps> = ({ name, status }) => (
     <span>-{name}</span>
     <span>| Status: {status}</span>
   </div>
-);
-
-const ActionButton: React.FC<{ label: string; onClick: () => void }> = ({
-  label,
-  onClick,
-}) => (
-  <button
-    onClick={onClick}
-    className="w-full bg-white text-black text-xl font-normal py-4 px-8 rounded-full border-2 border-black shadow-[0_4px_8px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 active:scale-95 mb-4"
-  >
-    {label}
-  </button>
 );
 
 export default function ParkingAvailabilityPage() {
@@ -105,7 +94,10 @@ export default function ParkingAvailabilityPage() {
         </div>
 
         <div className="mt-auto">
-          <ActionButton label="Filter Options" onClick={handleFilterOptions} />
+          <ParkingActionButton
+            label="Filter Options"
+            onClick={handleFilterOptions}
+          />
         </div>
       </main>
 
