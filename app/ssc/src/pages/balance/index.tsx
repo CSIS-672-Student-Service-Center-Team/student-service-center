@@ -34,7 +34,9 @@ export default function BalanceView() {
 			current = current.substring(0, current.length-1);
 			parsed = parseFloat(current)/100 || 0;
 		}
-		setAdditionalFunds(parsed.toFixed(2));
+		if (parsed < 1000 && parsed >= 0){
+			setAdditionalFunds(parsed.toFixed(2));
+		}
 	}
 
 	const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -91,7 +93,10 @@ export default function BalanceView() {
 						<div className="w-full h-px bg-gray-300 mb-4"></div>
 						<div className='flex items-center space-x-2'>
 							<div className="text-4xl font-bold">
-							${(displayBalance + parseFloat(additionalFunds || '0')).toFixed(2)}
+							<Label htmlFor='calcSpan'>New Total</Label>
+							<span id="calcSpan">
+								${(displayBalance + parseFloat(additionalFunds || '0')).toFixed(2)}
+							</span>
 							</div>
 						</div>
 						<div className="flex items-center space-x-2">
