@@ -47,7 +47,7 @@ export default function OfferedMealPlansPage() {
 
   const handleCheckout = (plan: MealPlanOption) => {
     const price = getPrice(plan)
-    router.push(`/checkout?price=${price}&type=meal-plan&planId=${plan.id}&planType=${selectedTypes[plan.id] || 'Year'}`)
+    router.push(`/checkout?price=${price}&type=meal-plan&planId=${plan.id}&planType=${selectedTypes[plan.id] || 'Year'}&from=dining/dining-page`)
   }
 
   return (
