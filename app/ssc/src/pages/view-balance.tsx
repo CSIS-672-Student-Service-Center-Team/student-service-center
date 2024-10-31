@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import ActionButton from "@/components/ui/actionButton"
 import Header from "@/components/ui/pageHeader"
 import NavBar from "@/components/ui/navBar"
 import { ArrowLeft, Home, Bell, User } from "lucide-react"
@@ -7,6 +8,8 @@ import React, { useEffect, useState } from "react"
 
 const ViewBalancePage: React.FC = () => {
   const router = useRouter()
+  //  TODO: add some user values here
+  //  
   const [displayBalance, setDisplayBalance] = useState(0)
   const targetBalance = 123.99
   
@@ -39,13 +42,10 @@ const ViewBalancePage: React.FC = () => {
         <div className="text-6xl font-bold mb-12">
           ${displayBalance.toFixed(2)}
         </div>
-        <Button 
-          variant="outline" 
-          className="w-full max-w-xs rounded-full border-2"
-          onClick={() => router.push('/balance/add-funds')}
-        >
-          Add Funds
-        </Button>
+        <ActionButton
+          label="Add Funds"
+          onClick={() => {console.log("Add funds clicked")} }
+        />
       </main>
       <NavBar />
     </div>
