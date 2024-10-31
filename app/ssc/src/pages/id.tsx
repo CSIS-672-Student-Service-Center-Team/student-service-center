@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import { UserSquare2, Mail, Banknote } from "lucide-react";
-import Header from "@/components/ui/header";
-import StudentIDCard from "@/components/ui/studentIdCard";
-import SquareButton from "@/components/ui/squareButton";
-import BottomNavBar from "@/components/ui/bottomNavBar";
-import { useRouter } from "next/navigation";
+import Header from "@/components/ui/pageHeader";
+import IdCard from "@/components/ui/idCard";
+import SquareButton from "@/components/ui/sqButton";
+import NavBar from "@/components/ui/navBar";
+import { useRouter } from "next/router";
 
 const StudentIDPage: React.FC = () => {
   const router = useRouter();
@@ -23,6 +23,7 @@ const StudentIDPage: React.FC = () => {
   const handleCardBalance = () => {
     console.log("Card Balance clicked");
     // TODO: Implement logic for checking card balance
+    router.push("/balance");
   };
 
   return (
@@ -30,7 +31,7 @@ const StudentIDPage: React.FC = () => {
       <Header title="Student ID" isHomeScreen={false} />
 
       <main className="flex-grow p-4 space-y-6 pt-16">
-        <StudentIDCard
+        <IdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
@@ -75,13 +76,13 @@ const StudentIDPage: React.FC = () => {
               />
             }
             label="Card Balance"
-            onClick={handleReplaceID}
+            onClick={handleCardBalance}
             size={120}
             labelStyle={{ fontSize: "20px" }}
           />
         </div>
       </main>
-      <BottomNavBar />
+      <NavBar />
     </div>
   );
 };

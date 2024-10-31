@@ -1,9 +1,9 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import SquareButton from "@/components/ui/squareButton";
-import BottomNavBar from "@/components/ui/bottomNavBar";
-import Header from "@/components/ui/header";
-import StudentIDCard from "@/components/ui/studentIdCard";
+import SquareButton from "@/components/ui/sqButton";
+import NavBar from "@/components/ui/navBar";
+import Header from "@/components/ui/pageHeader";
+import IdCard from "@/components/ui/idCard";
 
 export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const handleDining = () => {
     console.log("Dining clicked");
     // TODO: Implement dining navigation logic
-    router.push("/dining");
+    router.push("/dining/dining-page");
   };
 
   const handleID = () => {
@@ -30,7 +30,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
       <Header title="Home" isHomeScreen={true} onLogout={onLogout} />
 
       <main className="flex-grow p-4 pt-16 space-y-6">
-        <StudentIDCard
+        <IdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
@@ -83,7 +83,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
         </div>
       </main>
 
-      <BottomNavBar />
+      <NavBar />
     </div>
   );
 }

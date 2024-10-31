@@ -3,9 +3,9 @@
 import React, { useState, useRef } from "react";
 import { ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Header from "@/components/ui/header";
-import BottomNavBar from "@/components/ui/bottomNavBar";
-import StudentIDCard from "@/components/ui/studentIdCard";
+import Header from "@/components/ui/pageHeader";
+import BottomNavBar from "@/components/ui/navBar";
+import StudentIDCard from "@/components/ui/idCard";
 import { Button } from "@/components/ui/button";
 
 const NewStudentIDPage: React.FC = () => {
@@ -41,7 +41,6 @@ const NewStudentIDPage: React.FC = () => {
           idNumber="#123456789"
           email="johndoe@cofc.edu"
           photoUrl={selectedImage || "/placeholder.svg"}
-          className="w-full"
         />
 
         <div className="flex flex-col gap-6">

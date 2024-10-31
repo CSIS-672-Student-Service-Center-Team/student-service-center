@@ -2,7 +2,7 @@ import React from "react";
 import { Home, Bell, User } from "lucide-react";
 import { useRouter } from "next/router";
 
-const BottomNavBar: React.FC = () => {
+const NavBar: React.FC = () => {
   const router = useRouter();
 
   const handleNavigation = (path: string) => {
@@ -20,7 +20,7 @@ const BottomNavBar: React.FC = () => {
       <div className="w-px h-12 bg-white"></div>
       <button
         className="text-white flex-1 flex justify-center"
-        onClick={() => handleNavigation("/notifications")}
+        onClick={() => handleNavigation("/notification")}
       >
         <Bell size={32} />
       </button>
@@ -35,4 +35,4 @@ const BottomNavBar: React.FC = () => {
   );
 };
 
-export default BottomNavBar;
+export default NavBar;

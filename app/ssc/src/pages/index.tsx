@@ -17,7 +17,7 @@ export default function App() {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault();// prevent page reload
     // Handle login logic here
     console.log("Login attempted with:", email, password);
     setIsLoggedIn(true);
