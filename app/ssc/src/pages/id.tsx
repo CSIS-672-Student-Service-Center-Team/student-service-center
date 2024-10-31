@@ -5,21 +5,21 @@ import Header from "@/components/ui/pageHeader";
 import IdCard from "@/components/ui/idCard";
 import SquareButton from "@/components/ui/sqButton";
 import NavBar from "@/components/ui/navBar";
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 
 const StudentIDPage: React.FC = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleGetNewID = () => {
     console.log("Get New ID clicked");
-    // TODO: Implement logic for getting a new ID
+    router.push("/newid");
   };
-  
+
   const handleReplaceID = () => {
     console.log("Replace ID clicked");
     // TODO: Implement logic for replacing ID
   };
-  
+
   const handleCardBalance = () => {
     console.log("Card Balance clicked");
     // TODO: Implement logic for checking card balance
