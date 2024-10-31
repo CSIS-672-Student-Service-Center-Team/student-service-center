@@ -52,4 +52,4 @@ const ViewBalancePage: React.FC = () => {
   )
 };
 
-export default ViewBalancePage
+export default ViewBalancePage;
