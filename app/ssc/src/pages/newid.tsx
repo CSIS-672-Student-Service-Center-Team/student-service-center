@@ -5,7 +5,7 @@ import { ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import BottomNavBar from "@/components/ui/navBar";
-import StudentIDCard from "@/components/ui/idCard";
+import IdCard from "@/components/ui/idCard";
 import { Button } from "@/components/ui/button";
 
 const NewStudentIDPage: React.FC = () => {
@@ -36,11 +36,11 @@ const NewStudentIDPage: React.FC = () => {
       <Header title="New Student ID" />
 
       <main className="flex-grow p-4 space-y-6 pt-16">
-        <StudentIDCard
+        <IdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
-          photoUrl={selectedImage || "/placeholder.svg"}
+          photoUrl="/ssc-logo.png"
         />
 
         <div className="flex flex-col gap-6">
