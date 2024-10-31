@@ -1,10 +1,7 @@
-'use client'
-
 import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
 import {
     Accordion,
     AccordionContent,
@@ -33,11 +30,11 @@ export default function WeeklyMealsPage() {
 
     const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
-    const handlePreferenceChange = (id: string) => {
+    const handlePreferenceChange = (id: string, checked: boolean) => {
         setPreferences(prev =>
-            prev.includes(id)
-                ? prev.filter(p => p !== id)
-                : [...prev, id]
+            checked
+                ? [...prev, id]
+                : prev.filter(p => p !== id)
         )
     }
 
@@ -56,9 +53,9 @@ export default function WeeklyMealsPage() {
                                 <Checkbox
                                     id={option.id}
                                     checked={preferences.includes(option.id)}
-                                    onCheckedChange={() => handlePreferenceChange(option.id)}
+                                    onChange={(e) => handlePreferenceChange(option.id, e.target.checked)}
+                                    label={option.label}
                                 />
-                                <Label htmlFor={option.id}>{option.label}</Label>
                             </div>
                         ))}
                         <Button
@@ -70,12 +67,17 @@ export default function WeeklyMealsPage() {
                     </CardContent>
                 </Card>
 
-                <Accordion type="single" collapsible className="w-full">
+                <Accordion type="single" collapsible>
                     {weekDays.map((day) => (
-                        <AccordionItem key={day} value={day.toLowerCase()}>
-                            <AccordionTrigger className="text-lg font-semibold">
-                                {day}
-                            </AccordionTrigger>
+                        <AccordionItem
+                            key={day}
+                            value={day.toLowerCase()}
+                            trigger={
+                                <AccordionTrigger>
+                                    <span className="text-lg font-semibold">{day}</span>
+                                </AccordionTrigger>
+                            }
+                        >
                             <AccordionContent>
                                 <div className="space-y-4 p-2">
                                     <div>

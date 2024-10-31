@@ -56,7 +56,7 @@ export default function DiningPage() {
             <main className="flex-1 p-4 space-y-6 pt-16">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Today's Meals</CardTitle>
+                        <CardTitle>Today&apos;s Meals</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         {meals.map((section) => (
@@ -77,7 +77,7 @@ export default function DiningPage() {
                 <div className="grid grid-cols-2 gap-4">
                     <Button
                         className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                        onClick={() => router.push('/dining/weekly')}
+                        onClick={() => router.push('/dining/weekly-meals')}
                     >
                         Weekly Meals
                     </Button>

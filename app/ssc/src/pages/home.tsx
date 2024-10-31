@@ -17,7 +17,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const handleDining = () => {
     console.log("Dining clicked");
     // TODO: Implement dining navigation logic
-    router.push("/dining");
+    router.push("/dining/dining-page");
   };
 
   const handleID = () => {
