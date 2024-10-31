@@ -6,17 +6,24 @@ interface HeaderProps {
   title: string;
   isHomeScreen?: boolean;
   onLogout?: () => void;
+  onBackClick?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
   title,
   isHomeScreen = false,
   onLogout,
+  onBackClick
 }) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    router.back(); // Navigate to home screen
+    // if we have this argument
+    if (onBackClick) {
+      onBackClick(); // Use the behavior
+    } else {
+      router.back(); // Navigate to home screen
+    }
   };
 
   return (

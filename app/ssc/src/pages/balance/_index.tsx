@@ -6,13 +6,18 @@ import { ArrowLeft, Home, Bell, User } from "lucide-react"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 
+
 const ViewBalancePage: React.FC = () => {
   const router = useRouter()
   //  TODO: add some user values here
   //  
   const [displayBalance, setDisplayBalance] = useState(0)
   const targetBalance = 123.99
-  
+  const handleAddFunds = () => {
+    // TODO: navigate to "/balance/add"
+    // Make sure to give current balance
+    router.push("/balance/add")
+  };
   useEffect(() => {
     // Animate the balance counting up
     const duration = 1000 // 1 second animation
@@ -44,7 +49,7 @@ const ViewBalancePage: React.FC = () => {
         </div>
         <ActionButton
           label="Add Funds"
-          onClick={() => {console.log("Add funds clicked")} }
+          onClick={handleAddFunds}
         />
       </main>
       <NavBar />

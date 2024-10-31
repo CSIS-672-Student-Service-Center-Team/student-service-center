@@ -23,7 +23,7 @@ const StudentIDPage: React.FC = () => {
   const handleCardBalance = () => {
     console.log("Card Balance clicked");
     // TODO: Implement logic for checking card balance
-    router.push("/view-balance");
+    router.push("/balance");
   };
 
   return (
