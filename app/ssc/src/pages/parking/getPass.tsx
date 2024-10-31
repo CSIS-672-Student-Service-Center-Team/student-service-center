@@ -131,23 +131,25 @@ export default function GetParkingPassPage() {
       <main className="flex-1 flex flex-col p-6 mb-20">
         <ViewToggle activeView={activeView} onViewChange={setActiveView} />
 
-        <div className="mb-6">
+        <div className="flex-1 mb-6 flex flex-col">
           {activeView === "map" ? (
-            <div className="space-y-6">
+            <div className="flex-1 flex flex-col space-y-4">
               <Image
                 src="/parking-availability-map.png"
                 alt="Campus Parking Map"
-                width={600}
-                height={1000}
-                className="w-full h-auto rounded-lg border border-gray-200"
+                width={800}
+                height={1200}
+                className="w-full h-auto rounded-lg border border-gray-200 flex-1"
               />
-              <ActionButton
-                label="Select Location"
-                onClick={() => setActiveView("list")}
-              />
+              <div className="mt-auto">
+                <ActionButton
+                  label="Select Location"
+                  onClick={() => setActiveView("list")}
+                />
+              </div>
             </div>
           ) : (
-            <div className="rounded-lg overflow-hidden border border-gray-200">
+            <div className="rounded-lg overflow-hidden border border-gray-200 flex-1">
               {parkingLocations.map((location) => (
                 <ParkingLocation
                   key={location.name}
