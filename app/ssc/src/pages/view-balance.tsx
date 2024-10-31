@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button"
+import Header from "@/components/ui/pageHeader"
+import NavBar from "@/components/ui/navBar"
 import { ArrowLeft, Home, Bell, User } from "lucide-react"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
@@ -29,19 +31,8 @@ const ViewBalancePage: React.FC = () => {
   }, [])
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
-      {/* Header */}
-      <header className="bg-red-900 text-white px-4 py-4 flex items-center">
-        <button 
-          onClick={() => router.back()}
-          className="mr-4"
-        >
-          <ArrowLeft className="h-6 w-6" />
-          <span className="sr-only">Go back</span>
-        </button>
-        <h1 className="text-xl font-semibold">Student Card Balance</h1>
-      </header>
-
+<div className="flex flex-col h-screen bg-white">
+      <Header title="Student ID" isHomeScreen={false} />
       {/* Main Content */}
       <main className="flex-1 flex flex-col items-center px-4 pt-12">
         <h2 className="text-2xl mb-8">Current Balance</h2>
@@ -56,35 +47,7 @@ const ViewBalancePage: React.FC = () => {
           Add Funds
         </Button>
       </main>
-
-      {/* Bottom Navigation */}
-      <nav className="bg-red-900 text-white grid grid-cols-3 fixed bottom-0 w-full">
-        <button 
-          className="flex flex-col items-center justify-center py-4"
-          onClick={() => router.push('/dashboard')}
-        >
-          <Home className="h-6 w-6" />
-          <span className="sr-only">Home</span>
-        </button>
-        <button 
-          className="flex flex-col items-center justify-center py-4 relative"
-          onClick={() => router.push('/notifications')}
-        >
-          <Bell className="h-6 w-6" />
-          <div className="absolute top-3 right-[calc(50%-12px)] w-2 h-2 bg-yellow-400 rounded-full" />
-          <span className="sr-only">Notifications</span>
-        </button>
-        <button 
-          className="flex flex-col items-center justify-center py-4"
-          onClick={() => router.push('/profile')}
-        >
-          <User className="h-6 w-6" />
-          <span className="sr-only">Profile</span>
-        </button>
-      </nav>
-
-      {/* Bottom Spacing for Fixed Navigation */}
-      <div className="h-[72px]" />
+      <NavBar />
     </div>
   )
 };
