@@ -1,19 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
-
-// Use this to pass the Price to the page
-// const handleCheckout = () => {
-//     router.push(`/checkout?price=${price}`)
-// }
-
-
 
 interface CheckoutData {
     shipping: {
@@ -43,11 +37,10 @@ interface CheckoutData {
     }
 }
 
-interface CheckoutProps {
-    price: number
-}
-
-export default function Component({ price }: CheckoutProps) {
+export default function Checkout() {
+    const searchParams = useSearchParams()
+    const [price, setPrice] = useState<number>(0)
+    const [paymentType, setPaymentType] = useState<string>('')
     const [step, setStep] = useState(1)
     const [formData, setFormData] = useState<CheckoutData>({
         shipping: {
@@ -76,6 +69,17 @@ export default function Component({ price }: CheckoutProps) {
             csv: ''
         }
     })
+
+    useEffect(() => {
+        const priceParam = searchParams.get('price')
+        const typeParam = searchParams.get('type')
+        if (priceParam) {
+            setPrice(parseFloat(priceParam))
+        }
+        if (typeParam) {
+            setPaymentType(typeParam)
+        }
+    }, [searchParams])
 
     const handleInputChange = (section: 'shipping' | 'billing' | 'payment', field: string, value: string) => {
         setFormData(prev => ({
@@ -172,7 +176,6 @@ export default function Component({ price }: CheckoutProps) {
                     id="same-as-shipping"
                     checked={formData.sameAsShipping}
                     onChange={(e) => handleSameAsShipping(e.target.checked)}
-                    label="My billing address is the same as my shipping"
                 />
                 <Label htmlFor="same-as-shipping">My billing address is the same as my shipping</Label>
             </div>
@@ -316,6 +319,12 @@ export default function Component({ price }: CheckoutProps) {
                 </p>
             </div>
             <div className="space-y-2">
+                <h3 className="font-semibold">Payment Type</h3>
+                <p className="bg-gray-100 p-2 rounded capitalize">
+                    {paymentType}
+                </p>
+            </div>
+            <div className="space-y-2">
                 <h3 className="font-semibold">Total</h3>
                 <p className="bg-gray-100 p-2 rounded text-lg font-bold">
                     ${price.toFixed(2)}
@@ -361,7 +370,7 @@ export default function Component({ price }: CheckoutProps) {
                             setStep(step + 1)
                         } else {
                             // Handle order submission
-                            console.log('Order submitted:', { ...formData, price })
+                            console.log('Order submitted:', { ...formData, price, paymentType })
                         }
                     }}
                 >
