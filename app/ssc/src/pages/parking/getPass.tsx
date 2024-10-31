@@ -39,7 +39,6 @@ const ViewToggle: React.FC<ViewToggleProps> = ({
     </button>
   </div>
 );
-
 interface PassActionButtonProps {
   label: string;
   onClick: () => void;
@@ -53,6 +52,7 @@ const PassActionButton: React.FC<PassActionButtonProps> = ({
   disabled,
 }) => (
   <button
+    onClick={onClick}
     className={`w-full bg-white text-black text-xl font-normal py-4 px-8 rounded-full border-2 border-black shadow-[0_4px_8px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 active:scale-95 mb-4 ${
       disabled ? "opacity-50 cursor-not-allowed" : ""
     }`}
@@ -119,9 +119,7 @@ export default function GetParkingPassPage() {
   ];
 
   const handleCheckout = () => {
-    if (selectedLocation) {
-      router.push("/checkout");
-    }
+    router.push("/checkout?price=$500&type=parking&from=getPass");
   };
 
   return (
