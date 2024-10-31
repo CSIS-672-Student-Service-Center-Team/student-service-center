@@ -9,13 +9,13 @@ export default function ParkingPassPage() {
   const router = useRouter();
 
   const handleGetPass = () => {
-    // Implement get pass functionality
     console.log("Get a parking pass");
+    router.push("/parking/getPass");
   };
 
   const handleReturnPass = () => {
-    // Implement return pass functionality
     console.log("Return a parking pass");
+    router.push("/parking/returnPass");
   };
 
   return (
