@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
-import ParkingActionButton from "@/components/ui/parkingActionButton";
+import ActionButton from "@/components/ui/actionButton";
 
 interface TicketEntryProps {
   ticketNumber: string;
@@ -68,7 +68,7 @@ export default function ParkingTicketsPage() {
         </div>
 
         <div className="mt-auto">
-          <ParkingActionButton
+          <ActionButton
             label="Pay Parking Ticket"
             onClick={handlePayTicket}
           />

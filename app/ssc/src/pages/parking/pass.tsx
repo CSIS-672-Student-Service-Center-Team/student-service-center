@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
 import ParkingPass from "@/components/ui/parkingPass";
-import ParkingPassButton from "@/components/ui/parkingActionButton";
+import ParkingPassButton from "@/components/ui/actionButton";
 
 export default function ParkingPassPage() {
   const router = useRouter();
