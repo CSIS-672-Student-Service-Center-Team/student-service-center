@@ -1,23 +1,21 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft } from "lucide-react"
 import { useRouter } from "next/router"
 import Header from "@/components/ui/pageHeader"
 import NavBar from "@/components/ui/navBar"
 import { Label } from '@/components/ui/label'
-import { SelectValue } from '@radix-ui/react-select'
-import { format } from 'util'
+
+import ActionButton from '@/components/ui/actionButton'
 
 export default function BalanceView() {
 	const router = useRouter()
+	const type = "balance" //	For routing
 	const [displayBalance, setDisplayBalance] = useState(0)
 	const [isAddingFunds, setIsAddingFunds] = useState(false)
 	const [additionalFunds, setAdditionalFunds] = useState("0.00")
 	const [inputLastKey, setInputLastKey] = useState("0")
-	const [inputIsFocused, setInputIsFocused] = useState(false)
 	const targetBalance = 123.99
 	const inputRef = useRef<HTMLInputElement>(null)
 
@@ -71,10 +69,7 @@ export default function BalanceView() {
 	}
 
 	const handleConfirmAddFunds = () => {
-		const newBalance = displayBalance + parseFloat(additionalFunds || '0')
-		animateBalance(displayBalance, newBalance)
-		setIsAddingFunds(false)
-		setAdditionalFunds("0.00")
+		router.push(`/checkout?price=${additionalFunds}&type=${type}`);
 	}
 
 	return (
@@ -94,12 +89,14 @@ export default function BalanceView() {
 					<div className="flex flex-col items-center w-full max-w-xs mb-8 transition-all duration-500 ease-in-out">
 						<div className="text-4xl mb-4">+${parseFloat(additionalFunds).toFixed(2)}</div>
 						<div className="w-full h-px bg-gray-300 mb-4"></div>
-						<div className="text-4xl font-bold">
+						<div className='flex items-center space-x-2'>
+							<div className="text-4xl font-bold">
 							${(displayBalance + parseFloat(additionalFunds || '0')).toFixed(2)}
+							</div>
 						</div>
 						<div className="flex items-center space-x-2">
-							<Label htmlFor="userInputFunds" className='font-medium'>
-								Additional Funds:
+							<Label htmlFor="userInputFunds" className='font-large'>
+								Add Funds :
 							</Label>
 							<Input
 								id="userInputFunds"
@@ -116,13 +113,11 @@ export default function BalanceView() {
 						</div>
 					</div>
 				)}
-				<Button
-					variant="outline"
-					className={`w-full max-w-xs rounded-full border-2 transition-all duration-500 ease-in-out ${isAddingFunds ? 'mt-8' : ''}`}
-					onClick={isAddingFunds ? handleConfirmAddFunds : handleAddFunds}
+				<ActionButton
+				onClick={isAddingFunds ? handleConfirmAddFunds : handleAddFunds}
+				label = {isAddingFunds ? 'Confirm' : 'Add Funds'}
 				>
-					{isAddingFunds ? 'Confirm' : 'Add Funds'}
-				</Button>
+				</ActionButton>
 			</main>
 
 			<NavBar />
