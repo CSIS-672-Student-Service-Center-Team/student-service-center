@@ -7,6 +7,7 @@ import Header from "@/components/ui/pageHeader";
 import BottomNavBar from "@/components/ui/navBar";
 import IdCard from "@/components/ui/idCard";
 import { Button } from "@/components/ui/button";
+import {CheckoutData} from "@/pages/checkout"
 
 const NewStudentIDPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -27,7 +28,17 @@ const NewStudentIDPage: React.FC = () => {
 
   const handleContinue = () => {
     // Add navigation logic here
+    let checkoutData: CheckoutData =  {
+      payment: {
+        cardName: "",
+        cardNumber: "",
+        expDate: "",
+        csv: ""
+      }
+    }
+    sessionStorage.setItem('checkoutData', JSON.stringify(checkoutData));
     console.log("Continuing to next page...");
+    router.push('/checkout?price=25.00&type=id&from=id')
     // router.push('/next-page');
   };
 
