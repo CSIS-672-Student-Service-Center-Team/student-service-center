@@ -56,17 +56,18 @@ const PassActionButton: React.FC<PassActionButtonProps> = ({
   </button>
 );
 
-const Modal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
-  isOpen,
-  onClose,
-}) => {
+const Modal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}> = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Return Instructions</h2>
+          <h2 className="text-2xl font-bold">Confirmation</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700"
@@ -75,25 +76,17 @@ const Modal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           </button>
         </div>
         <p className="mb-4">
-          If you have a physical pass, please return it to the College of
-          Charleston Student Center:
+          Are you sure you want to return your parking pass? You will be
+          refunded a pro-rated amount.
         </p>
-        <p className="mb-4">
-          <strong>Mail:</strong>
-          <br />
-          College of Charleston Student Center
-          <br />
-          66 George St, Charleston, SC 29424
-        </p>
-        <p className="mb-4">
-          <strong>In Person:</strong>
-          <br />
-          Visit the Student Center during business hours.
-        </p>
-        <p>
-          If you do not have a physical pass, please call (123) 456-7890 for
-          further instructions.
-        </p>
+        <div className="flex justify-end">
+          <button
+            onClick={onConfirm}
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+          >
+            Confirm
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -118,6 +111,11 @@ export default function ReturnParkingPassPage() {
     if (selectedLocation) {
       setIsModalOpen(true);
     }
+  };
+
+  const handleConfirm = () => {
+    setIsModalOpen(false);
+    // Add any additional logic for confirming the return here
   };
 
   return (
@@ -147,7 +145,11 @@ export default function ReturnParkingPassPage() {
         </div>
       </main>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirm}
+      />
 
       <NavBar />
     </div>
