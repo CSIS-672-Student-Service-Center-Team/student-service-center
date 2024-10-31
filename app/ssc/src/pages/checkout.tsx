@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
+import { useRouter } from "next/router"
 
 interface CheckoutData {
     shipping: {
@@ -38,8 +39,10 @@ interface CheckoutData {
 }
 
 export default function Checkout() {
+    const router = useRouter()
     const searchParams = useSearchParams()
     const [price, setPrice] = useState<number>(0)
+    const [fromURL, setFromURL] = useState<string>('')
     const [paymentType, setPaymentType] = useState<string>('')
     const [step, setStep] = useState(1)
     const [formData, setFormData] = useState<CheckoutData>({
@@ -73,11 +76,15 @@ export default function Checkout() {
     useEffect(() => {
         const priceParam = searchParams.get('price')
         const typeParam = searchParams.get('type')
+        const fromURL = searchParams.get('from')
         if (priceParam) {
             setPrice(parseFloat(priceParam))
         }
         if (typeParam) {
             setPaymentType(typeParam)
+        }
+        if (fromURL) {
+            setFromURL(fromURL)
         }
     }, [searchParams])
 
@@ -97,6 +104,13 @@ export default function Checkout() {
             sameAsShipping: checked,
             billing: checked ? prev.shipping : prev.billing
         }))
+    }
+
+    const handleConfirmation = () => {
+        router.push({
+            pathname: `/confirmation`,
+            query: {amount: price, confirmationNumber: "#######", fromURL: `${fromURL}`}
+        });
     }
 
     const renderShippingForm = () => (
@@ -370,6 +384,7 @@ export default function Checkout() {
                             setStep(step + 1)
                         } else {
                             // Handle order submission
+                            handleConfirmation();
                             console.log('Order submitted:', { ...formData, price, paymentType })
                         }
                     }}

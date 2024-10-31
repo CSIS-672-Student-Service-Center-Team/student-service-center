@@ -42,7 +42,7 @@ export default function ParkingTicketsPage() {
   const totalAmount = tickets.reduce((sum, ticket) => sum + ticket.amount, 0);
 
   const handlePayTicket = () => {
-    router.push(`/checkout?price=${totalAmount}&type=parking`);
+    router.push(`/checkout?price=${totalAmount}&type=parking&from=parking`);
   };
 
   return (

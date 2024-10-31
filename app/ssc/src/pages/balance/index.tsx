@@ -11,7 +11,7 @@ import ActionButton from '@/components/ui/actionButton'
 
 export default function BalanceView() {
 	const router = useRouter()
-	const type = "balance" //	For routing
+	const from = "balance" //	For routing
 	const [displayBalance, setDisplayBalance] = useState(0)
 	const [isAddingFunds, setIsAddingFunds] = useState(false)
 	const [additionalFunds, setAdditionalFunds] = useState("0.00")
@@ -69,7 +69,7 @@ export default function BalanceView() {
 	}
 
 	const handleConfirmAddFunds = () => {
-		router.push(`/checkout?price=${additionalFunds}&type=${type}`);
+		router.push(`/checkout?price=${additionalFunds}&type=card-balanc&from=${from}`);
 	}
 
 	return (
