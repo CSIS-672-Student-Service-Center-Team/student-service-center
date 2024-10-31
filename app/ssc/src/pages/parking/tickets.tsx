@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
 import ActionButton from "@/components/ui/actionButton";
+import { CheckoutData } from "@/pages/checkout"
 
 interface TicketEntryProps {
   ticketNumber: string;

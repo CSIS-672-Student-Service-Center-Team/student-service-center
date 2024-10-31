@@ -10,8 +10,8 @@ import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
 import { useRouter } from "next/router"
 
-interface CheckoutData {
-    shipping: {
+export interface CheckoutData {
+    shipping?: {
         firstName: string
         lastName: string
         address1: string
@@ -20,7 +20,7 @@ interface CheckoutData {
         state: string
         zip: string
     }
-    billing: {
+    billing?: {
         firstName: string
         lastName: string
         address1: string
@@ -29,7 +29,7 @@ interface CheckoutData {
         state: string
         zip: string
     }
-    sameAsShipping: boolean
+    sameAsShipping?: boolean
     payment: {
         cardName: string
         cardNumber: string
@@ -107,163 +107,179 @@ export default function Checkout() {
     }
 
     const handleConfirmation = () => {
-        router.push({
+        router.replace({
             pathname: `/confirmation`,
-            query: {amount: price, confirmationNumber: "#######", fromURL: `${fromURL}`}
-        });
+            query: { amount: price, confirmationNumber: "#######", fromURL: `${fromURL}` }
+        });// need to get around the use of router.push
     }
 
-    const renderShippingForm = () => (
-        <div className="space-y-4">
-            <div className="space-y-2">
-                <Label htmlFor="shipping-firstName">First Name</Label>
-                <Input
-                    id="shipping-firstName"
-                    value={formData.shipping.firstName}
-                    onChange={(e) => handleInputChange('shipping', 'firstName', e.target.value)}
-                    placeholder="J. John"
-                />
-            </div>
-            <div className="space-y-2">
-                <Label htmlFor="shipping-lastName">Last Name</Label>
-                <Input
-                    id="shipping-lastName"
-                    value={formData.shipping.lastName}
-                    onChange={(e) => handleInputChange('shipping', 'lastName', e.target.value)}
-                    placeholder="Smith"
-                />
-            </div>
-            <div className="space-y-2">
-                <Label htmlFor="shipping-address1">Address</Label>
-                <Input
-                    id="shipping-address1"
-                    value={formData.shipping.address1}
-                    onChange={(e) => handleInputChange('shipping', 'address1', e.target.value)}
-                    placeholder="Address Line One"
-                />
-            </div>
-            <div className="space-y-2">
-                <Label htmlFor="shipping-address2">Optional Address Line Two</Label>
-                <Input
-                    id="shipping-address2"
-                    value={formData.shipping.address2}
-                    onChange={(e) => handleInputChange('shipping', 'address2', e.target.value)}
-                    placeholder="Address Line Two"
-                />
-            </div>
-            <div className="grid grid-cols-3 gap-4">
-                <div className="space-y-2">
-                    <Label htmlFor="shipping-city">City</Label>
-                    <Input
-                        id="shipping-city"
-                        value={formData.shipping.city}
-                        onChange={(e) => handleInputChange('shipping', 'city', e.target.value)}
-                        placeholder="City"
-                    />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="shipping-state">State</Label>
-                    <Input
-                        id="shipping-state"
-                        value={formData.shipping.state}
-                        onChange={(e) => handleInputChange('shipping', 'state', e.target.value)}
-                        placeholder="State"
-                    />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="shipping-zip">ZIP</Label>
-                    <Input
-                        id="shipping-zip"
-                        value={formData.shipping.zip}
-                        onChange={(e) => handleInputChange('shipping', 'zip', e.target.value)}
-                        placeholder="XXXXX"
-                    />
-                </div>
-            </div>
-        </div>
-    )
+    const renderShippingForm = () => {
 
-    const renderBillingForm = () => (
-        <div className="space-y-4">
-            <div className="flex items-center space-x-2 mb-6">
-                <Checkbox
-                    id="same-as-shipping"
-                    checked={formData.sameAsShipping}
-                    onChange={(e) => handleSameAsShipping(e.target.checked)}
-                />
-                <Label htmlFor="same-as-shipping">My billing address is the same as my shipping</Label>
+        if (!formData.shipping) {
+            setStep(step + 1)
+            return null;
+        }
+
+        return (
+            <div className="space-y-4">
+                <div className="space-y-2">
+                    <Label htmlFor="shipping-firstName">First Name</Label>
+                    <Input
+                        id="shipping-firstName"
+                        value={formData.shipping.firstName}
+                        onChange={(e) => handleInputChange('shipping', 'firstName', e.target.value)}
+                        placeholder="J. John"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="shipping-lastName">Last Name</Label>
+                    <Input
+                        id="shipping-lastName"
+                        value={formData.shipping.lastName}
+                        onChange={(e) => handleInputChange('shipping', 'lastName', e.target.value)}
+                        placeholder="Smith"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="shipping-address1">Address</Label>
+                    <Input
+                        id="shipping-address1"
+                        value={formData.shipping.address1}
+                        onChange={(e) => handleInputChange('shipping', 'address1', e.target.value)}
+                        placeholder="Address Line One"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="shipping-address2">Optional Address Line Two</Label>
+                    <Input
+                        id="shipping-address2"
+                        value={formData.shipping.address2}
+                        onChange={(e) => handleInputChange('shipping', 'address2', e.target.value)}
+                        placeholder="Address Line Two"
+                    />
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                        <Label htmlFor="shipping-city">City</Label>
+                        <Input
+                            id="shipping-city"
+                            value={formData.shipping.city}
+                            onChange={(e) => handleInputChange('shipping', 'city', e.target.value)}
+                            placeholder="City"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="shipping-state">State</Label>
+                        <Input
+                            id="shipping-state"
+                            value={formData.shipping.state}
+                            onChange={(e) => handleInputChange('shipping', 'state', e.target.value)}
+                            placeholder="State"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="shipping-zip">ZIP</Label>
+                        <Input
+                            id="shipping-zip"
+                            value={formData.shipping.zip}
+                            onChange={(e) => handleInputChange('shipping', 'zip', e.target.value)}
+                            placeholder="XXXXX"
+                        />
+                    </div>
+                </div>
             </div>
-            {!formData.sameAsShipping && (
-                <>
-                    <div className="space-y-2">
-                        <Label htmlFor="billing-firstName">First Name</Label>
-                        <Input
-                            id="billing-firstName"
-                            value={formData.billing.firstName}
-                            onChange={(e) => handleInputChange('billing', 'firstName', e.target.value)}
-                            placeholder="J. John"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="billing-lastName">Last Name</Label>
-                        <Input
-                            id="billing-lastName"
-                            value={formData.billing.lastName}
-                            onChange={(e) => handleInputChange('billing', 'lastName', e.target.value)}
-                            placeholder="Smith"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="billing-address1">Address</Label>
-                        <Input
-                            id="billing-address1"
-                            value={formData.billing.address1}
-                            onChange={(e) => handleInputChange('billing', 'address1', e.target.value)}
-                            placeholder="Address Line One"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="billing-address2">Optional Address Line Two</Label>
-                        <Input
-                            id="billing-address2"
-                            value={formData.billing.address2}
-                            onChange={(e) => handleInputChange('billing', 'address2', e.target.value)}
-                            placeholder="Address Line Two"
-                        />
-                    </div>
-                    <div className="grid grid-cols-3 gap-4">
+        );
+    };
+
+    const renderBillingForm = () => {
+
+        if (!formData.billing) {
+            setStep(step + 1);
+            return null;
+        }
+
+        return (
+            <div className="space-y-4">
+                <div className="flex items-center space-x-2 mb-6">
+                    <Checkbox
+                        id="same-as-shipping"
+                        checked={formData.sameAsShipping}
+                        onChange={(e) => handleSameAsShipping(e.target.checked)}
+                    />
+                    <Label htmlFor="same-as-shipping">My billing address is the same as my shipping</Label>
+                </div>
+                {!formData.sameAsShipping && (
+                    <>
                         <div className="space-y-2">
-                            <Label htmlFor="billing-city">City</Label>
+                            <Label htmlFor="billing-firstName">First Name</Label>
                             <Input
-                                id="billing-city"
-                                value={formData.billing.city}
-                                onChange={(e) => handleInputChange('billing', 'city', e.target.value)}
-                                placeholder="City"
+                                id="billing-firstName"
+                                value={formData.billing.firstName}
+                                onChange={(e) => handleInputChange('billing', 'firstName', e.target.value)}
+                                placeholder="J. John"
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="billing-state">State</Label>
+                            <Label htmlFor="billing-lastName">Last Name</Label>
                             <Input
-                                id="billing-state"
-                                value={formData.billing.state}
-                                onChange={(e) => handleInputChange('billing', 'state', e.target.value)}
-                                placeholder="State"
+                                id="billing-lastName"
+                                value={formData.billing.lastName}
+                                onChange={(e) => handleInputChange('billing', 'lastName', e.target.value)}
+                                placeholder="Smith"
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="billing-zip">ZIP</Label>
+                            <Label htmlFor="billing-address1">Address</Label>
                             <Input
-                                id="billing-zip"
-                                value={formData.billing.zip}
-                                onChange={(e) => handleInputChange('billing', 'zip', e.target.value)}
-                                placeholder="XXXXX"
+                                id="billing-address1"
+                                value={formData.billing.address1}
+                                onChange={(e) => handleInputChange('billing', 'address1', e.target.value)}
+                                placeholder="Address Line One"
                             />
                         </div>
-                    </div>
-                </>
-            )}
-        </div>
-    )
+                        <div className="space-y-2">
+                            <Label htmlFor="billing-address2">Optional Address Line Two</Label>
+                            <Input
+                                id="billing-address2"
+                                value={formData.billing.address2}
+                                onChange={(e) => handleInputChange('billing', 'address2', e.target.value)}
+                                placeholder="Address Line Two"
+                            />
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="billing-city">City</Label>
+                                <Input
+                                    id="billing-city"
+                                    value={formData.billing.city}
+                                    onChange={(e) => handleInputChange('billing', 'city', e.target.value)}
+                                    placeholder="City"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="billing-state">State</Label>
+                                <Input
+                                    id="billing-state"
+                                    value={formData.billing.state}
+                                    onChange={(e) => handleInputChange('billing', 'state', e.target.value)}
+                                    placeholder="State"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="billing-zip">ZIP</Label>
+                                <Input
+                                    id="billing-zip"
+                                    value={formData.billing.zip}
+                                    onChange={(e) => handleInputChange('billing', 'zip', e.target.value)}
+                                    placeholder="XXXXX"
+                                />
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
+        );
+    };
 
     const renderPaymentForm = () => (
         <div className="space-y-4">
@@ -310,13 +326,17 @@ export default function Checkout() {
 
     const renderReviewPage = () => (
         <div className="space-y-6">
-            <div className="space-y-2">
+
+
+{ formData.shipping  && (<div className="space-y-2">
                 <h3 className="font-semibold">Name</h3>
                 <p className="bg-gray-100 p-2 rounded">
                     {formData.shipping.firstName} {formData.shipping.lastName}
                 </p>
-            </div>
-            <div className="space-y-2">
+            </div>)}
+
+
+{formData.shipping &&  (<div className="space-y-2">
                 <h3 className="font-semibold">Shipping Address</h3>
                 <p className="bg-gray-100 p-2 rounded">
                     {formData.shipping.address1}
@@ -325,7 +345,7 @@ export default function Checkout() {
                     <br />
                     {formData.shipping.city}, {formData.shipping.state} {formData.shipping.zip}
                 </p>
-            </div>
+            </div>)}
             <div className="space-y-2">
                 <h3 className="font-semibold">Payment Method</h3>
                 <p className="bg-gray-100 p-2 rounded">
