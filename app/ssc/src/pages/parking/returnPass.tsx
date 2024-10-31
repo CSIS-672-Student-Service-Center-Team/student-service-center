@@ -115,7 +115,7 @@ export default function ReturnParkingPassPage() {
 
   const handleConfirm = () => {
     setIsModalOpen(false);
-    // Add any additional logic for confirming the return here
+    router.push("/parking");
   };
 
   return (
