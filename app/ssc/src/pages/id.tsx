@@ -5,21 +5,25 @@ import Header from "@/components/ui/pageHeader";
 import IdCard from "@/components/ui/idCard";
 import SquareButton from "@/components/ui/sqButton";
 import NavBar from "@/components/ui/navBar";
+import { useRouter } from "next/router"
 
 const StudentIDPage: React.FC = () => {
+  const router = useRouter()
+
   const handleGetNewID = () => {
     console.log("Get New ID clicked");
     // TODO: Implement logic for getting a new ID
   };
-
+  
   const handleReplaceID = () => {
     console.log("Replace ID clicked");
     // TODO: Implement logic for replacing ID
   };
-
+  
   const handleCardBalance = () => {
     console.log("Card Balance clicked");
     // TODO: Implement logic for checking card balance
+    router.push("/view-balance");
   };
 
   return (
@@ -72,7 +76,7 @@ const StudentIDPage: React.FC = () => {
               />
             }
             label="Card Balance"
-            onClick={handleReplaceID}
+            onClick={handleCardBalance}
             size={120}
             labelStyle={{ fontSize: "20px" }}
           />
