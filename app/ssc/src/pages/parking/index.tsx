@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
-import ParkingActionButton from "@/components/ui/parkingActionButton";
+import ActionButton from "@/components/ui/actionButton";
 
 export default function ParkingPage() {
   const router = useRouter();
@@ -12,18 +12,18 @@ export default function ParkingPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header title="Student ID" isHomeScreen={false} />
+      <Header title="Parking Services" isHomeScreen={false} />
 
       <main className="flex-1 flex flex-col items-center justify-center gap-8 p-6 mb-20">
-        <ParkingActionButton
+        <ActionButton
           label="Manage Parking Pass"
           onClick={() => handleNavigation("/parking/pass")}
         />
-        <ParkingActionButton
+        <ActionButton
           label="Parking Tickets"
           onClick={() => handleNavigation("/parking/tickets")}
         />
-        <ParkingActionButton
+        <ActionButton
           label="Parking Availability"
           onClick={() => handleNavigation("/parking/availability")}
         />

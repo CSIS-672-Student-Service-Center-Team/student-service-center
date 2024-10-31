@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
-import ParkingActionButton from "@/components/ui/parkingActionButton";
+import ActionButton from "@/components/ui/actionButton";
 
 interface ViewToggleProps {
   activeView: "map" | "list";
@@ -94,7 +94,7 @@ export default function ParkingAvailabilityPage() {
         </div>
 
         <div className="mt-auto">
-          <ParkingActionButton
+          <ActionButton
             label="Filter Options"
             onClick={handleFilterOptions}
           />
