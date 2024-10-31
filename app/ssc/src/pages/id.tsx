@@ -5,11 +5,14 @@ import Header from "@/components/ui/header";
 import StudentIDCard from "@/components/ui/studentIdCard";
 import SquareButton from "@/components/ui/squareButton";
 import BottomNavBar from "@/components/ui/bottomNavBar";
+import { useRouter } from "next/navigation";
 
 const StudentIDPage: React.FC = () => {
+  const router = useRouter();
+
   const handleGetNewID = () => {
     console.log("Get New ID clicked");
-    // TODO: Implement logic for getting a new ID
+    router.push("/newid");
   };
 
   const handleReplaceID = () => {
