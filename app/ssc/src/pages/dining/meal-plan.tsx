@@ -6,10 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
 import { useRouter } from 'next/navigation'
+import { CreditCard } from 'lucide-react'
 
 interface MealPlanOption {
-    name: string
-    price: number
+    id: string
+    semesterPrice: number
+    yearPrice: number
+    mealsPerWeek: number
 }
 
 export default function MealPlanPage() {
@@ -22,16 +25,17 @@ export default function MealPlanPage() {
     }
 
     const availablePlans: MealPlanOption[] = [
-        { name: "5 meals/week", price: 100 },
-        { name: "10 meals/week", price: 150 },
-        { name: "unlimited", price: 200 }
+        { id: '1', semesterPrice: 1299.00, yearPrice: 2499.00, mealsPerWeek: 12 },
+        { id: '2', semesterPrice: 1599.00, yearPrice: 3099.00, mealsPerWeek: 24 },
+        { id: '3', semesterPrice: 1399.00, yearPrice: 2699.00, mealsPerWeek: 12 },
+        { id: '4', semesterPrice: 1499.00, yearPrice: 2899.00, mealsPerWeek: 12 }
     ]
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
             <Header title="Meal Plan Management" isHomeScreen={false} />
 
-            <main className="flex-1 p-4 space-y-6 pt-16">
+            <main className="flex-1 p-4 space-y-6 pt-16 pb-24">
                 <Card>
                     <CardHeader>
                         <CardTitle>Your Current Meal Plan:</CardTitle>
@@ -45,7 +49,7 @@ export default function MealPlanPage() {
                         <Button
                             variant="secondary"
                             className="w-full"
-                            onClick={() => router.push('/dining/meal-plan/history')}
+                            onClick={() => router.push('/dining/meal-plan-history')}
                         >
                             Meal Plan History
                         </Button>
@@ -58,14 +62,17 @@ export default function MealPlanPage() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         {availablePlans.map((plan) => (
-                            <div key={plan.name} className="flex justify-between items-center py-2 border-b last:border-0">
-                                <span>{plan.name}</span>
-                                <span>${plan.price}</span>
+                            <div key={plan.id} className="flex justify-between items-center py-2 border-b last:border-0">
+                                <div className="flex items-center">
+                                    <CreditCard className="w-5 h-5 mr-2 text-[#8B1A1A]" />
+                                    <span>{plan.mealsPerWeek} Meals/Week</span>
+                                </div>
+                                <span>${plan.semesterPrice.toFixed(2)} - ${plan.yearPrice.toFixed(2)}</span>
                             </div>
                         ))}
                         <Button
-                            className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                            onClick={() => router.push('/dining/meal-plan/change')}
+                            className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
+                            onClick={() => router.push('/dining/offered-meal-plans')}
                         >
                             Change Meal Plan
                         </Button>
