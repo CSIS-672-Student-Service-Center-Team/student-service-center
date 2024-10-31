@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import Header from "@/components/ui/pageHeader"
 import NavBar from "@/components/ui/navBar"
 import { Label } from '@/components/ui/label'
+import { CheckoutData } from '@/pages/checkout'
 
 import ActionButton from '@/components/ui/actionButton'
 
@@ -71,6 +72,15 @@ export default function BalanceView() {
 	}
 
 	const handleConfirmAddFunds = () => {
+		let checkoutData: CheckoutData = {
+			payment: {
+				cardName: '',
+				cardNumber: '',
+				expDate: '',
+				csv: ''
+			}
+		};
+		sessionStorage.setItem('checkoutData', JSON.stringify(checkoutData));
 		router.push(`/checkout?price=${additionalFunds}&type=card-balanc&from=${from}`);
 	}
 

@@ -74,9 +74,13 @@ export default function Checkout() {
     })
 
     useEffect(() => {
-        const priceParam = searchParams.get('price')
-        const typeParam = searchParams.get('type')
-        const fromURL = searchParams.get('from')
+        const priceParam = searchParams.get('price');
+        const typeParam = searchParams.get('type');
+        const fromURL = searchParams.get('from');
+        const checkoutData = sessionStorage.getItem('checkoutData');
+        if (checkoutData) {
+            setFormData(JSON.parse(checkoutData));
+        }
         if (priceParam) {
             setPrice(parseFloat(priceParam))
         }
