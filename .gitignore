@@ -1,5 +1,6 @@
 .local.*
 .vercel
+.idea
 
 # dependencies
 /node_modules
