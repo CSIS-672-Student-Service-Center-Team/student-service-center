@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="bg-red-800 text-white p-4 flex items-center justify-between rounded-b-3xl">
+    <header className="fixed top-0 left-0 right-0 bg-red-800 text-white p-4 flex items-center justify-between rounded-b-3xl">
       {isHomeScreen ? (
         <button onClick={onLogout} className="text-white">
           <LogOut size={24} />
