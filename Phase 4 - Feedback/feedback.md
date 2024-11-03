@@ -92,3 +92,30 @@ Shipping Info: Where is the ID shipping info? It may not match the billing addre
 * **Practical concerns**: Logo may need updates if app services change.
 
 * :+1: The graduation cap looks nice.
+
+
+#### Color Suggestions:
+
+* **Red Should Be Softer**: Use shades for separation from navigation bars and buttons.
+
+* **Background Color Options**: Consider off-white or pale red.
+
+* **Highlight Parking Status**: Color code and bold text.
+
+#### Button Visibility Issues:
+
+* **Problem**: White buttons blend with background.
+    * **Solution**: Change button or border and text colors.
+
+#### Parking Availability Page Confusion:
+
+* **Tabs Issue**: De-selected tab's border seems bigger.
+    * **Suggested Fix**: Use lighter color for de-selected and stronger border for selected tabs.
+
+### Color Theme Feedback:
+
+* :-1: CofC maroon and white scheme feels dull; consider more distinct colors.
+
+* :+1: **Red is Empowering**: Monochrome red is good for business themes.
+
+* :point_right: **Red-Green Color Blindness**: Be cautious with green use.
