@@ -119,3 +119,31 @@ Shipping Info: Where is the ID shipping info? It may not match the billing addre
 * :+1: **Red is Empowering**: Monochrome red is good for business themes.
 
 * :point_right: **Red-Green Color Blindness**: Be cautious with green use.
+
+### Heuristic Violations Feedback:
+
+#### H1
+
+* **Notifications Don't Disappear After Payment** - (2 minor)
+Fix: Auto-remove notifications after payment.
+
+* **No Feedback for "Delivery" Checkbox** - (1 cosmetic)
+    * **Fix**: Add a check mark when selected.
+
+* **No Indication of Added Funds** - (2 minor)
+    * **Fix**: Update textbox with selected amount and animate the button.
+
+* **Important Notifications Not on Home Page** - (3 major)
+    * **Fix**: Add banner notifications for important items.
+
+* **Unclear Checkout Pages** - (1 or 2 cosmetic)
+    * **Fix**: Include purchase type in the header.
+
+* **Persisting "New Notification" Dot** - (2 minor, 3 major)
+  * :point_right: **Question**: What does the dot represent? Ensure access to notification history.
+
+* **Unclear Checkout Success** - (1 cosmetic, 3 major)
+    * **Fix**: Provide a clear "You checked out" page or message.
+
+* **Lack of Confirmation for Adding Funds** - (3 rating)
+    * **Fix**: Show success message and total balance.
