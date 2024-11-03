@@ -147,3 +147,38 @@ Fix: Auto-remove notifications after payment.
 
 * **Lack of Confirmation for Adding Funds** - (3 rating)
     * **Fix**: Show success message and total balance.
+
+#### H2
+
+Heuristic Violations Feedback:
+
+
+* **ID and Account Organization**: Feel a disconnect between "ID" and "Account." (1 - cosmetic, bias potential)
+  * **Suggested Fix**: Organize ID and balance as subcategories of account for a more natural flow. 
+
+#### H3
+
+* **Issue**: Can only pay all parking tickets at once. (2 minor)
+    * **Fix**: Allow selecting tickets individually with checkboxes. Add a checkbox to select/deselect all.
+
+#### H4
+
+* **Navigation Bar Size**:
+    * The top navigation bar on "Review & Confirm" and "Dining" pages is smaller. Fix: Adjust to match other pages.
+
+* **Home Button Placement**:
+    * The home button is where the back button usually is. Fix: Swap it with the notifications button to avoid confusion.
+
+##### Consistency Observations
+
+##### External Consistency
+* :+1: The app is generally easy to navigate and familiar.
+
+* :point_right: Styles are inconsistent across pages.  **Suggestion**: Ensure buttons are uniform in size, color, and style for a cohesive look.
+##### Internal Consistency
+
+* Good overall, but buttons should be more _consistent_. 
+* **Suggestion**: Uniform button design for similar functions enhances app uniformity.
+
+##### Option Display Differences
+* Student ID options use small red horizontal buttons; Parking uses long white vertical ones. Suggestion: Align option display styles across sections for a smoother user experience.
