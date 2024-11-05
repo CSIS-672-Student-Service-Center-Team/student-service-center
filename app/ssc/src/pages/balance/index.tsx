@@ -19,6 +19,7 @@ export default function BalanceView() {
 	const [addingFundsAnimation, setFundsAnimation] = useState(false)
 	const [additionalFunds, setAdditionalFunds] = useState("0.00")
 	const [inputLastKey, setInputLastKey] = useState("0")
+	const [yDown, setYDown] = useState(true)
 	const targetBalance = 123.99
 	const inputRef = useRef<HTMLInputElement>(null)
 
@@ -75,12 +76,8 @@ export default function BalanceView() {
 	}
 
 	const handleBackToBalance = () => {
-		setYTranslation(40)
-		setIsAddingFunds(false)
 		setFundsAnimation(true)
-		setTimeout(() => {
-			setFundsAnimation(false)
-		}, animationDuration)
+		setIsAddingFunds(false)
 		setAdditionalFunds("0.00")
 	}
 
@@ -145,7 +142,7 @@ export default function BalanceView() {
 					</div>
 				)}
 				<div
-					className={`${addingFundsAnimation ? `transition-transform duration-${animationDuration} ease-in-out ` : ''} translate-y-${yTranslation}`}
+					className={`${addingFundsAnimation ? `transition-transform duration-${animationDuration} ease-in-out ` : ''} ${yDown ? '': '-'}translate-y-${yTranslation}`}
 					
 				>
 					<ActionButton
