@@ -13,6 +13,7 @@ export default function BalanceView() {
 	const router = useRouter()
 	const from = "balance" //	For routing
 	const animationDuration = 1000
+	const [balanceAnimationComplete,setBalanceAnimationComplete] = useState(false);
 	const [yTranslation, setYTranslation] = useState(0)
 	const [displayBalance, setDisplayBalance] = useState(0)
 	const [isAddingFunds, setIsAddingFunds] = useState(false)
@@ -25,7 +26,8 @@ export default function BalanceView() {
 
 	useEffect(() => {
 		animateBalance(0, targetBalance)
-	}, [])
+		inputRef.current?.focus()
+	}, [isAddingFunds])
 
 
 	const handleInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,11 +50,14 @@ export default function BalanceView() {
 	}
 
 	const animateBalance = (start: number, end: number) => {
+		if(balanceAnimationComplete) {
+			return;
+		}
 		const duration = 450
 		const steps = 60
 		const increment = (end - start) / steps
 		let current = start
-
+		
 		const timer = setInterval(() => {
 			current += increment
 			if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
@@ -62,6 +67,7 @@ export default function BalanceView() {
 				setDisplayBalance(current)
 			}
 		}, duration / steps)
+		setBalanceAnimationComplete(true)
 	}
 
 	const handleAddFunds = () => {
@@ -72,7 +78,6 @@ export default function BalanceView() {
 			setYTranslation(0)
 			setFundsAnimation(false)
 		}, animationDuration)
-		setTimeout(() => inputRef.current?.focus(), animationDuration)
 	}
 
 	const handleBackToBalance = () => {
@@ -101,7 +106,8 @@ export default function BalanceView() {
 				onBackClick={isAddingFunds ? handleBackToBalance : () => router.back()}
 			/>
 
-			<main className="flex-1 flex flex-col items-center px-4 pt-12 transition-all duration-500 ease-in-out">
+			<main className="flex-1 flex flex-col items-center px-4 pt-12 transition-all duration-500 ease-in-out gap-y-6">
+				<span className='min-h-16'></span>
 				<h2 className="text-4xl mb-8">Current Balance</h2>
 				<div className="text-6xl font-bold mb-12">
 					${displayBalance.toFixed(2)}
@@ -148,6 +154,7 @@ export default function BalanceView() {
 					<ActionButton
 						onClick={isAddingFunds ? handleConfirmAddFunds : handleAddFunds}
 						label={isAddingFunds ? 'Confirm' : 'Add Funds'}
+						className="min-w-full bg-white text-black text-xl font-normal py-4 px-8 rounded-full border-2 border-black shadow-[0_4px_8px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 active:scale-95 mb-4"
 					>
 					</ActionButton>
 				</div>
