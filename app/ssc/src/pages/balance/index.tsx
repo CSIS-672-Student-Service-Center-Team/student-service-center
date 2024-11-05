@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import { Input } from "@/components/ui/input"
 import { useRouter } from "next/router"
 import Header from "@/components/ui/pageHeader"
 import NavBar from "@/components/ui/navBar"
@@ -15,6 +14,7 @@ export default function BalanceView() {
 	const from = "balance" //	For routing
 	const [displayBalance, setDisplayBalance] = useState(0)
 	const [isAddingFunds, setIsAddingFunds] = useState(false)
+	const [addingFundsAnimation, setFundsAnimation] = useState(false)
 	const [additionalFunds, setAdditionalFunds] = useState("0.00")
 	const [inputLastKey, setInputLastKey] = useState("0")
 	const targetBalance = 123.99
@@ -30,12 +30,12 @@ export default function BalanceView() {
 		let parsed: number = 0;
 		if (e.target.value.length > additionalFunds.length) { // If we're adding to this
 			current += inputLastKey.replace(/[^0-9]/g, "");
-			parsed = parseFloat(current)/100;
+			parsed = parseFloat(current) / 100;
 		} else {
-			current = current.substring(0, current.length-1);
-			parsed = parseFloat(current)/100 || 0;
+			current = current.substring(0, current.length - 1);
+			parsed = parseFloat(current) / 100 || 0;
 		}
-		if (parsed < 1000 && parsed >= 0){
+		if (parsed < 1000 && parsed >= 0) {
 			setAdditionalFunds(parsed.toFixed(2));
 		}
 	}
@@ -62,13 +62,11 @@ export default function BalanceView() {
 	}
 
 	const handleAddFunds = () => {
-		setIsAddingFunds(true)
-		setTimeout(() => inputRef.current?.focus(), 500)
-	}
-
-	const shiftFocusToInput = () => {
-		console.log("Triggered");
-		inputRef.current?.focus();
+		setFundsAnimation(true)
+		setTimeout(() => {
+			setFundsAnimation(false)
+			setIsAddingFunds(true)}, 1000)
+		setTimeout(() => inputRef.current?.focus(), 1000)
 	}
 
 	const handleBackToBalance = () => {
@@ -103,44 +101,50 @@ export default function BalanceView() {
 				</div>
 				{isAddingFunds && (
 					<div className="flex flex-col items-center w-full max-w-xs mb-8 transition-all duration-500 ease-in-out">
-							<div className="flex items-center w-full">
+						<div className="flex items-center w-full">
 							<div className="w-1/5"></div>
-							<Label 
-							htmlFor='userInputFunds'
-							className="text-4xl">
-							<span>+</span></Label>
-							<input 
-							id="userInputFunds"
-							className="text-4xl w-1/2 text-center focus:outline-dotted focus:outline-zinc-300 focus:bg-zinc-50 focus:caret-slate-200" 
-							ref={inputRef}
-							type="number"
-							step="0.01"
-							min="0.01"
-							placeholder='0.00'
-							onChange={handleInputChanged}
-							onKeyDown={handleOnKeyDown}
-							value={additionalFunds}
+							<Label
+								htmlFor='userInputFunds'
+								className="text-4xl">
+								<span>+</span></Label>
+							<input
+								id="userInputFunds"
+								className="text-4xl w-1/2 text-center focus:outline-dotted focus:outline-zinc-300 focus:bg-zinc-50 focus:caret-slate-200"
+								ref={inputRef}
+								type="number"
+								step="0.01"
+								min="0.01"
+								placeholder='0.00'
+								onChange={handleInputChanged}
+								onKeyDown={handleOnKeyDown}
+								value={additionalFunds}
 							></input>
-							</div>
+						</div>
 						<div className="w-full h-px bg-gray-300 mb-4"></div>
 						<div className='flex items-center space-x-2'>
 							<div className="text-4xl font-bold">
-							<span 
-							id="calcSpan"
-							className='text-7xl'
-							>
-								${(displayBalance + parseFloat(additionalFunds || '0')).toFixed(2)}
-							</span>
+								<span
+									id="calcSpan"
+									className='text-7xl'
+								>
+									${(displayBalance + parseFloat(additionalFunds || '0')).toFixed(2)}
+								</span>
 							</div>
-					
+
 						</div>
 					</div>
 				)}
-				<ActionButton
-				onClick={isAddingFunds ? handleConfirmAddFunds : handleAddFunds}
-				label = {isAddingFunds ? 'Confirm' : 'Add Funds'}
+				<div
+					className={`${addingFundsAnimation ? 'transition-transform duration-1000 ease-in-out translate-y-40' : ''}`}
+
+					
 				>
-				</ActionButton>
+					<ActionButton
+						onClick={isAddingFunds ? handleConfirmAddFunds : handleAddFunds}
+						label={isAddingFunds ? 'Confirm' : 'Add Funds'}
+					>
+					</ActionButton>
+				</div>
 			</main>
 
 			<NavBar />
