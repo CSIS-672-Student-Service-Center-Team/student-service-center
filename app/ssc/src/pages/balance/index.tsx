@@ -12,6 +12,8 @@ import ActionButton from '@/components/ui/actionButton'
 export default function BalanceView() {
 	const router = useRouter()
 	const from = "balance" //	For routing
+	const animationDuration = 1000
+	const [yTranslation, setYTranslation] = useState(0)
 	const [displayBalance, setDisplayBalance] = useState(0)
 	const [isAddingFunds, setIsAddingFunds] = useState(false)
 	const [addingFundsAnimation, setFundsAnimation] = useState(false)
@@ -63,14 +65,22 @@ export default function BalanceView() {
 
 	const handleAddFunds = () => {
 		setFundsAnimation(true)
+		setYTranslation(40)
 		setTimeout(() => {
+			setIsAddingFunds(true)
+			setYTranslation(0)
 			setFundsAnimation(false)
-			setIsAddingFunds(true)}, 1000)
-		setTimeout(() => inputRef.current?.focus(), 1000)
+		}, animationDuration)
+		setTimeout(() => inputRef.current?.focus(), animationDuration)
 	}
 
 	const handleBackToBalance = () => {
+		setYTranslation(40)
 		setIsAddingFunds(false)
+		setFundsAnimation(true)
+		setTimeout(() => {
+			setFundsAnimation(false)
+		}, animationDuration)
 		setAdditionalFunds("0.00")
 	}
 
@@ -135,8 +145,7 @@ export default function BalanceView() {
 					</div>
 				)}
 				<div
-					className={`${addingFundsAnimation ? 'transition-transform duration-1000 ease-in-out translate-y-40' : ''}`}
-
+					className={`${addingFundsAnimation ? `transition-transform duration-${animationDuration} ease-in-out ` : ''} translate-y-${yTranslation}`}
 					
 				>
 					<ActionButton
