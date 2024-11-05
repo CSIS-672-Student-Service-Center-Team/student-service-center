@@ -134,23 +134,6 @@ export default function BalanceView() {
 							</div>
 					
 						</div>
-						{/* <div className="flex items-center space-x-2">
-							<Label htmlFor="userInputFunds" className='font-large'>
-								Add Funds :
-							</Label>
-							<Input
-								id="userInputFunds"
-								ref={inputRef}
-								type="number"
-								step="0.01"
-								min="0.01"
-								onChange={handleInputChanged}
-								onKeyDown={handleOnKeyDown}
-								value={additionalFunds}
-								className="text-center text-2xl mb-4"
-								placeholder="0.00"
-							/>
-						</div> */}
 					</div>
 				)}
 				<ActionButton
