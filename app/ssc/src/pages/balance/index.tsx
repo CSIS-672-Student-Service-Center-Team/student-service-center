@@ -45,7 +45,7 @@ export default function BalanceView() {
 	}
 
 	const animateBalance = (start: number, end: number) => {
-		const duration = 1000
+		const duration = 450
 		const steps = 60
 		const increment = (end - start) / steps
 		let current = start
@@ -64,6 +64,11 @@ export default function BalanceView() {
 	const handleAddFunds = () => {
 		setIsAddingFunds(true)
 		setTimeout(() => inputRef.current?.focus(), 500)
+	}
+
+	const shiftFocusToInput = () => {
+		console.log("Triggered");
+		inputRef.current?.focus();
 	}
 
 	const handleBackToBalance = () => {
@@ -92,24 +97,44 @@ export default function BalanceView() {
 			/>
 
 			<main className="flex-1 flex flex-col items-center px-4 pt-12 transition-all duration-500 ease-in-out">
-				<h2 className="text-2xl mb-8">Current Balance</h2>
+				<h2 className="text-4xl mb-8">Current Balance</h2>
 				<div className="text-6xl font-bold mb-12">
 					${displayBalance.toFixed(2)}
 				</div>
-
 				{isAddingFunds && (
 					<div className="flex flex-col items-center w-full max-w-xs mb-8 transition-all duration-500 ease-in-out">
-						<div className="text-4xl mb-4">+${parseFloat(additionalFunds).toFixed(2)}</div>
+							<div className="flex items-center w-full">
+							<div className="w-1/5"></div>
+							<Label 
+							htmlFor='userInputFunds'
+							className="text-4xl">
+							<span>+</span></Label>
+							<input 
+							id="userInputFunds"
+							className="text-4xl w-1/2 text-center focus:outline-dotted focus:outline-zinc-300 focus:bg-zinc-50 focus:caret-slate-200" 
+							ref={inputRef}
+							type="number"
+							step="0.01"
+							min="0.01"
+							placeholder='0.00'
+							onChange={handleInputChanged}
+							onKeyDown={handleOnKeyDown}
+							value={additionalFunds}
+							></input>
+							</div>
 						<div className="w-full h-px bg-gray-300 mb-4"></div>
 						<div className='flex items-center space-x-2'>
 							<div className="text-4xl font-bold">
-							<Label htmlFor='calcSpan'>New Total</Label>
-							<span id="calcSpan">
+							<span 
+							id="calcSpan"
+							className='text-7xl'
+							>
 								${(displayBalance + parseFloat(additionalFunds || '0')).toFixed(2)}
 							</span>
 							</div>
+					
 						</div>
-						<div className="flex items-center space-x-2">
+						{/* <div className="flex items-center space-x-2">
 							<Label htmlFor="userInputFunds" className='font-large'>
 								Add Funds :
 							</Label>
@@ -125,7 +150,7 @@ export default function BalanceView() {
 								className="text-center text-2xl mb-4"
 								placeholder="0.00"
 							/>
-						</div>
+						</div> */}
 					</div>
 				)}
 				<ActionButton
