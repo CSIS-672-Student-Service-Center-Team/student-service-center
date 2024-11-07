@@ -13,7 +13,7 @@ export default function BalanceView() {
 	const router = useRouter()
 	const from = "balance" //	For routing
 	const animationDuration = 1000
-	const [balanceAnimationComplete,setBalanceAnimationComplete] = useState(false);
+	const [balanceAnimationComplete, setBalanceAnimationComplete] = useState(false);
 	const [yTranslation, setYTranslation] = useState(0)
 	const [displayBalance, setDisplayBalance] = useState(0)
 	const [isAddingFunds, setIsAddingFunds] = useState(false)
@@ -25,7 +25,10 @@ export default function BalanceView() {
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	useEffect(() => {
-		animateBalance(0, targetBalance)
+		animateBalance(0, targetBalance);
+	},[])
+
+	useEffect(() => {
 		inputRef.current?.focus()
 	}, [isAddingFunds])
 
@@ -50,14 +53,14 @@ export default function BalanceView() {
 	}
 
 	const animateBalance = (start: number, end: number) => {
-		if(balanceAnimationComplete) {
+		if (balanceAnimationComplete) {
 			return;
 		}
 		const duration = 450
 		const steps = 60
 		const increment = (end - start) / steps
 		let current = start
-		
+
 		const timer = setInterval(() => {
 			current += increment
 			if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
@@ -72,12 +75,13 @@ export default function BalanceView() {
 
 	const handleAddFunds = () => {
 		setFundsAnimation(true)
-		setYTranslation(40)
+		setYTranslation(160)
 		setTimeout(() => {
 			setIsAddingFunds(true)
 			setYTranslation(0)
 			setFundsAnimation(false)
 		}, animationDuration)
+		console.log("animate");
 	}
 
 	const handleBackToBalance = () => {
@@ -148,13 +152,14 @@ export default function BalanceView() {
 					</div>
 				)}
 				<div
-					className={`${addingFundsAnimation ? `transition-transform duration-${animationDuration} ease-in-out ` : ''} ${yDown ? '': '-'}translate-y-${yTranslation}`}
-					
+					className={`${addingFundsAnimation ? `transition-transform duration-${animationDuration} ease-in-out` : ''}`}
+					style={{
+						transform: `translateY(${yTranslation}px)`,
+					}}
 				>
 					<ActionButton
 						onClick={isAddingFunds ? handleConfirmAddFunds : handleAddFunds}
 						label={isAddingFunds ? 'Confirm' : 'Add Funds'}
-						className="min-w-full bg-white text-black text-xl font-normal py-4 px-8 rounded-full border-2 border-black shadow-[0_4px_8px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 active:scale-95 mb-4"
 					>
 					</ActionButton>
 				</div>
