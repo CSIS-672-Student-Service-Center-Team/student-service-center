@@ -419,6 +419,19 @@ export default function Checkout() {
             <Header title="Checkout" isHomeScreen={false} />
 
             <main className="flex-1 p-4 space-y-6 pt-20">
+                <div 
+                    className="">
+                    <span
+                        className='text-2xl'
+                    >
+                    Charge Amount:
+                    </span>
+                    <span
+                        className='text-5xl'
+                    >
+                    ${price.toFixed(2)}
+                    </span>
+                </div>
                 <ProgressBar progress={calculateProgress()} />
 
                 {step === 1 && (
