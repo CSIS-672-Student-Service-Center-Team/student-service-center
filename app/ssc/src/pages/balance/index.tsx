@@ -12,7 +12,7 @@ import ActionButton from '@/components/ui/actionButton'
 export default function BalanceView() {
 	const router = useRouter()
 	const from = "balance" //	For routing
-	const animationDuration = 1000
+	const animationDuration = 400
 	const [balanceAnimationComplete, setBalanceAnimationComplete] = useState(false);
 	const [yTranslation, setYTranslation] = useState(0)
 	const [displayBalance, setDisplayBalance] = useState(0)
