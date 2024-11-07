@@ -6,8 +6,6 @@ import Header from "@/components/ui/pageHeader"
 import NavBar from "@/components/ui/navBar"
 import { Label } from '@/components/ui/label'
 import { CheckoutData } from '@/pages/checkout'
-
-import ActionButton from '@/components/ui/actionButton'
 import { Button } from '@/components/ui/button'
 import { CheckCircle } from 'lucide-react'
 
@@ -15,6 +13,7 @@ export default function BalanceView() {
 	const router = useRouter()
 	const from = "balance" //	For routing
 	const animationDuration = 400
+	const minimumAmount = 5
 	const [balanceAnimationComplete, setBalanceAnimationComplete] = useState(false);
 	const [yTranslation, setYTranslation] = useState(0)
 	const [displayBalance, setDisplayBalance] = useState(0)
@@ -23,12 +22,13 @@ export default function BalanceView() {
 	const [additionalFunds, setAdditionalFunds] = useState("0.00")
 	const [inputLastKey, setInputLastKey] = useState("0")
 	const [yDown, setYDown] = useState(true)
+	const [toolTip, setToolTip] = useState(false)
 	const targetBalance = 123.99
 	const inputRef = useRef<HTMLInputElement>(null)
 
 	useEffect(() => {
 		animateBalance(0, targetBalance);
-	},[])
+	}, [])
 
 	useEffect(() => {
 		inputRef.current?.focus()
@@ -48,6 +48,13 @@ export default function BalanceView() {
 		if (parsed < 1000 && parsed >= 0) {
 			setAdditionalFunds(parsed.toFixed(2));
 		}
+	}
+
+	const showTooltip = () => {
+		setToolTip(true)
+		setTimeout(()=>{
+			setToolTip(false)
+		},1000)
 	}
 
 	const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -138,6 +145,24 @@ export default function BalanceView() {
 								onKeyDown={handleOnKeyDown}
 								value={additionalFunds}
 							></input>
+							{toolTip && (
+								<div
+									style={{
+										position: 'absolute',
+										top: '100%',
+										left: 0,
+										marginTop: '4px',
+										padding: '8px',
+										backgroundColor: 'rgba(0, 0, 0, 0.75)',
+										color: 'white',
+										borderRadius: '4px',
+										whiteSpace: 'nowrap',
+										zIndex: 10,
+									}}
+								>
+									Amount must be at least {minimumAmount}
+								</div>
+							)}
 						</div>
 						<div className="w-full h-px bg-gray-300 mb-4"></div>
 						<div className='flex items-center space-x-2'>
@@ -159,14 +184,14 @@ export default function BalanceView() {
 						transform: `translateY(${yTranslation}px)`,
 					}}
 				>
-					<Button 
+					<Button
 						onClick={isAddingFunds ? handleConfirmAddFunds : handleAddFunds}
-						className="bg-[#841414] hover:bg-[#9a1818] text-white flex items-center justify-center w-60 h-20 text-4xl"
+						className="bg-[#841414] hover:bg-[#9a1818] text-white flex items-center justify-center w-60 h-20 text-2xl"
 					>
-						{isAddingFunds && (<CheckCircle size={48}/>)}
-					<span>
-						{isAddingFunds ? 'Confirm' : 'Add Funds'}
-					</span></Button>
+						{isAddingFunds && (<CheckCircle />)}
+						<span>
+							{isAddingFunds ? 'Confirm' : 'Add Funds'}
+						</span></Button>
 				</div>
 			</main>
 
