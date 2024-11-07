@@ -1,8 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
-import { cn } from "@/lib/utils"
+import React, {useState} from 'react'
+import {ChevronDown} from 'lucide-react'
+import {cn} from "@/lib/utils"
 
 interface AccordionItemProps {
     value: string
@@ -11,22 +11,29 @@ interface AccordionItemProps {
 }
 
 interface AccordionProps {
-    type?: 'single' | 'multiple'
-    collapsible?: boolean
-    className?: string
-    children: React.ReactNode
+    type?: 'single' | 'multiple',
+    collapsible?: boolean,
+    className?: string,
+    children: React.ReactNode,
+    value?: string[],
+    onValueChange?: (value: (((prevState: string[]) => string[]) | string[])) => void
 }
 
 const AccordionContext = React.createContext<{
     expanded: string[]
     toggle: (value: string) => void
-}>({ expanded: [], toggle: () => {} })
+}>({
+    expanded: [], toggle: () => {
+    }
+})
 
 export function Accordion({
                               type = 'single',
                               collapsible = true,
                               className,
-                              children
+                              children,
+                              value,
+                              onValueChange
                           }: AccordionProps) {
     const [expanded, setExpanded] = useState<string[]>([])
 
@@ -43,7 +50,7 @@ export function Accordion({
     }
 
     return (
-        <AccordionContext.Provider value={{ expanded, toggle }}>
+        <AccordionContext.Provider value={{expanded, toggle}}>
             <div className={cn('space-y-2', className)}>
                 {children}
             </div>
@@ -51,8 +58,8 @@ export function Accordion({
     )
 }
 
-export function AccordionItem({ value, trigger, children }: AccordionItemProps) {
-    const { expanded, toggle } = React.useContext(AccordionContext)
+export function AccordionItem({value, trigger, children}: AccordionItemProps) {
+    const {expanded, toggle} = React.useContext(AccordionContext)
     const isExpanded = expanded.includes(value)
 
     return (
@@ -79,7 +86,7 @@ export function AccordionItem({ value, trigger, children }: AccordionItemProps) 
     )
 }
 
-export function AccordionTrigger({ children, className }: { children: React.ReactNode; className?: string }) {
+export function AccordionTrigger({children, className}: { children: React.ReactNode; className?: string }) {
     return (
         <span className={cn("text-sm font-medium", className)}>
       {children}
@@ -87,6 +94,6 @@ export function AccordionTrigger({ children, className }: { children: React.Reac
     )
 }
 
-export function AccordionContent({ children }: { children: React.ReactNode }) {
+export function AccordionContent({children}: { children: React.ReactNode }) {
     return <div className="text-sm">{children}</div>
 }
