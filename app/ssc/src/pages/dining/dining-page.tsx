@@ -1,11 +1,11 @@
 'use client'
 
 import React from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {Button} from "@/components/ui/button"
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
-import { useRouter } from 'next/navigation'
+import {useRouter} from 'next/navigation'
 
 interface MenuItem {
     name: string
@@ -23,35 +23,35 @@ export default function DiningPage() {
         {
             title: "Breakfast",
             items: [
-                { name: "Scrambled Eggs" },
-                { name: "Pancakes" },
-                { name: "Fresh Fruit" },
-                { name: "Yogurt" }
+                {name: "Scrambled Eggs"},
+                {name: "Pancakes"},
+                {name: "Fresh Fruit"},
+                {name: "Yogurt"}
             ]
         },
         {
             title: "Lunch",
             items: [
-                { name: "Salad Bar" },
-                { name: "Sandwich Bar" },
-                { name: "Cheeseburger & Fries" },
-                { name: "Rice & Pulled Pork" }
+                {name: "Salad Bar"},
+                {name: "Sandwich Bar"},
+                {name: "Cheeseburger & Fries"},
+                {name: "Rice & Pulled Pork"}
             ]
         },
         {
             title: "Dinner",
             items: [
-                { name: "Salad Bar" },
-                { name: "Pasta with Red Sauce" },
-                { name: "Chicken Parm" },
-                { name: "Beef Meatballs" }
+                {name: "Salad Bar"},
+                {name: "Pasta with Red Sauce"},
+                {name: "Chicken Parm"},
+                {name: "Beef Meatballs"}
             ]
         }
     ]
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
-            <Header title="Dining" isHomeScreen={false} />
+            <Header title="Dining" isHomeScreen={false}/>
 
             <main className="flex-1 p-4 space-y-6 pt-20">
                 <Card>
@@ -79,7 +79,7 @@ export default function DiningPage() {
                         className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
                         onClick={() => router.push('/dining/weekly-meals')}
                     >
-                        Weekly Meals
+                        Weekly Menu
                     </Button>
                     <Button
                         className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
@@ -90,7 +90,7 @@ export default function DiningPage() {
                 </div>
             </main>
 
-            <BottomNavBar />
+            <BottomNavBar/>
         </div>
     )
 }
