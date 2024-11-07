@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
@@ -11,62 +13,24 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { CheckoutData } from "@/pages/checkout";
-import {
-  CalendarIcon,
-  CreditCardIcon,
-  TicketIcon,
-  CheckCircleIcon,
-} from "lucide-react";
-
-interface ViewToggleProps {
-  activeView: "outstanding" | "paid";
-  onViewChange: (view: "outstanding" | "paid") => void;
-}
-
-const ViewToggle: React.FC<ViewToggleProps> = ({
-  activeView,
-  onViewChange,
-}) => (
-  <div className="flex rounded-lg overflow-hidden border border-[#841414] mb-6">
-    <button
-      onClick={() => onViewChange("outstanding")}
-      className={`flex-1 py-2 px-6 text-lg ${
-        activeView === "outstanding"
-          ? "bg-[#841414] text-white"
-          : "bg-white text-[#841414]"
-      }`}
-    >
-      Outstanding
-    </button>
-    <button
-      onClick={() => onViewChange("paid")}
-      className={`flex-1 py-2 px-6 text-lg ${
-        activeView === "paid"
-          ? "bg-[#841414] text-white"
-          : "bg-white text-[#841414]"
-      }`}
-    >
-      Paid
-    </button>
-  </div>
-);
+import { CalendarIcon, CreditCardIcon, TicketIcon } from "lucide-react";
 
 interface TicketEntryProps {
   ticketNumber: string;
   issueDate: string;
   amount: number;
-  isPaid?: boolean;
-  paidDate?: string;
+  isSelected: boolean;
+  onSelect: () => void;
 }
 
 const TicketEntry: React.FC<TicketEntryProps> = ({
   ticketNumber,
   issueDate,
   amount,
-  isPaid = false,
-  paidDate,
+  isSelected,
+  onSelect,
 }) => (
-  <Card className="mb-4">
+  <Card className={`mb-4 ${isSelected ? "border-[#841414] border-2" : ""}`}>
     <CardHeader>
       <CardTitle className="flex items-center justify-between">
         <span className="flex items-center">
@@ -81,21 +45,24 @@ const TicketEntry: React.FC<TicketEntryProps> = ({
         <CalendarIcon className="mr-2 h-4 w-4" />
         Issue Date: {issueDate}
       </div>
-      {isPaid && (
-        <div className="flex items-center text-sm text-green-600 mt-2">
-          <CheckCircleIcon className="mr-2 h-4 w-4" />
-          Paid on: {paidDate}
-        </div>
-      )}
     </CardContent>
+    <CardFooter>
+      <Button
+        variant={isSelected ? "default" : "outline"}
+        className={`w-full ${
+          isSelected ? "bg-[#841414] text-white hover:bg-[#9a1818]" : ""
+        }`}
+        onClick={onSelect}
+      >
+        {isSelected ? "Deselect" : "Select"}
+      </Button>
+    </CardFooter>
   </Card>
 );
 
 export default function ParkingTicketsPage() {
   const router = useRouter();
-  const [activeView, setActiveView] = useState<"outstanding" | "paid">(
-    "outstanding"
-  );
+  const [selectedTickets, setSelectedTickets] = useState<string[]>([]);
 
   const outstandingTickets = [
     {
@@ -110,25 +77,9 @@ export default function ParkingTicketsPage() {
     },
   ];
 
-  const paidTickets = [
-    {
-      ticketNumber: "11111",
-      issueDate: "12/01/2023",
-      amount: 25,
-      paidDate: "12/15/2023",
-    },
-    {
-      ticketNumber: "22222",
-      issueDate: "11/15/2023",
-      amount: 30,
-      paidDate: "11/30/2023",
-    },
-  ];
-
-  const totalAmount = outstandingTickets.reduce(
-    (sum, ticket) => sum + ticket.amount,
-    0
-  );
+  const totalAmount = outstandingTickets
+    .filter((ticket) => selectedTickets.includes(ticket.ticketNumber))
+    .reduce((sum, ticket) => sum + ticket.amount, 0);
 
   const handlePayTicket = () => {
     let checkoutData: CheckoutData = {
@@ -143,68 +94,76 @@ export default function ParkingTicketsPage() {
     router.push(`/checkout?price=${totalAmount}&type=parking&from=parking`);
   };
 
+  const handleSelectTicket = (ticketNumber: string) => {
+    setSelectedTickets((prev) =>
+      prev.includes(ticketNumber)
+        ? prev.filter((t) => t !== ticketNumber)
+        : [...prev, ticketNumber]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedTickets.length === outstandingTickets.length) {
+      setSelectedTickets([]);
+    } else {
+      setSelectedTickets(
+        outstandingTickets.map((ticket) => ticket.ticketNumber)
+      );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header title="Parking Tickets" />
 
-      <main className="flex-1 container max-w-md mx-auto p-4 mb-20">
-        <ViewToggle activeView={activeView} onViewChange={setActiveView} />
+      <main className="flex-1 container max-w-md mx-auto p-4 mb-20 pt-20">
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          Outstanding Tickets
+        </h2>
 
-        {activeView === "outstanding" ? (
-          <>
-            <h2 className="text-2xl font-semibold text-center mb-6">
-              Outstanding Tickets
-            </h2>
+        <Button
+          variant="outline"
+          className="w-full mb-4"
+          onClick={handleSelectAll}
+        >
+          {selectedTickets.length === outstandingTickets.length
+            ? "Deselect All"
+            : "Select All"}
+        </Button>
 
-            {outstandingTickets.map((ticket) => (
-              <TicketEntry
-                key={ticket.ticketNumber}
-                ticketNumber={ticket.ticketNumber}
-                issueDate={ticket.issueDate}
-                amount={ticket.amount}
-              />
-            ))}
+        {outstandingTickets.map((ticket) => (
+          <TicketEntry
+            key={ticket.ticketNumber}
+            ticketNumber={ticket.ticketNumber}
+            issueDate={ticket.issueDate}
+            amount={ticket.amount}
+            isSelected={selectedTickets.includes(ticket.ticketNumber)}
+            onSelect={() => handleSelectTicket(ticket.ticketNumber)}
+          />
+        ))}
 
-            <div className="mt-8">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Total Amount Due</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-3xl font-bold text-center">
-                    ${totalAmount.toFixed(2)}
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button
-                    className="w-full bg-[#841414] hover:bg-[#9a1818]"
-                    onClick={handlePayTicket}
-                  >
-                    <CreditCardIcon className="mr-2 h-4 w-4" />
-                    Pay Parking Tickets
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </>
-        ) : (
-          <>
-            <h2 className="text-2xl font-semibold text-center mb-6">
-              Paid Tickets History
-            </h2>
-
-            {paidTickets.map((ticket) => (
-              <TicketEntry
-                key={ticket.ticketNumber}
-                ticketNumber={ticket.ticketNumber}
-                issueDate={ticket.issueDate}
-                amount={ticket.amount}
-                isPaid={true}
-                paidDate={ticket.paidDate}
-              />
-            ))}
-          </>
-        )}
+        <div className="mt-8">
+          <Card>
+            <CardHeader>
+              <CardTitle>Total Amount Due</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-3xl font-bold text-center">
+                ${totalAmount.toFixed(2)}
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Button
+                className="w-full bg-[#841414] hover:bg-[#9a1818]"
+                onClick={handlePayTicket}
+                disabled={selectedTickets.length === 0}
+              >
+                <CreditCardIcon className="mr-2 h-4 w-4" />
+                Pay Selected Tickets
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
       </main>
 
       <NavBar />
