@@ -1,93 +1,97 @@
 "use client";
-import {useRouter} from "next/navigation";
+
+import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
-import ParkingPass from "@/components/ui/parkingPass";
-import ParkingPassButton from "@/components/ui/actionButton";
-import {cn} from "@/lib/utils";
-import {Car, Ticket} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CalendarIcon, PlusCircle, ArrowLeftCircle } from "lucide-react";
+
+interface ParkingPassProps {
+  type: string;
+  status: "Active" | "Expired";
+  expirationDate: string;
+}
+
+const ParkingPass: React.FC<ParkingPassProps> = ({
+  type,
+  status,
+  expirationDate,
+}) => (
+  <Card className="mb-4 overflow-hidden">
+    <CardHeader className="bg-[#841414] text-white p-4">
+      <CardTitle className="flex justify-between items-center">
+        <span>{type}</span>
+        <Badge variant={status === "Active" ? "default" : "secondary"}>
+          {status}
+        </Badge>
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="p-4">
+      <div className="flex items-center text-sm text-gray-600">
+        <CalendarIcon className="mr-2 h-4 w-4" />
+        Expires: {expirationDate}
+      </div>
+    </CardContent>
+  </Card>
+);
 
 export default function ParkingPassPage() {
-    const router = useRouter();
+  const router = useRouter();
 
-    const handleGetPass = () => {
-        console.log("Get a parking pass");
-        router.push("/parking/getPass");
-    };
+  const handleGetPass = () => {
+    console.log("Get a parking pass");
+    router.push("/parking/getPass");
+  };
 
-    const handleReturnPass = () => {
-        console.log("Return a parking pass");
-        router.push("/parking/returnPass");
-    };
-    const ButtonWrapper = ({children, onClick}: { children: React.ReactNode, onClick: () => void }) => (
-        <button
-            onClick={onClick}
-            className={cn(
-                "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl",
-                "shadow-lg hover:shadow-xl transition-shadow",
-                "flex flex-col items-center justify-center gap-2",
-                "p-4"
-            )}
-        >
-            {children}
-        </button>
-    )
+  const handleReturnPass = () => {
+    console.log("Return a parking pass");
+    router.push("/parking/returnPass");
+  };
 
-    return (
-        <div className="min-h-screen bg-white flex flex-col">
-            <Header title="Parking Pass"/>
+  return (
+    <div className="min-h-screen bg-white flex flex-col">
+      <Header title="Parking Pass" />
 
-            <main className="flex-1 flex flex-col p-6 mb-20">
-                <h2 className="text-2xl font-bold mb-6">Manage your parking passes:</h2>
+      <main className="flex-1 container max-w-4xl mx-auto px-4 py-8 mb-20 pt-20">
+        <h2 className="text-3xl font-bold mb-6 text-[#841414]">
+          Manage Your Parking Passes
+        </h2>
 
-                <ParkingPass
-                    type="Fall Pass"
-                    status="Active"
-                    expirationDate="12/20/2024"
-                />
-                <ParkingPass
-                    type="Summer Pass"
-                    status="Expired"
-                    expirationDate="06/20/2024"
-                />
-
-                <div className="flex flex-col gap-6">
-                    <ButtonWrapper onClick={() => handleGetPass()}>
-                        {/* Getting a Parking Pass Icon */}
-                        <svg
-                            className="w-12 h-12 text-[#8B1A1A]"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
-                            <text x="12" y="12" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">P
-                            </text>
-                            <line x1="12" y1="17" x2="12" y2="20" stroke="white" strokeWidth="2"/>
-                            <line x1="10" y1="18.5" x2="14" y2="18.5" stroke="white" strokeWidth="2"/>
-                        </svg>
-                        <span className="text-lg font-medium text-[#8B1A1A]">Get A Parking Pass</span>
-                    </ButtonWrapper>
-
-                    <ButtonWrapper onClick={() => handleReturnPass()}>
-                        {/* Returning a Parking Pass Icon */}
-                        <svg
-                            className="w-12 h-12 text-[#8B1A1A]"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
-                            <text x="12" y="12" textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">P
-                            </text>
-                            <path d="M12 17 L12 21 L10 19" stroke="white" strokeWidth="2" fill="none"/>
-                        </svg>
-                        <span className="text-lg font-medium text-[#8B1A1A]">Return A Parking Pass</span>
-                    </ButtonWrapper>
-                </div>
-            </main>
-
-            <NavBar/>
+        <div className="grid gap-6 md:grid-cols-2">
+          <ParkingPass
+            type="Fall Pass"
+            status="Active"
+            expirationDate="12/20/2024"
+          />
+          <ParkingPass
+            type="Summer Pass"
+            status="Expired"
+            expirationDate="06/20/2024"
+          />
         </div>
-    );
+
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <Button
+            onClick={handleGetPass}
+            className="bg-[#841414] hover:bg-[#9a1818] text-white flex items-center justify-center"
+          >
+            <PlusCircle className="mr-2 h-4 w-4" />
+            <span>Get A Parking Pass</span>
+          </Button>
+          <Button
+            onClick={handleReturnPass}
+            variant="outline"
+            className="border-[#841414] text-[#841414] hover:bg-[#841414] hover:text-white flex items-center justify-center"
+          >
+            <ArrowLeftCircle className="mr-2 h-4 w-4" />
+            <span>Return A Parking Pass</span>
+          </Button>
+        </div>
+      </main>
+
+      <NavBar />
+    </div>
+  );
 }
