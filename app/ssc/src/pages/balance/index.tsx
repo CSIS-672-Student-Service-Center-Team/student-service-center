@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label'
 import { CheckoutData } from '@/pages/checkout'
 
 import ActionButton from '@/components/ui/actionButton'
+import { Button } from '@/components/ui/button'
+import { CheckCircle } from 'lucide-react'
 
 export default function BalanceView() {
 	const router = useRouter()
@@ -75,7 +77,7 @@ export default function BalanceView() {
 
 	const handleAddFunds = () => {
 		setFundsAnimation(true)
-		setYTranslation(160)
+		setYTranslation(167)
 		setTimeout(() => {
 			setIsAddingFunds(true)
 			setYTranslation(0)
@@ -157,11 +159,14 @@ export default function BalanceView() {
 						transform: `translateY(${yTranslation}px)`,
 					}}
 				>
-					<ActionButton
+					<Button 
 						onClick={isAddingFunds ? handleConfirmAddFunds : handleAddFunds}
-						label={isAddingFunds ? 'Confirm' : 'Add Funds'}
+						className="bg-[#841414] hover:bg-[#9a1818] text-white flex items-center justify-center w-60 h-20 text-4xl"
 					>
-					</ActionButton>
+						{isAddingFunds && (<CheckCircle size={48}/>)}
+					<span>
+						{isAddingFunds ? 'Confirm' : 'Add Funds'}
+					</span></Button>
 				</div>
 			</main>
 
