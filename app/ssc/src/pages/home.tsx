@@ -46,7 +46,7 @@ export default function HomeScreen({onLogout}: { onLogout: () => void }) {
                         <span className="text-lg font-medium text-[#8B1A1A]">Parking</span>
                     </ButtonWrapper>
 
-                    <ButtonWrapper onClick={() => handleNavigation("/dining")}>
+                    <ButtonWrapper onClick={() => handleNavigation("/dining/dining-page")}>
                         <Utensils className="w-12 h-12 text-[#8B1A1A]"/>
                         <span className="text-lg font-medium text-[#8B1A1A]">Dining</span>
                     </ButtonWrapper>

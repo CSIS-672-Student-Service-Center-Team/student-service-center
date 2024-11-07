@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
 import { useRouter } from 'next/navigation'
-import { CreditCard } from 'lucide-react'
+import { CreditCard, Check } from 'lucide-react'
 
 interface MealPlanOption {
   id: string
@@ -54,7 +54,7 @@ export default function OfferedMealPlansPage() {
       <div className="flex flex-col min-h-screen bg-gray-50">
         <Header title="Meal Plans" isHomeScreen={false} />
 
-        <main className="flex-1 p-4 space-y-6 pt-16">
+        <main className="flex-1 p-4 space-y-6 pt-20 pb-24">
           <Card className="bg-white shadow-sm border">
             <CardContent className="p-4">
               <h2 className="text-[#8B1A1A] font-semibold text-lg mb-2">Your Current Meal Plan</h2>
@@ -63,39 +63,40 @@ export default function OfferedMealPlansPage() {
             </CardContent>
           </Card>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4">
             {mealPlans.map((plan) => (
-                <Card key={plan.id} className="bg-[#8B1A1A] text-white">
-                  <CardContent className="p-4 flex flex-col h-full">
-                    <div className="mb-4">
-                      <h3 className="text-lg font-semibold">Meals</h3>
-                      <p className="text-2xl font-bold">${getPrice(plan).toFixed(2)}</p>
-                    </div>
-
-                    <div className="flex items-center mb-4">
-                      <CreditCard className="w-5 h-5 mr-2" />
-                      <span>{plan.mealsPerWeek} Meals Per Week</span>
+                <Card key={plan.id} className="bg-[#8B1A1A] text-white w-full">
+                  <CardContent className="p-4">
+                    <div className="flex justify-between items-center mb-4">
+                      <div>
+                        <h3 className="text-lg font-semibold">Meals</h3>
+                        <p className="text-2xl font-bold">${getPrice(plan).toFixed(2)}</p>
+                      </div>
+                      <div className="flex items-center">
+                        <CreditCard className="w-5 h-5 mr-2" />
+                        <span>{plan.mealsPerWeek} Meals Per Week</span>
+                      </div>
                     </div>
 
                     <div className="flex mb-4 bg-[#6B1414] rounded-lg p-1">
                       <Button
                           variant="ghost"
-                          className={`flex-1 ${selectedTypes[plan.id] === 'Year' ? 'bg-[#98D8AA] text-black' : 'text-white'}`}
+                          className={`flex-1 ${selectedTypes[plan.id] === 'Year' ? 'bg-[#F0E68C] text-black' : 'text-white'}`}
                           onClick={() => handleTypeChange(plan.id, 'Year')}
                       >
-                        Year
+                        Year {selectedTypes[plan.id] === 'Year' && <Check className="ml-1 h-4 w-4" />}
                       </Button>
                       <Button
                           variant="ghost"
-                          className={`flex-1 ${selectedTypes[plan.id] === 'Semester' ? 'bg-[#98D8AA] text-black' : 'text-white'}`}
+                          className={`flex-1 ${selectedTypes[plan.id] === 'Semester' ? 'bg-[#F0E68C] text-black' : 'text-white'}`}
                           onClick={() => handleTypeChange(plan.id, 'Semester')}
                       >
-                        Semester
+                        Semester {selectedTypes[plan.id] === 'Semester' && <Check className="ml-1 h-4 w-4" />}
                       </Button>
                     </div>
 
                     <Button
-                        className="mt-auto bg-[#98D8AA] hover:bg-[#98D8AA]/90 text-black"
+                        className="w-full bg-[#F0E68C] hover:bg-[#F0E68C]/90 text-black"
                         onClick={() => handleCheckout(plan)}
                     >
                       Checkout

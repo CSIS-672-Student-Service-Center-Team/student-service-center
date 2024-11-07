@@ -53,7 +53,7 @@ export default function DiningPage() {
         <div className="flex flex-col min-h-screen bg-gray-50">
             <Header title="Dining" isHomeScreen={false} />
 
-            <main className="flex-1 p-4 space-y-6 pt-16">
+            <main className="flex-1 p-4 space-y-6 pt-20">
                 <Card>
                     <CardHeader>
                         <CardTitle>Today&apos;s Meals</CardTitle>
