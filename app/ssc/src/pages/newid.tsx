@@ -7,10 +7,11 @@ import Header from "@/components/ui/pageHeader";
 import BottomNavBar from "@/components/ui/navBar";
 import IdCard from "@/components/ui/idCard";
 import { Button } from "@/components/ui/button";
-import {CheckoutData} from "@/pages/checkout"
+import { Input } from "@/components/ui/input";
 
 const NewStudentIDPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -19,6 +20,7 @@ const NewStudentIDPage: React.FC = () => {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
+      setUploadedFileName(file.name);
     }
   };
 
@@ -27,36 +29,33 @@ const NewStudentIDPage: React.FC = () => {
   };
 
   const handleContinue = () => {
-    // Add navigation logic here
-    let checkoutData: CheckoutData =  {
-      payment: {
-        cardName: "",
-        cardNumber: "",
-        expDate: "",
-        csv: ""
-      }
+    if (selectedImage) {
+      router.push(
+        `/newid-pickup-delivery?photoUrl=${encodeURIComponent(selectedImage)}`
+      );
+    } else {
+      router.push("/newid-pickup-delivery");
     }
-    sessionStorage.setItem('checkoutData', JSON.stringify(checkoutData));
-    console.log("Continuing to next page...");
-    router.push('/checkout?price=25.00&type=id&from=id')
-    // router.push('/next-page');
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      <Header title="New Student ID" />
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header title="New Student ID" isHomeScreen={false} />
 
-      <main className="flex-grow p-4 space-y-6 pt-16">
-        <IdCard
-          name="John Doe"
-          idNumber="#123456789"
-          email="johndoe@cofc.edu"
-          photoUrl={selectedImage || "/ssc-logo.png"}
-        />
+      <main className="flex-grow p-4 space-y-6 pt-20 pb-24">
+        <div className="w-full max-w-md mx-auto">
+          <IdCard
+            name="John Doe"
+            idNumber="#123456789"
+            email="johndoe@cofc.edu"
+            photoUrl={selectedImage || "/ssc-logo.png"}
+          />
+        </div>
 
-        <div className="flex flex-col gap-6">
-          <div className="flex justify-center">
-            <input
+        <div className="space-y-4">
+          <div className="flex flex-col items-center gap-4">
+            <Input
+              id="photo-upload"
               type="file"
               ref={fileInputRef}
               accept="image/*"
@@ -66,23 +65,28 @@ const NewStudentIDPage: React.FC = () => {
             <Button
               onClick={handleChooseImage}
               variant="outline"
-              className="flex items-center gap-2 px-6 py-3 rounded-full border-2"
+              className="w-full max-w-md py-6 text-xl font-medium bg-white hover:bg-gray-100 text-[#841414] rounded-full border-2 border-[#841414] transition-colors"
             >
-              <ImageIcon className="w-5 h-5" />
+              <ImageIcon className="w-5 h-5 mr-2" />
               Choose From Library
             </Button>
+            {uploadedFileName && (
+              <span className="text-sm text-gray-600 truncate max-w-[300px]">
+                {uploadedFileName}
+              </span>
+            )}
           </div>
 
-          {selectedImage && (
-            <div className="flex justify-center items-center">
-              <Button
-                onClick={handleContinue}
-                className="w-[200px] py-6 text-lg font-medium bg-green-100 hover:bg-green-200 text-green-800 rounded-full text-center"
-              >
-                Continue
-              </Button>
-            </div>
-          )}
+          <div className="w-full max-w-md mx-auto h-16 rounded-full bg-[#841414] hover:bg-[#9a1818] transition-colors overflow-hidden">
+            <button
+              onClick={handleContinue}
+              className="w-full h-full flex items-center justify-center text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#841414]"
+            >
+              {selectedImage
+                ? "Continue with New Photo"
+                : "Continue with Current Photo"}
+            </button>
+          </div>
         </div>
       </main>
 
