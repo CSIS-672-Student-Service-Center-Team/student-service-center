@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label"
 import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
 import { useRouter } from "next/router"
+import ProgressBar from "@/components/ui/ProgressBar"
 
 export interface CheckoutData {
     shipping?: {
@@ -114,11 +115,36 @@ export default function Checkout() {
         router.replace({
             pathname: `/confirmation`,
             query: { amount: price, confirmationNumber: "#######", fromURL: `${fromURL}` }
-        });// need to get around the use of router.push
+        });
+    }
+
+    const calculateProgress = () => {
+        return (step / 4) * 100;
+    }
+
+    const formatCreditCard = (value: string) => {
+        const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+        const matches = v.match(/\d{4,16}/g);
+        const match = matches && matches[0] || ''
+        const parts = []
+
+        for (let i = 0, len = match.length; i < len; i += 4) {
+            parts.push(match.substring(i, i + 4))
+        }
+
+        if (parts.length) {
+            return parts.join(' ')
+        } else {
+            return value
+        }
+    }
+
+    const handleCreditCardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const formattedValue = formatCreditCard(e.target.value)
+        handleInputChange('payment', 'cardNumber', formattedValue)
     }
 
     const renderShippingForm = () => {
-
         if (!formData.shipping) {
             setStep(step + 1)
             return null;
@@ -133,6 +159,7 @@ export default function Checkout() {
                         value={formData.shipping.firstName}
                         onChange={(e) => handleInputChange('shipping', 'firstName', e.target.value)}
                         placeholder="J. John"
+                        required
                     />
                 </div>
                 <div className="space-y-2">
@@ -142,6 +169,7 @@ export default function Checkout() {
                         value={formData.shipping.lastName}
                         onChange={(e) => handleInputChange('shipping', 'lastName', e.target.value)}
                         placeholder="Smith"
+                        required
                     />
                 </div>
                 <div className="space-y-2">
@@ -151,6 +179,7 @@ export default function Checkout() {
                         value={formData.shipping.address1}
                         onChange={(e) => handleInputChange('shipping', 'address1', e.target.value)}
                         placeholder="Address Line One"
+                        required
                     />
                 </div>
                 <div className="space-y-2">
@@ -170,6 +199,7 @@ export default function Checkout() {
                             value={formData.shipping.city}
                             onChange={(e) => handleInputChange('shipping', 'city', e.target.value)}
                             placeholder="City"
+                            required
                         />
                     </div>
                     <div className="space-y-2">
@@ -179,6 +209,7 @@ export default function Checkout() {
                             value={formData.shipping.state}
                             onChange={(e) => handleInputChange('shipping', 'state', e.target.value)}
                             placeholder="State"
+                            required
                         />
                     </div>
                     <div className="space-y-2">
@@ -188,6 +219,7 @@ export default function Checkout() {
                             value={formData.shipping.zip}
                             onChange={(e) => handleInputChange('shipping', 'zip', e.target.value)}
                             placeholder="XXXXX"
+                            required
                         />
                     </div>
                 </div>
@@ -196,7 +228,6 @@ export default function Checkout() {
     };
 
     const renderBillingForm = () => {
-
         if (!formData.billing) {
             setStep(step + 1);
             return null;
@@ -221,6 +252,7 @@ export default function Checkout() {
                                 value={formData.billing.firstName}
                                 onChange={(e) => handleInputChange('billing', 'firstName', e.target.value)}
                                 placeholder="J. John"
+                                required
                             />
                         </div>
                         <div className="space-y-2">
@@ -230,6 +262,7 @@ export default function Checkout() {
                                 value={formData.billing.lastName}
                                 onChange={(e) => handleInputChange('billing', 'lastName', e.target.value)}
                                 placeholder="Smith"
+                                required
                             />
                         </div>
                         <div className="space-y-2">
@@ -239,6 +272,7 @@ export default function Checkout() {
                                 value={formData.billing.address1}
                                 onChange={(e) => handleInputChange('billing', 'address1', e.target.value)}
                                 placeholder="Address Line One"
+                                required
                             />
                         </div>
                         <div className="space-y-2">
@@ -258,6 +292,7 @@ export default function Checkout() {
                                     value={formData.billing.city}
                                     onChange={(e) => handleInputChange('billing', 'city', e.target.value)}
                                     placeholder="City"
+                                    required
                                 />
                             </div>
                             <div className="space-y-2">
@@ -267,6 +302,7 @@ export default function Checkout() {
                                     value={formData.billing.state}
                                     onChange={(e) => handleInputChange('billing', 'state', e.target.value)}
                                     placeholder="State"
+                                    required
                                 />
                             </div>
                             <div className="space-y-2">
@@ -276,6 +312,7 @@ export default function Checkout() {
                                     value={formData.billing.zip}
                                     onChange={(e) => handleInputChange('billing', 'zip', e.target.value)}
                                     placeholder="XXXXX"
+                                    required
                                 />
                             </div>
                         </div>
@@ -294,6 +331,7 @@ export default function Checkout() {
                     value={formData.payment.cardName}
                     onChange={(e) => handleInputChange('payment', 'cardName', e.target.value)}
                     placeholder="J. John D. Smith"
+                    required
                 />
             </div>
             <div className="space-y-2">
@@ -301,8 +339,10 @@ export default function Checkout() {
                 <Input
                     id="card-number"
                     value={formData.payment.cardNumber}
-                    onChange={(e) => handleInputChange('payment', 'cardNumber', e.target.value)}
+                    onChange={handleCreditCardChange}
                     placeholder="1234 5678 9101 1121"
+                    required
+                    maxLength={19}
                 />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -313,6 +353,7 @@ export default function Checkout() {
                         value={formData.payment.expDate}
                         onChange={(e) => handleInputChange('payment', 'expDate', e.target.value)}
                         placeholder="MM/YY"
+                        required
                     />
                 </div>
                 <div className="space-y-2">
@@ -322,6 +363,7 @@ export default function Checkout() {
                         value={formData.payment.csv}
                         onChange={(e) => handleInputChange('payment', 'csv', e.target.value)}
                         placeholder="XXX"
+                        required
                     />
                 </div>
             </div>
@@ -330,26 +372,27 @@ export default function Checkout() {
 
     const renderReviewPage = () => (
         <div className="space-y-6">
+            {formData.shipping && (
+                <div className="space-y-2">
+                    <h3 className="font-semibold">Name</h3>
+                    <p className="bg-gray-100 p-2 rounded">
+                        {formData.shipping.firstName} {formData.shipping.lastName}
+                    </p>
+                </div>
+            )}
 
-
-{ formData.shipping  && (<div className="space-y-2">
-                <h3 className="font-semibold">Name</h3>
-                <p className="bg-gray-100 p-2 rounded">
-                    {formData.shipping.firstName} {formData.shipping.lastName}
-                </p>
-            </div>)}
-
-
-{formData.shipping &&  (<div className="space-y-2">
-                <h3 className="font-semibold">Shipping Address</h3>
-                <p className="bg-gray-100 p-2 rounded">
-                    {formData.shipping.address1}
-                    {formData.shipping.address2 && <br />}
-                    {formData.shipping.address2}
-                    <br />
-                    {formData.shipping.city}, {formData.shipping.state} {formData.shipping.zip}
-                </p>
-            </div>)}
+            {formData.shipping && (
+                <div className="space-y-2">
+                    <h3 className="font-semibold">Shipping Address</h3>
+                    <p className="bg-gray-100 p-2 rounded">
+                        {formData.shipping.address1}
+                        {formData.shipping.address2 && <br />}
+                        {formData.shipping.address2}
+                        <br />
+                        {formData.shipping.city}, {formData.shipping.state} {formData.shipping.zip}
+                    </p>
+                </div>
+            )}
             <div className="space-y-2">
                 <h3 className="font-semibold">Payment Method</h3>
                 <p className="bg-gray-100 p-2 rounded">
@@ -375,7 +418,9 @@ export default function Checkout() {
         <div className="flex flex-col min-h-screen bg-gray-50">
             <Header title="Checkout" isHomeScreen={false} />
 
-            <main className="flex-1 p-4 space-y-6 pt-16">
+            <main className="flex-1 p-4 space-y-6 pt-20">
+                <ProgressBar progress={calculateProgress()} />
+
                 {step === 1 && (
                     <>
                         <h2 className="text-lg font-semibold">Shipping</h2>
@@ -407,7 +452,6 @@ export default function Checkout() {
                         if (step < 4) {
                             setStep(step + 1)
                         } else {
-                            // Handle order submission
                             handleConfirmation();
                             console.log('Order submitted:', { ...formData, price, paymentType })
                         }
