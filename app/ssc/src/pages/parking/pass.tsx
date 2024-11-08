@@ -71,6 +71,18 @@ export default function ParkingPassPage() {
             expirationDate="06/20/2024"
           />
         </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          <ParkingPass
+            type="Fall Pass"
+            status="Active"
+            expirationDate="12/20/2024"
+          />
+          <ParkingPass
+            type="Summer Pass"
+            status="Expired"
+            expirationDate="06/20/2024"
+          />
+        </div>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <Button
