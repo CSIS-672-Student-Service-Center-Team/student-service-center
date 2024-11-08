@@ -42,12 +42,12 @@ export default function ParkingPassPage() {
 
   const handleGetPass = () => {
     console.log("Get a parking pass");
-    router.push("/parking/getPass");
+    // router.push("/parking/getPass");
   };
 
   const handleReturnPass = () => {
     console.log("Return a parking pass");
-    router.push("/parking/returnPass");
+    // router.push("/parking/returnPass");
   };
 
   return (
@@ -59,18 +59,6 @@ export default function ParkingPassPage() {
           Manage Your Parking Passes
         </h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <ParkingPass
-            type="Fall Pass"
-            status="Active"
-            expirationDate="12/20/2024"
-          />
-          <ParkingPass
-            type="Summer Pass"
-            status="Expired"
-            expirationDate="06/20/2024"
-          />
-        </div>
         <div className="grid gap-6 md:grid-cols-2">
           <ParkingPass
             type="Fall Pass"
