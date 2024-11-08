@@ -26,9 +26,9 @@ export default function MealPlanHistoryPage() {
 
   return (
       <div className="flex flex-col min-h-screen bg-gray-50">
-        <Header title="Meal Plan History" isHomeScreen={false} />
+        <Header title="Meal Plan History" isHomeScreen={false}/>
 
-        <main className="flex-1 p-4 space-y-6 pt-16 pb-24"> {/* Added pb-24 for bottom padding */}
+        <main className="flex-1 p-4 space-y-6 pt-20 pb-24 overflow-y-auto">
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-[#8B1A1A]">Your Meal Plan History</CardTitle>

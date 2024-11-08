@@ -42,19 +42,19 @@ export default function ParkingPassPage() {
 
   const handleGetPass = () => {
     console.log("Get a parking pass");
-    router.push("/parking/getPass");
+    // router.push("/parking/getPass");
   };
 
   const handleReturnPass = () => {
     console.log("Return a parking pass");
-    router.push("/parking/returnPass");
+    // router.push("/parking/returnPass");
   };
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Header title="Parking Pass" />
 
-      <main className="flex-1 container max-w-4xl mx-auto px-4 py-8 mb-20">
+      <main className="flex-1 container max-w-4xl mx-auto px-4 py-8 mb-20 pt-20">
         <h2 className="text-3xl font-bold mb-6 text-[#841414]">
           Manage Your Parking Passes
         </h2>
@@ -75,18 +75,18 @@ export default function ParkingPassPage() {
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <Button
             onClick={handleGetPass}
-            className="bg-[#841414] hover:bg-[#9a1818] text-white"
+            className="bg-[#841414] hover:bg-[#9a1818] text-white flex items-center justify-center"
           >
             <PlusCircle className="mr-2 h-4 w-4" />
-            Get A Parking Pass
+            <span>Get A Parking Pass</span>
           </Button>
           <Button
             onClick={handleReturnPass}
             variant="outline"
-            className="border-[#841414] text-[#841414] hover:bg-[#841414] hover:text-white"
+            className="border-[#841414] text-[#841414] hover:bg-[#841414] hover:text-white flex items-center justify-center"
           >
             <ArrowLeftCircle className="mr-2 h-4 w-4" />
-            Return A Parking Pass
+            <span>Return A Parking Pass</span>
           </Button>
         </div>
       </main>
