@@ -1,0 +1,30 @@
+/* app/ssc/src/styles/pageHeader.css */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: #8B1A1A; /* bg-red-800 */
+  color: white; /* text-white */
+  padding: 1rem; /* p-4 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom-left-radius: 1.5rem; /* rounded-b-3xl */
+  border-bottom-right-radius: 1.5rem; /* rounded-b-3xl */
+}
+
+.header button {
+  color: white; /* text-white */
+}
+
+.header h1 {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: bold; /* font-bold */
+}
+
+.header .spacer {
+  width: 1.5rem; /* w-6 */
+}

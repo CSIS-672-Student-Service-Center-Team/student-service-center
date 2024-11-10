@@ -1,0 +1,26 @@
+.button-wrapper {
+  width: 100%;
+  height: 10rem; /* 40 * 0.25rem */
+  background-color: white;
+  border: 2px solid #8B1A1A;
+  border-radius: 1rem; /* 2 * 0.25rem */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* 2 * 0.25rem */
+  padding: 1rem; /* 4 * 0.25rem */
+}
+
+.button-wrapper:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.home-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f9fafb; /* bg-gray-50 */
+}

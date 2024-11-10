@@ -5,7 +5,6 @@ import Header from "@/components/ui/pageHeader"
 import NavBar from "@/components/ui/navBar"
 import IdCard from "@/components/ui/idCard"
 import {Car, Utensils, CreditCard} from "lucide-react"
-import {cn} from "@/lib/utils"
 
 export default function HomeScreen({onLogout}: { onLogout: () => void }) {
     const router = useRouter()
@@ -17,19 +16,14 @@ export default function HomeScreen({onLogout}: { onLogout: () => void }) {
     const ButtonWrapper = ({children, onClick}: { children: React.ReactNode, onClick: () => void }) => (
         <button
             onClick={onClick}
-            className={cn(
-                "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl",
-                "shadow-lg hover:shadow-xl transition-shadow",
-                "flex flex-col items-center justify-center gap-2",
-                "p-4"
-            )}
+            className="button-wrapper" // Use the new CSS class
         >
             {children}
         </button>
     )
 
     return (
-        <div className="flex flex-col min-h-screen bg-gray-50">
+        <div className="home-screen"> {/* Use the new CSS class */}
             <Header title="Home" isHomeScreen={true} onLogout={onLogout}/>
 
             <main className="flex-1 p-6 pt-20 pb-24">

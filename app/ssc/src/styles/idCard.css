@@ -1,0 +1,31 @@
+/* app/ssc/src/styles/idCard.css */
+
+.id-card {
+  background-color: #8B1A1A; /* bg-red-800 */
+  padding: 1rem; /* p-4 */
+  border-radius: 1rem; /* rounded-2xl */
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 190px; /* h-[190px] */
+}
+
+.id-card img {
+  border-radius: 50%; /* rounded-full */
+  margin-right: 1rem; /* mr-4 */
+}
+
+.id-card .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.id-card .info p {
+  color: white; /* text-white */
+}
+
+.id-card .info .name {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600; /* font-semibold */
+}

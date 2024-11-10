@@ -10,18 +10,18 @@ interface IdCardProps {
 
 const IdCard: React.FC<IdCardProps> = ({ name, idNumber, email, photoUrl }) => {
   return (
-    <div className="bg-red-800 p-4 rounded-2xl flex items-center w-full h-[190px]">
+    <div className="id-card"> {/* Use the new CSS class */}
       <Image
-        src={photoUrl}
+        src="/id-logo.png"
         alt="Student Photo"
         width={120}
         height={120}
         className="rounded-full mr-4"
       />
-      <div className="flex flex-col justify-center">
-        <p className="text-white text-xl font-semibold">{name}</p>
-        <p className="text-white">{idNumber}</p>
-        <p className="text-white">{email}</p>
+      <div className="info"> {/* Use the new CSS class */}
+        <p className="name">{name}</p> {/* Use the new CSS class */}
+        <p>{idNumber}</p>
+        <p>{email}</p>
       </div>
     </div>
   );
