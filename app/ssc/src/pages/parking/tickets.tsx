@@ -88,10 +88,6 @@ export default function ParkingTicketsPage() {
         cardNumber: "",
         expDate: "",
         csv: "",
-        cardName: "",
-        cardNumber: "",
-        expDate: "",
-        csv: "",
       },
     };
     sessionStorage.setItem("checkoutData", JSON.stringify(checkoutData));
@@ -120,7 +116,7 @@ export default function ParkingTicketsPage() {
     <div className="min-h-screen bg-background flex flex-col">
       <Header title="Parking Tickets" />
 
-      <main className="flex-1 container max-w-md mx-auto p-4 mb-20 pt-20">
+      <main className="content">
         <h2 className="text-2xl font-semibold text-center mb-6">
           Outstanding Tickets
         </h2>

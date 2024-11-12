@@ -1,0 +1,5 @@
+.content {
+    padding-top: 91px;/* for the header*/
+    padding-bottom: 80px;/* for the navbar */
+    overflow-y: auto;/* enables scrolling */
+}

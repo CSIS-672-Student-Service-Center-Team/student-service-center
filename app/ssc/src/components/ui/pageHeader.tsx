@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({
           <ArrowLeft size={24} />
         </button>
       )}
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1>{title}</h1>
       <div className="spacer"></div> {/* Spacer for alignment */}
     </header>
   );

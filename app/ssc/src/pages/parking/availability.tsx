@@ -156,7 +156,7 @@ export default function ParkingAvailabilityPage() {
     <div className="min-h-screen bg-white flex flex-col">
       <Header title="Parking Availability"  />
 
-      <main className="flex-1  flex-col p-6 mb-20">
+      <main className="content">
         <div className="h-36" />
         <ViewToggle activeView={activeView} onViewChange={setActiveView} />
 

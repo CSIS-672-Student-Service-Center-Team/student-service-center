@@ -16,7 +16,8 @@ export default function TransactionConfirmation() {
         onBackClick={()=>router.back()}
       />
 
-      <main className="flex-1 flex items-center justify-center px-4 py-8">
+      {/* <main className="flex-1 flex items-center justify-center px-4 py-8"> */}
+      <main className="content">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">

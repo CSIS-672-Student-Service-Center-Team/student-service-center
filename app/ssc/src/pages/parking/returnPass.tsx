@@ -122,7 +122,8 @@ export default function ReturnParkingPassPage() {
     <div className="min-h-screen bg-white flex flex-col">
       <Header title="Return Parking Pass" />
 
-      <main className="flex-1 flex flex-col p-6 mb-20">
+      {/* <main className="flex-1 flex flex-col p-6 mb-20"> */}
+      <main className="content">
         <h2 className="text-2xl font-bold mb-4">Select Pass Location:</h2>
         <div className="mb-6 rounded-lg overflow-hidden border border-gray-200">
           {parkingLocations.map((location) => (

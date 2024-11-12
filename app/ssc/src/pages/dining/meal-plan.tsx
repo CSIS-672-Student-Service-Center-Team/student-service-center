@@ -35,7 +35,8 @@ export default function MealPlanPage() {
         <div className="flex flex-col min-h-screen bg-gray-50">
             <Header title="Meal Plan Management" isHomeScreen={false} />
 
-            <main className="flex-1 p-4 space-y-6 pt-20 pb-24">
+            {/* <main className="flex-1 p-4 space-y-6 pt-20 pb-24"> */}
+            <main className="content">
                 <Card>
                     <CardHeader>
                         <CardTitle>Your Current Meal Plan:</CardTitle>

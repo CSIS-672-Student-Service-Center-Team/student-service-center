@@ -37,7 +37,8 @@ const ViewBalancePage: React.FC = () => {
 <div className="flex flex-col h-screen bg-white">
       <Header title="Student ID" isHomeScreen={false} />
       {/* Main Content */}
-      <main className="flex-1 flex flex-col items-center px-4 pt-12">
+      {/* <main className="flex-1 flex flex-col items-center px-4 pt-12"> */}
+      <main className="content">
         <h2 className="text-2xl mb-8">Current Balance</h2>
         <div className="text-6xl font-bold mb-12">
           ${displayBalance.toFixed(2)}

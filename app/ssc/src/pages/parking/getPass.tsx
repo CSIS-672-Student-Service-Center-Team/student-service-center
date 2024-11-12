@@ -126,7 +126,8 @@ export default function GetParkingPassPage() {
     <div className="min-h-screen bg-white flex flex-col">
       <Header title="Parking Pass" />
 
-      <main className="flex-1 flex flex-col p-6 mb-20">
+      {/* <main className="flex-1 flex flex-col p-6 mb-20"> */}
+      <main className="content">
         <ViewToggle activeView={activeView} onViewChange={setActiveView} />
 
         <div className="flex-1 mb-6 flex flex-col">

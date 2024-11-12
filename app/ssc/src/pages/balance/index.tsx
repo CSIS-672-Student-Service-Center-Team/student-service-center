@@ -119,7 +119,8 @@ export default function BalanceView() {
 				onBackClick={isAddingFunds ? handleBackToBalance : () => router.back()}
 			/>
 
-			<main className="flex-1 flex flex-col items-center px-4 pt-12 transition-all duration-500 ease-in-out gap-y-6">
+			{/* <main className="flex-1 flex flex-col items-center px-4 pt-12 transition-all duration-500 ease-in-out gap-y-6"> */}
+			<main className="content">
 				<span className='min-h-16'></span>
 				<h2 className="text-4xl mb-8">Current Balance</h2>
 				<div className="text-6xl font-bold mb-12">

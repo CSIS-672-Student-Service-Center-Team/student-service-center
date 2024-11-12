@@ -67,7 +67,8 @@ export default function WeeklyMealsPage() {
         <div className="flex flex-col min-h-screen bg-gray-50">
             <Header title="Meals For The Week" isHomeScreen={false} />
 
-            <main className="flex-1 p-4 space-y-6 pt-20">
+            {/* <main className="flex-1 p-4 space-y-6 pt-20"> */}
+            <main className="content">
                 <Button
                     onClick={() => setIsOverlayOpen(true)}
                     className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"

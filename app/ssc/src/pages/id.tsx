@@ -45,7 +45,7 @@ const StudentIDPage: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="Student ID" isHomeScreen={false} />
 
-      <main className="flex-1 p-6 pt-20 pb-24">
+      <main className="content">
         <IdCard
           name="John Doe"
           idNumber="#123456789"

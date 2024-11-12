@@ -52,7 +52,8 @@ export default function Component() {
       <Header title="Notifications" isHomeScreen={false} />
 
       {/* Notifications List */}
-      <main className="flex-1 p-4 space-y-3">
+      {/* <main className="flex-1 p-4 space-y-3"> */}
+      <main className="content">
         {notifications.map((notification) => (
           <div
             key={notification.id}

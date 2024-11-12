@@ -62,7 +62,8 @@ export default function OfferedMealPlansPage() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="Meal Plans" isHomeScreen={false} />
 
-      <main className="flex-1 p-4 space-y-6 pt-20 pb-24">
+      {/* <main className="flex-1 p-4 space-y-6 pt-20 pb-24"> */}
+      <main className="content">
         <Card className="bg-white shadow-sm border rounded-xl">
           <CardContent className="p-4">
             <h2 className="text-[#8B1A1A] font-semibold text-xl mb-3">

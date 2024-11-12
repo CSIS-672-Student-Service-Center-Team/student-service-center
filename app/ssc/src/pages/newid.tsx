@@ -42,7 +42,8 @@ const NewStudentIDPage: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="New Student ID" isHomeScreen={false} />
 
-      <main className="flex-grow p-4 space-y-6 pt-20 pb-24">
+      {/* <main className="flex-grow p-4 space-y-6 pt-20 pb-24"> */}
+      <main className="content">
         <div className="w-full max-w-md mx-auto">
           <IdCard
             name="John Doe"
