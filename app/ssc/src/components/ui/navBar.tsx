@@ -10,23 +10,20 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-red-800 p-4 flex justify-between items-center rounded-t-3xl">
-      <button
-        className="text-white flex-1 flex justify-center"
+    <div className="navbar">{/* Use the new CSS */}
+      <span><button
         onClick={() => handleNavigation("/home")}
       >
         <Home size={32} />
-      </button>
-      <div className="w-px h-12 bg-white"></div>
+      </button></span>
+      <div className="divider"></div>
       <button
-        className="text-white flex-1 flex justify-center"
         onClick={() => handleNavigation("/notification")}
       >
         <Bell size={32} />
       </button>
-      <div className="w-px h-12 bg-white"></div>
+      <div className="divider"></div>
       <button
-        className="text-white flex-1 flex justify-center"
         onClick={() => handleNavigation("/profile")}
       >
         <User size={32} />

@@ -1,0 +1,29 @@
+.navbar {
+    position: fixed;
+    bottom:0;
+    left:0;
+    right:0; 
+    z-index: 10;
+    background-color: #8B1A1A; /* bg-red-800 */
+    color: white; /* text-white */
+    padding: 1rem; /* p-4 */
+    align-items: center;
+    justify-content: space-evenly;
+    display: flex;
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+}
+
+.navbar button {
+    justify-content: space-between;
+    background-color: #8B1A1A; /* bg-red-800 */
+    color:white;
+    border: none;
+}
+
+
+.navbar > .divider {
+    width: 1px;
+    height: 3rem;
+    background-color: white;
+}

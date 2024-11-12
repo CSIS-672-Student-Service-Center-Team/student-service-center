@@ -50,9 +50,9 @@ export default function HomeScreen({onLogout}: { onLogout: () => void }) {
                         <span className="text-lg font-medium text-[#8B1A1A]">ID</span>
                     </ButtonWrapper>
                 </div>
+            <NavBar/>
             </main>
 
-            <NavBar/>
         </div>
     )
 }
