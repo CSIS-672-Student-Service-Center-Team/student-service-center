@@ -24,12 +24,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    // <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="wall">
       {isLoggedIn ? (
         <HomeScreen onLogout={handleLogout} />
       ) : (
         <>
-          <div className="w-full h-[313px] bg-[#8B1A1A] rounded-b-[50px] relative overflow-hidden">
+          <div className="banner w-full h-[313px] bg-[#8B1A1A] rounded-b-[50px] relative overflow-hidden">
             <Image
               src="/SSC-Logo.png"
               alt="Student Service Center Logo"
