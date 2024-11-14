@@ -6,12 +6,11 @@
   border-radius: 1rem; /* rounded-2xl */
   display: flex;
   align-items: center;
-  width: 100%;
+  min-width: min-content;
   height: 190px; /* h-[190px] */
 }
 
 .id-card img {
-  border-radius: 50%; /* rounded-full */
   margin-right: 1rem; /* mr-4 */
 }
 

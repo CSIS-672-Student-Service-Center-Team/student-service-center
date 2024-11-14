@@ -16,7 +16,6 @@ const IdCard: React.FC<IdCardProps> = ({ name, idNumber, email, photoUrl }) => {
         alt="Student Photo"
         width={120}
         height={120}
-        className="rounded-full mr-4"
       />
       <div className="info"> {/* Use the new CSS class */}
         <p className="name">{name}</p> {/* Use the new CSS class */}
