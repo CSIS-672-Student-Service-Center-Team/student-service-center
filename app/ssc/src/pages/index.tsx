@@ -30,7 +30,7 @@ export default function App() {
         <HomeScreen onLogout={handleLogout} />
       ) : (
         <>
-          <div className="banner w-full h-[313px] bg-[#8B1A1A] rounded-b-[50px] relative overflow-hidden">
+          <div className="banner">
             <Image
               src="/SSC-Logo.png"
               alt="Student Service Center Logo"
@@ -39,10 +39,10 @@ export default function App() {
               className="opacity-100"
             />
           </div>
-          <div className="flex-grow flex items-center justify-center">
-            <Card className="w-full max-w-md">
-              <CardContent className="pt-6">
-                <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="holder">
+            <Card className="center-card shadow">
+              <CardContent className="card-content">
+                <form onSubmit={handleSubmit} className="signin-form">
                   <div>
                     <Input
                       type="email"
