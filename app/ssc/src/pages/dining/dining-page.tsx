@@ -14,13 +14,18 @@ interface MealSection {
     items: MenuItem[];
 }
 
+type MealCategory = {
+    title: string;
+    items: {name: string}[];
+}
+
 export default function DiningPage() {
     const router = useRouter();
     const [showDietaryPreferences, setShowDietaryPreferences] = useState(false);
     const [location, setLocation] = useState('');
     const [meals, setMeals] = useState<MealSection[]>([]);
 
-    const mealsData = {
+    const mealsData: Record<string, MealCategory[]> = {
         Bistro: [
             {
                 title: "Breakfast",
