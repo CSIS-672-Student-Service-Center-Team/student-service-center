@@ -3,27 +3,31 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/ui/pageHeader";
 import BottomNavBar from "@/components/ui/navBar";
+import { Checkbox } from "@/components/ui/checkbox"
 import { useRouter } from 'next/navigation';
+import { X } from 'lucide-react';
+import {
+    MealCategory,
+    MealSection,
+    DietaryPreference
+} from '@/lib/dining-utils';
 
-interface MenuItem {
-    name: string;
-}
-
-interface MealSection {
-    title: string;
-    items: MenuItem[];
-}
-
-type MealCategory = {
-    title: string;
-    items: {name: string}[];
-}
 
 export default function DiningPage() {
     const router = useRouter();
-    const [showDietaryPreferences, setShowDietaryPreferences] = useState(false);
+    const [isDietaryOverlayOpen, setDietaryOverlay] = useState(false);
     const [location, setLocation] = useState('');
+    const [preferences, setPreferences] = useState<string[]>([]);
     const [meals, setMeals] = useState<MealSection[]>([]);
+
+    const dietaryOptions: DietaryPreference[] = [
+        { id: "gluten-free", label: "Gluten-free" },
+        { id: "vegetarian", label: "Vegetarian" },
+        { id: "vegan", label: "Vegan" },
+        { id: "halal", label: "Halal" },
+        { id: "dairy-free", label: "Dairy-free" },
+        { id: "nut-free", label: "Nut-free" }
+    ]
 
     const mealsData: Record<string, MealCategory[]> = {
         Bistro: [
@@ -96,11 +100,28 @@ export default function DiningPage() {
     }, [location]);
 
     const toggleDietaryPreferences = () => {
-        setShowDietaryPreferences(!showDietaryPreferences);
+        setDietaryOverlay(!isDietaryOverlayOpen);
     };
 
     const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setLocation(e.target.value);
+    };
+
+    const handlePreferenceChange = (id: string, checked: boolean) => {
+        setPreferences(prev =>
+            checked
+                ? [...prev, id]
+                : prev.filter(p => p !== id)
+        )
+    };
+
+    const handleSavePreferences = () => {
+        console.log('Preferences saved:', preferences)
+        setDietaryOverlay(false)
+    };
+
+    const handleCloseOverlay = () => {
+        setDietaryOverlay(false)
     };
 
     return (
@@ -150,15 +171,17 @@ export default function DiningPage() {
                 <Button
                     className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white flex items-center justify-center space-x-2"
                     onClick={toggleDietaryPreferences}
-                    aria-expanded={showDietaryPreferences ? "true" : "false"}
+                    aria-expanded={isDietaryOverlayOpen ? "true" : "false"}
                     aria-controls="dietary-preferences"
                     aria-label="Toggle dietary preferences"
                 >
                     <span>Dietary Preferences</span>
                 </Button>
 
+                {/* Leaving this commented out as opposed to deleted
+                     for team-discussion of dietary options - DJ */}
                 {/* Dietary Preferences Section */}
-                {showDietaryPreferences && (
+                {/* {isDietaryOverlayOpen && (
                     <Card id="dietary-preferences" className="mt-4">
                         <CardHeader>
                             <CardTitle>Dietary Preferences</CardTitle>
@@ -173,6 +196,42 @@ export default function DiningPage() {
                             </ul>
                         </CardContent>
                     </Card>
+                )} */}
+
+                {isDietaryOverlayOpen && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div className="bg-white p-6 rounded-lg w-full max-w-md relative">
+                            <button
+                                onClick={handleCloseOverlay}
+                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                                aria-label="Close"
+                            >
+                                <X size={24} />
+                            </button>
+                            <h2 className="text-xl font-bold mb-4">Select Dietary Preferences</h2>
+                            <div className="space-y-4">
+                                {dietaryOptions.map((option) => (
+                                    <div key={option.id} className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id={option.id}
+                                            checked={preferences.includes(option.id)}
+                                            onChange={(checked) => 
+                                                handlePreferenceChange(option.id, 
+                                                    !preferences.includes(option.id)
+                                                )}
+                                        />
+                                        <label htmlFor={option.id}>{option.label}</label>
+                                    </div>
+                                ))}
+                            </div>
+                            <Button
+                                onClick={handleSavePreferences}
+                                className="w-full mt-6 bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
+                            >
+                                Save Preferences
+                            </Button>
+                        </div>
+                    </div>
                 )}
 
                 {/* Navigation Buttons */}
