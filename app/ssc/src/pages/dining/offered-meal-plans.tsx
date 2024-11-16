@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import Header from "@/components/ui/pageHeader"
-import BottomNavBar from "@/components/ui/navBar"
-import { useRouter } from 'next/navigation'
-import { CreditCard } from 'lucide-react'
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import Header from "@/components/ui/pageHeader";
+import BottomNavBar from "@/components/ui/navBar";
+import { useRouter } from "next/navigation";
+import { CreditCard, Check } from "lucide-react";
 
 interface MealPlanOption {
   id: string
@@ -17,8 +17,10 @@ interface MealPlanOption {
 }
 
 export default function OfferedMealPlansPage() {
-  const router = useRouter()
-  const [selectedTypes, setSelectedTypes] = React.useState<Record<string, 'Year' | 'Semester'>>({})
+  const router = useRouter();
+  const [selectedTypes, setSelectedTypes] = React.useState<
+    Record<string, "Year" | "Semester">
+  >({});
 
   const mealPlans: MealPlanOption[] = [
     { id: '1', semesterPrice: 1299.00, yearPrice: 2499.00, mealsPerWeek: 12, description: "12 meals per week for a balanced plan." },
@@ -28,30 +30,38 @@ export default function OfferedMealPlansPage() {
   ]
 
   React.useEffect(() => {
-    const initialTypes: Record<string, 'Year' | 'Semester'> = {}
-    mealPlans.forEach(plan => {
-      initialTypes[plan.id] = 'Year'
-    })
-    setSelectedTypes(initialTypes)
-  }, [])
+    const initialTypes: Record<string, "Year" | "Semester"> = {};
+    mealPlans.forEach((plan) => {
+      initialTypes[plan.id] = "Year";
+    });
+    setSelectedTypes(initialTypes);
+  }, []);
 
-  const handleTypeChange = (planId: string, type: 'Year' | 'Semester') => {
-    setSelectedTypes(prev => ({
+  const handleTypeChange = (planId: string, type: "Year" | "Semester") => {
+    setSelectedTypes((prev) => ({
       ...prev,
-      [planId]: type
-    }))
-  }
+      [planId]: type,
+    }));
+  };
 
   const getPrice = (plan: MealPlanOption) => {
-    return selectedTypes[plan.id] === 'Year' ? plan.yearPrice : plan.semesterPrice
-  }
+    return selectedTypes[plan.id] === "Year"
+      ? plan.yearPrice
+      : plan.semesterPrice;
+  };
 
   const handleCheckout = (plan: MealPlanOption) => {
-    const price = getPrice(plan)
-    router.push(`/checkout?price=${price}&type=meal-plan&planId=${plan.id}&planType=${selectedTypes[plan.id] || 'Year'}&from=dining/dining-page`)
-  }
+    const price = getPrice(plan);
+    router.push(
+      `/checkout?price=${price}&type=meal-plan&planId=${plan.id}&planType=${
+        selectedTypes[plan.id] || "Year"
+      }&from=dining/dining-page`
+    );
+  };
 
   return (
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header title="Meal Plans" isHomeScreen={false} />
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="Meal Plans" isHomeScreen={false} />
 

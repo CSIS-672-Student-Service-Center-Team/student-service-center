@@ -3,7 +3,7 @@
 import {useRouter} from "next/navigation"
 import Header from "@/components/ui/pageHeader"
 import NavBar from "@/components/ui/navBar"
-import IdCard from "@/components/ui/idCard"
+import IdCard_db from "@/components/ui/idCard_db"
 import {Car, Utensils, CreditCard} from "lucide-react"
 import {cn} from "@/lib/utils"
 
@@ -33,12 +33,7 @@ export default function HomeScreen({onLogout}: { onLogout: () => void }) {
             <Header title="Home" isHomeScreen={true} onLogout={onLogout}/>
 
             <main className="flex-1 p-6 pt-20 pb-24">
-                <IdCard
-                    name="John Doe"
-                    idNumber="#123456789"
-                    email="johndoe@cofc.edu"
-                    photoUrl="/placeholder.svg?height=100&width=100"
-                />
+                <IdCard_db />
 
                 <div className="flex flex-col gap-6 mt-6">
                     <ButtonWrapper onClick={() => handleNavigation("/parking")}>

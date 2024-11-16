@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
     Accordion,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/accordion"
 import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
+import { ChevronDown, ChevronUp, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 import {
@@ -22,6 +22,7 @@ import {
 import DietaryOverlay, {
     DietaryOverlayProps
 } from '@/components/ui/dietaryOverlay'
+import { Card } from '@/components/ui/card'
 
 
 interface Meal {
@@ -40,6 +41,8 @@ export default function WeeklyMealsPage() {
     const [selectedLocation, setSelectedLocation] = useState<string>('Bistro')
     const [menu, setMenu] = useState<LocationMenu>({});
 
+    const [expandedDays, setExpandedDays] = useState<string[]>([])
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false)
 
     const dietaryOptions: DietaryPreference[] = [
         { id: "gluten-free", label: "Gluten-free" },
@@ -52,6 +55,14 @@ export default function WeeklyMealsPage() {
 
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
+    useEffect(() => {
+        const today = new Date().getDay()
+        const currentDay = days[today - 1] // Adjust for 0-indexed array
+        if (currentDay) {
+            setExpandedDays([currentDay.toLowerCase()])
+        }
+    }, [])
+
     const handlePreferenceChange = (id: string, checked: boolean) => {
         setPreferences(prev =>
             checked
@@ -59,6 +70,14 @@ export default function WeeklyMealsPage() {
                 : prev.filter(p => p !== id)
         )
     }
+
+    const handleToggleAll = useCallback(() => {
+        setExpandedDays(prev =>
+            prev.length === days.length ? [] : days.map(day => day.toLowerCase())
+        )
+    }, [days])
+
+    
 
 
     const toggleDietaryPreferences = () => {
@@ -177,6 +196,7 @@ export default function WeeklyMealsPage() {
                                 </AccordionTrigger>
                             }
                         >
+
                             <AccordionContent>
                                 <div className="space-y-4 p-2">
                                     {menu[day]?.map((meal, index) => (

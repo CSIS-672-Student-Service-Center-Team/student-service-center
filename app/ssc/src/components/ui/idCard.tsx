@@ -10,7 +10,7 @@ interface IdCardProps {
 
 const IdCard: React.FC<IdCardProps> = ({ name, idNumber, email, photoUrl }) => {
   return (
-    <div className="bg-red-800 p-4 rounded-2xl flex items-center w-[380px] h-[190px]">
+    <div className="bg-red-800 p-4 rounded-2xl flex items-center w-full h-[190px]">
       <Image
         src={photoUrl}
         alt="Student Photo"

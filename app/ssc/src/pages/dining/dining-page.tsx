@@ -126,7 +126,7 @@ export default function DiningPage() {
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
-            <Header title="Dining" isHomeScreen={false} />
+            <Header title="Dining" isHomeScreen={false}/>
 
             <main className="flex-1 text-xl p-4 space-y-9 pt-16">
                 {/* Meal Card Section */}
@@ -242,7 +242,7 @@ export default function DiningPage() {
                 </div>
             </main>
 
-            <BottomNavBar />
+            <BottomNavBar/>
         </div>
     );
 }
