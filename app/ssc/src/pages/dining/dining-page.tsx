@@ -3,14 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/ui/pageHeader";
 import BottomNavBar from "@/components/ui/navBar";
-import { Checkbox } from "@/components/ui/checkbox"
 import { useRouter } from 'next/navigation';
-import { X } from 'lucide-react';
 import {
     MealCategory,
     MealSection,
     DietaryPreference
 } from '@/lib/dining-utils';
+import { dietaryOptions, mealsData  } from '@/mocks/mockData';
 import DietaryOverlay  from '@/components/ui/dietaryOverlay'
 
 
@@ -21,75 +20,75 @@ export default function DiningPage() {
     const [preferences, setPreferences] = useState<string[]>([]);
     const [meals, setMeals] = useState<MealSection[]>([]);
 
-    const dietaryOptions: DietaryPreference[] = [
-        { id: "gluten-free", label: "Gluten-free" },
-        { id: "vegetarian", label: "Vegetarian" },
-        { id: "vegan", label: "Vegan" },
-        { id: "halal", label: "Halal" },
-        { id: "dairy-free", label: "Dairy-free" },
-        { id: "nut-free", label: "Nut-free" }
-    ]; // NOTE: This will need to be loaded asynchronously later
+    // const dietaryOptions: DietaryPreference[] = [
+    //     { id: "gluten-free", label: "Gluten-free" },
+    //     { id: "vegetarian", label: "Vegetarian" },
+    //     { id: "vegan", label: "Vegan" },
+    //     { id: "halal", label: "Halal" },
+    //     { id: "dairy-free", label: "Dairy-free" },
+    //     { id: "nut-free", label: "Nut-free" }
+    // ]; // NOTE: This will need to be loaded asynchronously later
 
-    const mealsData: Record<string, MealCategory[]> = {
-        Bistro: [
-            {
-                title: "Breakfast",
-                items: [
-                    { name: "Scrambled Eggs" },
-                    { name: "Pancakes" },
-                    { name: "Fresh Fruit" },
-                    { name: "Yogurt" }
-                ]
-            },
-            {
-                title: "Lunch",
-                items: [
-                    { name: "Salad Bar" },
-                    { name: "Sandwich Bar" },
-                    { name: "Cheeseburger & Fries" },
-                    { name: "Rice & Pulled Pork" }
-                ]
-            },
-            {
-                title: "Dinner",
-                items: [
-                    { name: "Salad Bar" },
-                    { name: "Pasta with Red Sauce" },
-                    { name: "Chicken Parm" },
-                    { name: "Beef Meatballs" }
-                ]
-            }
-        ],
-        Liberty: [
-            {
-                title: "Breakfast",
-                items: [
-                    { name: "Omelette" },
-                    { name: "Bagels" },
-                    { name: "Fruit Salad" },
-                    { name: "Cereal" }
-                ]
-            },
-            {
-                title: "Lunch",
-                items: [
-                    { name: "Pasta Salad" },
-                    { name: "Chicken Sandwich" },
-                    { name: "Vegetable Stir Fry" },
-                    { name: "Pulled Pork Tacos" }
-                ]
-            },
-            {
-                title: "Dinner",
-                items: [
-                    { name: "Vegetarian Lasagna" },
-                    { name: "BBQ Ribs" },
-                    { name: "Baked Salmon" },
-                    { name: "Rice Pilaf" }
-                ]
-            }
-        ]
-    };// NOTE: this will need to be loaded asynchronously later
+    // const mealsData: Record<string, MealCategory[]> = {
+    //     Bistro: [
+    //         {
+    //             title: "Breakfast",
+    //             items: [
+    //                 { name: "Scrambled Eggs" },
+    //                 { name: "Pancakes" },
+    //                 { name: "Fresh Fruit" },
+    //                 { name: "Yogurt" }
+    //             ]
+    //         },
+    //         {
+    //             title: "Lunch",
+    //             items: [
+    //                 { name: "Salad Bar" },
+    //                 { name: "Sandwich Bar" },
+    //                 { name: "Cheeseburger & Fries" },
+    //                 { name: "Rice & Pulled Pork" }
+    //             ]
+    //         },
+    //         {
+    //             title: "Dinner",
+    //             items: [
+    //                 { name: "Salad Bar" },
+    //                 { name: "Pasta with Red Sauce" },
+    //                 { name: "Chicken Parm" },
+    //                 { name: "Beef Meatballs" }
+    //             ]
+    //         }
+    //     ],
+    //     Liberty: [
+    //         {
+    //             title: "Breakfast",
+    //             items: [
+    //                 { name: "Omelette" },
+    //                 { name: "Bagels" },
+    //                 { name: "Fruit Salad" },
+    //                 { name: "Cereal" }
+    //             ]
+    //         },
+    //         {
+    //             title: "Lunch",
+    //             items: [
+    //                 { name: "Pasta Salad" },
+    //                 { name: "Chicken Sandwich" },
+    //                 { name: "Vegetable Stir Fry" },
+    //                 { name: "Pulled Pork Tacos" }
+    //             ]
+    //         },
+    //         {
+    //             title: "Dinner",
+    //             items: [
+    //                 { name: "Vegetarian Lasagna" },
+    //                 { name: "BBQ Ribs" },
+    //                 { name: "Baked Salmon" },
+    //                 { name: "Rice Pilaf" }
+    //             ]
+    //         }
+    //     ]
+    // };// NOTE: this will need to be loaded asynchronously later
 
     // Update meals when location changes
     useEffect(() => {

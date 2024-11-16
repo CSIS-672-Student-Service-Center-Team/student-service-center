@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DietaryPreference } from '@/lib/dining-utils'
 
-interface DietaryOverlayProps {
+export interface DietaryOverlayProps {
     preferences: string[];
     dietaryPreferences: DietaryPreference[];
     onClose: () => void;

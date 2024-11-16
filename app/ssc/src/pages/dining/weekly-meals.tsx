@@ -14,10 +14,15 @@ import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
 import { useRouter } from 'next/navigation'
 
-interface DietaryPreference {
-    id: string
-    label: string
-}
+import {
+    MealCategory,
+    MealSection,
+    DietaryPreference,
+} from '@/lib/dining-utils';
+import DietaryOverlay, {
+    DietaryOverlayProps
+} from '@/components/ui/dietaryOverlay'
+
 
 interface Meal {
     mealType: string
@@ -31,8 +36,10 @@ interface LocationMenu {
 export default function WeeklyMealsPage() {
     const router = useRouter()
     const [preferences, setPreferences] = useState<string[]>([])
+    const [isDietaryOverlayOpen, setDietaryOverlay] = useState(false);
     const [selectedLocation, setSelectedLocation] = useState<string>('Bistro')
-    const [menu, setMenu] = useState<LocationMenu>({})
+    const [menu, setMenu] = useState<LocationMenu>({});
+
 
     const dietaryOptions: DietaryPreference[] = [
         { id: "gluten-free", label: "Gluten-free" },
@@ -43,7 +50,7 @@ export default function WeeklyMealsPage() {
         { id: "nut-free", label: "Nut-free" }
     ]
 
-    const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
     const handlePreferenceChange = (id: string, checked: boolean) => {
         setPreferences(prev =>
@@ -53,9 +60,19 @@ export default function WeeklyMealsPage() {
         )
     }
 
+
+    const toggleDietaryPreferences = () => {
+        setDietaryOverlay(!isDietaryOverlayOpen);
+    };
+
     const handleSavePreferences = () => {
         console.log('Preferences saved:', preferences)
+        setDietaryOverlay(false);
         // Replace this with actual API or localStorage call to persist user preferences
+    }
+
+    const handleCloseOverlay = () => {
+        setDietaryOverlay(false);
     }
 
     // Mock data for Bistro and Liberty menus
@@ -112,31 +129,28 @@ export default function WeeklyMealsPage() {
 
             <main className="flex-1 p-4 space-y-6 pt-16">
                 {/* Dietary Preferences Section */}
-                <Card className="bg-white shadow-sm border">
-                    <CardHeader>
-                        <CardTitle>Select any dietary preferences:</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        {dietaryOptions.map((option) => (
-                            <div key={option.id} className="flex items-center space-x-2">
-                                <Checkbox
-                                    id={option.id}
-                                    checked={preferences.includes(option.id)}
-                                    onChange={(e) => handlePreferenceChange(option.id, e.target.checked)}
-                                    aria-labelledby={option.id}
-                                />
-                                <label htmlFor={option.id} className="text-lg">{option.label}</label>
-                            </div>
-                        ))}
+                <Card className="bg-white shadow-sm border flex justify-center items-center">
+
                         <Button
-                            className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
-                            onClick={handleSavePreferences}
+                            className="w-full h-[4rem] text-3xl bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white "
+                            onClick={toggleDietaryPreferences}
+                            aria-expanded={isDietaryOverlayOpen ? "true" : "false"}
+                            aria-controls="dietary-preferences"
+                            aria-label="Toggle dietary preferences"
                         >
-                            Save Preferences
+                            Dietary Preferences
                         </Button>
-                    </CardContent>
                 </Card>
 
+                {isDietaryOverlayOpen && 
+                    <DietaryOverlay 
+                        preferences={preferences}
+                        dietaryPreferences={dietaryOptions}
+                        onClose={handleCloseOverlay}
+                        onPreferenceChange={handlePreferenceChange}
+                        onSave={handleSavePreferences}
+                    />
+                }
                 {/* Location Dropdown */}
                 <div className="mb-6">
                     <label htmlFor="location" className="block text-lg font-medium">Select Location</label>
@@ -153,13 +167,13 @@ export default function WeeklyMealsPage() {
 
                 {/* Weekly Meals Accordion Section */}
                 <Accordion type="single" collapsible className="space-y-4">
-                    {weekDays.map((day) => (
+                    {days.map((day) => (
                         <AccordionItem
                             key={day}
                             value={day.toLowerCase()}
                             trigger={
-                                <AccordionTrigger className="bg-[#8B1A1A] text-white p-2 rounded-md">
-                                    <span className="text-lg font-semibold">{day}</span>
+                                <AccordionTrigger className="bg-[#8B1A1A] w-[60%] text-center h-[3rem] text-white p-2 rounded-md">
+                                    <span className="text-2xl font-semibold">{day}</span>
                                 </AccordionTrigger>
                             }
                         >
@@ -168,9 +182,9 @@ export default function WeeklyMealsPage() {
                                     {menu[day]?.map((meal, index) => (
                                         <div key={index}>
                                             <h4 className="font-medium">{meal.mealType}</h4>
-                                            <p className="text-sm text-muted-foreground">{meal.menu}</p>
+                                            <p className="text-lg text-muted-foreground">{meal.menu}</p>
                                         </div>
-                                    )) || <p className="text-sm text-muted-foreground">Menu not yet available</p>}
+                                    )) || <p className="text-lg text-muted-foreground">Menu not yet available</p>}
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
@@ -178,12 +192,12 @@ export default function WeeklyMealsPage() {
                 </Accordion>
 
                 {/* Checkout Button */}
-                <Button
+                {/* <Button
                     className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white mt-4"
                     onClick={handleCheckout}
                 >
                     Proceed to Checkout
-                </Button>
+                </Button> */}
             </main>
 
             <BottomNavBar />
