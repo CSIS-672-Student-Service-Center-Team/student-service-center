@@ -128,7 +128,7 @@ export default function DiningPage() {
         <div className="flex flex-col min-h-screen bg-gray-50">
             <Header title="Dining" isHomeScreen={false} />
 
-            <main className="flex-1 p-4 space-y-6 pt-16">
+            <main className="flex-1 text-xl p-4 space-y-9 pt-16">
                 {/* Meal Card Section */}
                 <Card>
                     <CardHeader>
@@ -136,7 +136,7 @@ export default function DiningPage() {
                     </CardHeader>
                     <CardContent className="space-y-6">
                         {/* Location Dropdown */}
-                        <div className="mb-4">
+                        <div className="mb-4 overflow-visible relative">
                             <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
                             <select
                                 id="location"
@@ -144,6 +144,7 @@ export default function DiningPage() {
                                 onChange={handleLocationChange}
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 aria-label="Select dining location"
+                                
                             >
                                 <option value="">Select a location</option>
                                 <option value="Bistro">Bistro</option>
@@ -169,7 +170,7 @@ export default function DiningPage() {
 
                 {/* Dietary Preferences Toggle Button */}
                 <Button
-                    className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white flex items-center justify-center space-x-2"
+                    className="text-2xl h-[3rem] w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white flex items-center justify-center space-x-2"
                     onClick={toggleDietaryPreferences}
                     aria-expanded={isDietaryOverlayOpen ? "true" : "false"}
                     aria-controls="dietary-preferences"
@@ -210,21 +211,21 @@ export default function DiningPage() {
                 {/* Navigation Buttons */}
                 <div className="grid grid-cols-2 gap-4 mt-4">
                     <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
+                        className="text-xl h-[3rem] bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
                         onClick={() => router.push('/dining/weekly-meals')}
                         aria-label="Go to weekly menu"
                     >
                         Weekly Menu
                     </Button>
                     <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
+                        className="text-xl h-[3rem] bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
                         onClick={() => router.push('/dining/meal-plan')}
                         aria-label="Go to meal plan"
                     >
                         Meal Plan
                     </Button>
                     <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
+                        className="text-xl h-[3rem] bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
                         onClick={() => router.push('/dining/offered-meal-plans')}
                         aria-label="Go to offered meal plans"
                     >
@@ -232,7 +233,7 @@ export default function DiningPage() {
                     </Button>
                     {/* New Button for Meal Plan History */}
                     <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
+                        className="text-xl h-[3rem] bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white"
                         onClick={() => router.push('/dining/meal-plan-history')}
                         aria-label="Go to meal plan history"
                     >

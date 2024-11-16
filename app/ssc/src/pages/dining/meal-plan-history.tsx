@@ -72,24 +72,24 @@ export default function MealPlanHistoryPage() {
                 {/* Meal Plan History Section */}
                 <Card className="shadow-lg">
                     <CardHeader>
-                        <CardTitle className="text-xl font-semibold text-center">
+                        <CardTitle className="text-2xl font-semibold text-center">
                             Previous Meal Plan Selections
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         {mealPlanHistory.length === 0 ? (
-                            <p className="text-center text-sm text-gray-500">
+                            <p className="text-center text-lg text-gray-500">
                                 No meal plans selected yet.
                             </p>
                         ) : (
                             mealPlanHistory.map((mealPlan, index) => (
                                 <div key={index} className="flex justify-between items-center p-4 border-b border-gray-200 rounded-lg">
                                     <div>
-                                        <div className="text-lg font-medium text-gray-800">{mealPlan.date}</div>
-                                        <div className="text-sm text-gray-600">{mealPlan.planType}</div>
+                                        <div className="text-xl font-medium text-gray-800">{mealPlan.date}</div>
+                                        <div className="text-lg text-gray-600">{mealPlan.planType}</div>
                                     </div>
                                     <Button 
-                                        className="bg-[#8B1A1A] text-white hover:bg-[#8B1A1A]/90"
+                                        className="text-xl h-[3rem] h-[4rem] bg-[#8B1A1A] text-white hover:bg-[#8B1A1A]/90"
                                         onClick={() => handleViewDetails(mealPlan)}
                                         aria-label={`View details for ${mealPlan.date}`}
                                     >
@@ -104,25 +104,18 @@ export default function MealPlanHistoryPage() {
                 {/* Action Buttons */}
                 <div className="grid grid-cols-2 gap-4">
                     <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                        onClick={() => router.push('/dining/weekly-menu')}
+                        className="text-2xl h-[5rem] bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
+                        onClick={() => router.push('/dining/weekly-meals')}
                         aria-label="Go to Weekly Menu"
                     >
                         Weekly Menu
                     </Button>
                     <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
+                        className="text-2xl h-[5rem] bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
                         onClick={() => router.push('/dining/meal-plan')}
                         aria-label="Go to Meal Plan"
                     >
                         Meal Plan
-                    </Button>
-                    <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                        onClick={() => router.push('/dining/meal-plan-history')}
-                        aria-label="Go to Meal Plan History"
-                    >
-                        Meal Plan History
                     </Button>
                 </div>
             </main>
