@@ -22,7 +22,7 @@ const IdCard_db: React.FC = () => {
         const fetchUserData = async () => {
             try {
                 console.log('Fetching user data for ID:', currentUserId);
-                const response = await fetch(`/api/users?userId=${currentUserId}`);
+                const response = await fetch(`/api/users_db?userId=${currentUserId}`);
                 console.log('Response status:', response.status);
 
                 if (response.ok) {
