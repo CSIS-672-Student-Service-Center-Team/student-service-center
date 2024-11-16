@@ -11,6 +11,7 @@ import {
     MealSection,
     DietaryPreference
 } from '@/lib/dining-utils';
+import DietaryOverlay  from '@/components/ui/dietaryOverlay'
 
 
 export default function DiningPage() {
@@ -27,7 +28,7 @@ export default function DiningPage() {
         { id: "halal", label: "Halal" },
         { id: "dairy-free", label: "Dairy-free" },
         { id: "nut-free", label: "Nut-free" }
-    ]
+    ]; // NOTE: This will need to be loaded asynchronously later
 
     const mealsData: Record<string, MealCategory[]> = {
         Bistro: [
@@ -88,7 +89,7 @@ export default function DiningPage() {
                 ]
             }
         ]
-    };
+    };// NOTE: this will need to be loaded asynchronously later
 
     // Update meals when location changes
     useEffect(() => {
@@ -197,42 +198,15 @@ export default function DiningPage() {
                         </CardContent>
                     </Card>
                 )} */}
-
-                {isDietaryOverlayOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white p-6 rounded-lg w-full max-w-md relative">
-                            <button
-                                onClick={handleCloseOverlay}
-                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                                aria-label="Close"
-                            >
-                                <X size={24} />
-                            </button>
-                            <h2 className="text-xl font-bold mb-4">Select Dietary Preferences</h2>
-                            <div className="space-y-4">
-                                {dietaryOptions.map((option) => (
-                                    <div key={option.id} className="flex items-center space-x-2">
-                                        <Checkbox
-                                            id={option.id}
-                                            checked={preferences.includes(option.id)}
-                                            onChange={(checked) => 
-                                                handlePreferenceChange(option.id, 
-                                                    !preferences.includes(option.id)
-                                                )}
-                                        />
-                                        <label htmlFor={option.id}>{option.label}</label>
-                                    </div>
-                                ))}
-                            </div>
-                            <Button
-                                onClick={handleSavePreferences}
-                                className="w-full mt-6 bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                            >
-                                Save Preferences
-                            </Button>
-                        </div>
-                    </div>
-                )}
+                {isDietaryOverlayOpen && 
+                    <DietaryOverlay 
+                        preferences={preferences}
+                        dietaryPreferences={dietaryOptions}
+                        onClose={handleCloseOverlay}
+                        onPreferenceChange={handlePreferenceChange}
+                        onSave={handleSavePreferences}
+                    />
+                }
 
                 {/* Navigation Buttons */}
                 <div className="grid grid-cols-2 gap-4 mt-4">
