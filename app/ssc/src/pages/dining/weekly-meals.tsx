@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useCallback, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -10,14 +12,35 @@ import {
 import Header from "@/components/ui/pageHeader"
 import BottomNavBar from "@/components/ui/navBar"
 import { ChevronDown, ChevronUp, X } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
-interface DietaryPreference {
-    id: string
-    label: string
+import {
+    MealCategory,
+    MealSection,
+    DietaryPreference,
+} from '@/lib/dining-utils';
+import DietaryOverlay, {
+    DietaryOverlayProps
+} from '@/components/ui/dietaryOverlay'
+import { Card } from '@/components/ui/card'
+
+
+interface Meal {
+    mealType: string
+    menu: string
+}
+
+interface LocationMenu {
+    [key: string]: Meal[] // Key will be the day, value is an array of meals for that day
 }
 
 export default function WeeklyMealsPage() {
+    const router = useRouter()
     const [preferences, setPreferences] = useState<string[]>([])
+    const [isDietaryOverlayOpen, setDietaryOverlay] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState<string>('Bistro')
+    const [menu, setMenu] = useState<LocationMenu>({});
+
     const [expandedDays, setExpandedDays] = useState<string[]>([])
     const [isOverlayOpen, setIsOverlayOpen] = useState(false)
 
@@ -30,11 +53,11 @@ export default function WeeklyMealsPage() {
         { id: "nut-free", label: "Nut-free" }
     ]
 
-    const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
     useEffect(() => {
         const today = new Date().getDay()
-        const currentDay = weekDays[today - 1] // Adjust for 0-indexed array
+        const currentDay = days[today - 1] // Adjust for 0-indexed array
         if (currentDay) {
             setExpandedDays([currentDay.toLowerCase()])
         }
@@ -50,110 +73,151 @@ export default function WeeklyMealsPage() {
 
     const handleToggleAll = useCallback(() => {
         setExpandedDays(prev =>
-            prev.length === weekDays.length ? [] : weekDays.map(day => day.toLowerCase())
+            prev.length === days.length ? [] : days.map(day => day.toLowerCase())
         )
-    }, [weekDays])
+    }, [days])
+
+    
+
+
+    const toggleDietaryPreferences = () => {
+        setDietaryOverlay(!isDietaryOverlayOpen);
+    };
 
     const handleSavePreferences = () => {
         console.log('Preferences saved:', preferences)
-        setIsOverlayOpen(false)
+        setDietaryOverlay(false);
+        // Replace this with actual API or localStorage call to persist user preferences
     }
 
     const handleCloseOverlay = () => {
-        setIsOverlayOpen(false)
+        setDietaryOverlay(false);
+    }
+
+    // Mock data for Bistro and Liberty menus
+    const bistroMenu: LocationMenu = {
+        Monday: [
+            { mealType: 'Breakfast', menu: 'Bistro Pancakes, Bacon' },
+            { mealType: 'Lunch', menu: 'Bistro Chicken Salad, Soup' },
+            { mealType: 'Dinner', menu: 'Bistro Grilled Salmon' },
+        ],
+        Tuesday: [
+            { mealType: 'Breakfast', menu: 'Bistro Scrambled Eggs, Toast' },
+            { mealType: 'Lunch', menu: 'Bistro Veggie Wrap' },
+            { mealType: 'Dinner', menu: 'Bistro Pasta Primavera' },
+        ],
+        // Add more days...
+    }
+
+    const libertyMenu: LocationMenu = {
+        Monday: [
+            { mealType: 'Breakfast', menu: 'Liberty Bagels, Coffee' },
+            { mealType: 'Lunch', menu: 'Liberty Turkey Sandwich' },
+            { mealType: 'Dinner', menu: 'Liberty Veggie Stir-Fry' },
+        ],
+        Tuesday: [
+            { mealType: 'Breakfast', menu: 'Liberty Oatmeal, Fruit' },
+            { mealType: 'Lunch', menu: 'Liberty Veggie Burger' },
+            { mealType: 'Dinner', menu: 'Liberty BBQ Chicken' },
+        ],
+        // Add more days...
+    }
+
+    useEffect(() => {
+        // Set the menu based on selected location
+        if (selectedLocation === 'Bistro') {
+            setMenu(bistroMenu)
+        } else if (selectedLocation === 'Liberty') {
+            setMenu(libertyMenu)
+        }
+    }, [selectedLocation])
+
+    const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedLocation(e.target.value)
+    }
+
+    const handleCheckout = () => {
+        // Placeholder for checkout logic
+        // You can route to the checkout page with the selected location and preferences
+        router.push(`/checkout?location=${selectedLocation}&preferences=${preferences.join(',')}`)
     }
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
             <Header title="Meals For The Week" isHomeScreen={false} />
 
-            <main className="flex-1 p-4 space-y-6 pt-20">
-                <Button
-                    onClick={() => setIsOverlayOpen(true)}
-                    className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                >
-                    Set Dietary Preferences
-                </Button>
+            <main className="flex-1 p-4 space-y-6 pt-16">
+                {/* Dietary Preferences Section */}
+                <Card className="bg-white shadow-sm border flex justify-center items-center">
 
-                {isOverlayOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                        <div className="bg-white p-6 rounded-lg w-full max-w-md relative">
-                            <button
-                                onClick={handleCloseOverlay}
-                                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                                aria-label="Close"
-                            >
-                                <X size={24} />
-                            </button>
-                            <h2 className="text-xl font-bold mb-4">Select Dietary Preferences</h2>
-                            <div className="space-y-4">
-                                {dietaryOptions.map((option) => (
-                                    <div key={option.id} className="flex items-center space-x-2">
-                                        <Checkbox
-                                            id={option.id}
-                                            checked={preferences.includes(option.id)}
-                                            onChange={(checked) => handlePreferenceChange(option.id, true)}
-                                        />
-                                        <label htmlFor={option.id}>{option.label}</label>
-                                    </div>
-                                ))}
-                            </div>
-                            <Button
-                                onClick={handleSavePreferences}
-                                className="w-full mt-6 bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                            >
-                                Save Preferences
-                            </Button>
-                        </div>
-                    </div>
-                )}
+                        <Button
+                            className="w-full h-[4rem] text-3xl bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white "
+                            onClick={toggleDietaryPreferences}
+                            aria-expanded={isDietaryOverlayOpen ? "true" : "false"}
+                            aria-controls="dietary-preferences"
+                            aria-label="Toggle dietary preferences"
+                        >
+                            Dietary Preferences
+                        </Button>
+                </Card>
 
-                <Button
-                    onClick={handleToggleAll}
-                    className="w-full mb-4 bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                >
-                    {expandedDays.length === weekDays.length ? (
-                        <>
-                            <ChevronUp className="mr-2 h-4 w-4" />
-                            Collapse All
-                        </>
-                    ) : (
-                        <>
-                            <ChevronDown className="mr-2 h-4 w-4" />
-                            Expand All
-                        </>
-                    )}
-                </Button>
+                {isDietaryOverlayOpen && 
+                    <DietaryOverlay 
+                        preferences={preferences}
+                        dietaryPreferences={dietaryOptions}
+                        onClose={handleCloseOverlay}
+                        onPreferenceChange={handlePreferenceChange}
+                        onSave={handleSavePreferences}
+                    />
+                }
+                {/* Location Dropdown */}
+                <div className="mb-6">
+                    <label htmlFor="location" className="block text-lg font-medium">Select Location</label>
+                    <select
+                        id="location"
+                        value={selectedLocation}
+                        onChange={handleLocationChange}
+                        className="mt-2 p-2 w-full border border-gray-300 rounded-md"
+                    >
+                        <option value="Bistro">Bistro</option>
+                        <option value="Liberty">Liberty</option>
+                    </select>
+                </div>
 
-                <Accordion type="multiple" value={expandedDays} onValueChange={setExpandedDays}>
-                    {weekDays.map((day) => (
+                {/* Weekly Meals Accordion Section */}
+                <Accordion type="single" collapsible className="space-y-4">
+                    {days.map((day) => (
                         <AccordionItem
                             key={day}
                             value={day.toLowerCase()}
-                            trigger={<AccordionTrigger>
-                                <span className="text-lg font-semibold">{day}</span>
-                            </AccordionTrigger>}
+                            trigger={
+                                <AccordionTrigger className="bg-[#8B1A1A] w-[60%] text-center h-[3rem] text-white p-2 rounded-md">
+                                    <span className="text-2xl font-semibold">{day}</span>
+                                </AccordionTrigger>
+                            }
                         >
 
                             <AccordionContent>
                                 <div className="space-y-4 p-2">
-                                    <div>
-                                        <h4 className="font-medium">Breakfast</h4>
-                                        <p className="text-sm text-muted-foreground">Menu not yet available</p>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-medium">Lunch</h4>
-                                        <p className="text-sm text-muted-foreground">Menu not yet available</p>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-medium">Dinner</h4>
-                                        <p className="text-sm text-muted-foreground">Menu not yet available</p>
-                                    </div>
+                                    {menu[day]?.map((meal, index) => (
+                                        <div key={index}>
+                                            <h4 className="font-medium">{meal.mealType}</h4>
+                                            <p className="text-lg text-muted-foreground">{meal.menu}</p>
+                                        </div>
+                                    )) || <p className="text-lg text-muted-foreground">Menu not yet available</p>}
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
                     ))}
                 </Accordion>
+
+                {/* Checkout Button */}
+                {/* <Button
+                    className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white mt-4"
+                    onClick={handleCheckout}
+                >
+                    Proceed to Checkout
+                </Button> */}
             </main>
 
             <BottomNavBar />
