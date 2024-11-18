@@ -42,12 +42,12 @@ export default function ParkingPassPage() {
 
   const handleGetPass = () => {
     console.log("Get a parking pass");
-    // router.push("/parking/getPass");
+    router.push("/parking/getPass");
   };
 
   const handleReturnPass = () => {
     console.log("Return a parking pass");
-    // router.push("/parking/returnPass");
+    router.push("/parking/returnPass");
   };
 
   return (
