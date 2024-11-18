@@ -38,12 +38,12 @@ export default function HomeScreen({onLogout}: { onLogout: () => void }) {
                 <div className="flex flex-col gap-6 mt-6">
                     <ButtonWrapper onClick={() => handleNavigation("/parking")}>
                         <Car className="w-12 h-12 text-[#8B1A1A]"/>
-                        <span className="text-lg font-medium text-[#8B1A1A]">Parking</span>
+                        <span className="text-lg font-medium text-[#8B1A1A]">PARKING</span>
                     </ButtonWrapper>
 
                     <ButtonWrapper onClick={() => handleNavigation("/dining/dining-page")}>
                         <Utensils className="w-12 h-12 text-[#8B1A1A]"/>
-                        <span className="text-lg font-medium text-[#8B1A1A]">Dining</span>
+                        <span className="text-lg font-medium text-[#8B1A1A]">DINING</span>
                     </ButtonWrapper>
 
                     <ButtonWrapper onClick={() => handleNavigation("/id")}>

@@ -4,152 +4,112 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
-import ActionButton from "@/components/ui/actionButton";
-import { Check, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ParkingLocationProps {
   name: string;
 }
 
-const ParkingLocation: React.FC<{
-  location: ParkingLocationProps;
-  isSelected: boolean;
-  onSelect: () => void;
-}> = ({ location, isSelected, onSelect }) => (
-  <button
-    onClick={onSelect}
-    className={cn(
-      "w-full flex justify-between items-center py-4 px-3 border-b border-gray-200",
-      isSelected ? "bg-gray-50" : "hover:bg-gray-50"
-    )}
-  >
-    <div className="flex items-center gap-3">
-      <div className="w-5 h-5 border rounded flex items-center justify-center">
-        {isSelected && <Check className="w-4 h-4 text-red-800" />}
-      </div>
-      <span className="text-lg">{location.name}</span>
-    </div>
-  </button>
-);
-
-interface PassActionButtonProps {
-  label: string;
-  onClick: () => void;
-  disabled?: boolean;
-  className?: string;
-}
-
-const PassActionButton: React.FC<PassActionButtonProps> = ({
-  label,
-  onClick,
-  disabled,
-}) => (
-  <button
-    onClick={onClick}
-    className={`w-full bg-white text-black text-xl font-normal py-4 px-8 rounded-full border-2 border-black shadow-[0_4px_8px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 active:scale-95 mb-4 ${
-      disabled ? "opacity-50 cursor-not-allowed" : ""
-    }`}
-    disabled={disabled}
-  >
-    {label}
-  </button>
-);
-
-const Modal: React.FC<{
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-}> = ({ isOpen, onClose, onConfirm }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Confirmation</h2>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            <X size={24} />
-          </button>
-        </div>
-        <p className="mb-4">
-          Are you sure you want to return your parking pass? You will be
-          refunded a pro-rated amount.
-        </p>
-        <div className="flex justify-end">
-          <button
-            onClick={onConfirm}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-          >
-            Confirm
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+const parkingLocations: ParkingLocationProps[] = [
+  { name: "St. Phillip's Street Garage" },
+  { name: "George Street Garage" },
+  { name: "Wentworth Street Garage" },
+  { name: "Aquarium Garage" },
+  { name: "Calhoun Street Garage" },
+  { name: "Marion Square Garage" },
+  { name: "Visitor's Center Garage" },
+];
 
 export default function ReturnParkingPassPage() {
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
   const router = useRouter();
-
-  const parkingLocations: ParkingLocationProps[] = [
-    { name: "St. Phillip's Street Garage" },
-    { name: "George Street Garage" },
-    { name: "Wentworth Street Garage" },
-    { name: "Aquarium Garage" },
-    { name: "Calhoun Street Garage" },
-    { name: "Marion Square Garage" },
-    { name: "Visitor's Center Garage" },
-  ];
 
   const handleReturnPass = () => {
     if (selectedLocation) {
-      setIsModalOpen(true);
+      setIsConfirming(true);
     }
   };
 
   const handleConfirm = () => {
-    setIsModalOpen(false);
+    // Here you would typically make an API call to process the return
     router.push("/parking");
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <Header title="Return Parking Pass" />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header title="Return Parking Pass" isHomeScreen={false} />
 
-      <main className="flex-1 flex flex-col p-6 mb-20">
-        <h2 className="text-2xl font-bold mb-4">Select Pass Location:</h2>
-        <div className="mb-6 rounded-lg overflow-hidden border border-gray-200">
-          {parkingLocations.map((location) => (
-            <ParkingLocation
-              key={location.name}
-              location={location}
-              isSelected={selectedLocation === location.name}
-              onSelect={() => setSelectedLocation(location.name)}
-            />
-          ))}
-        </div>
+      <main className="flex-1 container max-w-4xl mx-auto px-4 py-8 mb-20 pt-20">
+        <Card className="bg-white shadow-lg rounded-lg overflow-hidden">
+          <CardContent className="p-6">
+            {!isConfirming ? (
+              <>
+                <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                  Select Pass Location:
+                </h2>
+                <div className="space-y-2">
+                  {parkingLocations.map((location) => (
+                    <button
+                      key={location.name}
+                      onClick={() => setSelectedLocation(location.name)}
+                      className={cn(
+                        "w-full flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50 transition-colors",
+                        selectedLocation === location.name &&
+                          "bg-gray-100 border-[#841414]"
+                      )}
+                    >
+                      <span className="text-left">{location.name}</span>
+                      {selectedLocation === location.name && (
+                        <Check className="h-5 w-5 text-[#841414]" />
+                      )}
+                    </button>
+                  ))}
+                </div>
 
-        <div className="mt-auto">
-          <PassActionButton
-            label="Return Pass"
-            onClick={handleReturnPass}
-            disabled={!selectedLocation}
-            className={cn(!selectedLocation && "opacity-50 cursor-not-allowed")}
-          />
-        </div>
+                <Button
+                  onClick={handleReturnPass}
+                  disabled={!selectedLocation}
+                  className={cn(
+                    "w-full mt-8 bg-[#841414] hover:bg-[#9a1818] text-white text-lg py-6 rounded-full transition-all",
+                    !selectedLocation && "opacity-50 cursor-not-allowed"
+                  )}
+                >
+                  Return Pass
+                </Button>
+              </>
+            ) : (
+              <div className="text-center">
+                <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                  Confirm Pass Return
+                </h2>
+                <p className="mb-6 text-gray-600">
+                  Are you sure you want to return your parking pass for{" "}
+                  {selectedLocation}? You will be refunded a pro-rated amount.
+                </p>
+                <div className="space-x-4">
+                  <Button
+                    onClick={() => setIsConfirming(false)}
+                    variant="outline"
+                    className="px-6 py-2"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleConfirm}
+                    className="px-6 py-2 bg-[#841414] hover:bg-[#9a1818] text-white"
+                  >
+                    Confirm
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </main>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={handleConfirm}
-      />
 
       <NavBar />
     </div>

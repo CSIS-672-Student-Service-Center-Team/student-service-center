@@ -42,12 +42,12 @@ export default function ParkingPassPage() {
 
   const handleGetPass = () => {
     console.log("Get a parking pass");
-    // router.push("/parking/getPass");
+    router.push("/parking/getPass");
   };
 
   const handleReturnPass = () => {
     console.log("Return a parking pass");
-    // router.push("/parking/returnPass");
+    router.push("/parking/returnPass");
   };
 
   return (
@@ -56,7 +56,7 @@ export default function ParkingPassPage() {
 
       <main className="flex-1 container max-w-4xl mx-auto px-4 py-8 mb-20 pt-20">
         <h2 className="text-3xl font-bold mb-6 text-[#841414]">
-          Manage Your Parking Passes
+          MANAGE YOUR PARKING PASSES
         </h2>
 
         <div className="grid gap-6 md:grid-cols-2">
@@ -78,7 +78,7 @@ export default function ParkingPassPage() {
             className="bg-[#841414] hover:bg-[#9a1818] text-white flex items-center justify-center"
           >
             <PlusCircle className="mr-2 h-4 w-4" />
-            <span>Get A Parking Pass</span>
+            <span>GET A PARKING PASS</span>
           </Button>
           <Button
             onClick={handleReturnPass}
@@ -86,7 +86,7 @@ export default function ParkingPassPage() {
             className="border-[#841414] text-[#841414] hover:bg-[#841414] hover:text-white flex items-center justify-center"
           >
             <ArrowLeftCircle className="mr-2 h-4 w-4" />
-            <span>Return A Parking Pass</span>
+            <span>RETURN A PARKING PASS</span>
           </Button>
         </div>
       </main>

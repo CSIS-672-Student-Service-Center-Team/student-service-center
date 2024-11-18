@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
-import ActionButton from "@/components/ui/actionButton";
-import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Check, MapPin, List } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ViewToggleProps {
@@ -18,48 +19,32 @@ const ViewToggle: React.FC<ViewToggleProps> = ({
   activeView,
   onViewChange,
 }) => (
-  <div className="flex rounded-lg overflow-hidden border border-red-800 mb-6">
+  <div className="inline-flex rounded-lg overflow-hidden border border-[#841414] mb-6">
     <button
       onClick={() => onViewChange("map")}
-      className={`flex-1 py-2 px-6 text-lg ${
-        activeView === "map" ? "bg-red-800 text-white" : "bg-white text-red-800"
-      }`}
+      className={cn(
+        "flex items-center justify-center py-2 px-4 text-sm font-medium transition-colors",
+        activeView === "map"
+          ? "bg-[#841414] text-white"
+          : "bg-white text-[#841414] hover:bg-[#841414] hover:text-white"
+      )}
     >
+      <MapPin className="mr-2 h-4 w-4" />
       Map View
     </button>
     <button
       onClick={() => onViewChange("list")}
-      className={`flex-1 py-2 px-6 text-lg ${
+      className={cn(
+        "flex items-center justify-center py-2 px-4 text-sm font-medium transition-colors",
         activeView === "list"
-          ? "bg-red-800 text-white"
-          : "bg-white text-red-800"
-      }`}
+          ? "bg-[#841414] text-white"
+          : "bg-white text-[#841414] hover:bg-[#841414] hover:text-white"
+      )}
     >
+      <List className="mr-2 h-4 w-4" />
       List View
     </button>
   </div>
-);
-interface PassActionButtonProps {
-  label: string;
-  onClick: () => void;
-  disabled?: boolean;
-  className?: string;
-}
-
-const PassActionButton: React.FC<PassActionButtonProps> = ({
-  label,
-  onClick,
-  disabled,
-}) => (
-  <button
-    onClick={onClick}
-    className={`w-full bg-white text-black text-xl font-normal py-4 px-8 rounded-full border-2 border-black shadow-[0_4px_8px_rgba(0,0,0,0.25)] transition-transform hover:scale-105 active:scale-95 mb-4 ${
-      disabled ? "opacity-50 cursor-not-allowed" : ""
-    }`}
-    disabled={disabled}
-  >
-    {label}
-  </button>
 );
 
 interface ParkingLocationProps {
@@ -76,13 +61,13 @@ const ParkingLocation: React.FC<{
   <button
     onClick={onSelect}
     className={cn(
-      "w-full flex justify-between items-center py-4 px-3 border-b border-gray-200",
+      "w-full flex justify-between items-center py-4 px-4 border-b border-gray-200 transition-colors",
       isSelected ? "bg-gray-50" : "hover:bg-gray-50"
     )}
   >
     <div className="flex items-center gap-3">
-      <div className="w-5 h-5 border rounded flex items-center justify-center">
-        {isSelected && <Check className="w-4 h-4 text-red-800" />}
+      <div className="w-5 h-5 border border-[#841414] rounded flex items-center justify-center">
+        {isSelected && <Check className="w-4 h-4 text-[#841414]" />}
       </div>
       <span
         className={cn(
@@ -95,16 +80,20 @@ const ParkingLocation: React.FC<{
     </div>
     <span
       className={cn(
-        "px-3 py-1 rounded-md text-white font-medium",
-        location.status === "Full" ? "bg-red-500" : "bg-green-500"
+        "px-3 py-1 rounded-full text-sm font-medium",
+        location.status === "Full"
+          ? "bg-red-100 text-red-800"
+          : location.status === "Limited"
+          ? "bg-yellow-100 text-yellow-800"
+          : "bg-green-100 text-green-800"
       )}
     >
-      {location.status === "Full" ? "Full" : location.spaces}
+      {location.status === "Full" ? "FULL" : location.spaces}
     </span>
   </button>
 );
 
-export default function GetParkingPassPage() {
+export default function Component() {
   const [activeView, setActiveView] = useState<"map" | "list">("map");
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const router = useRouter();
@@ -119,59 +108,72 @@ export default function GetParkingPassPage() {
   ];
 
   const handleCheckout = () => {
-    router.push("/checkout?price=$500&type=parking&from=getPass");
+    router.push("/checkout?price=250&type=parking&from=getPass");
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <Header title="Parking Pass" />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header title="Get Parking Pass" isHomeScreen={false} />
 
-      <main className="flex-1 flex flex-col p-6 mb-20">
-        <ViewToggle activeView={activeView} onViewChange={setActiveView} />
-
-        <div className="flex-1 mb-6 flex flex-col">
-          {activeView === "map" ? (
-            <div className="flex-1 flex flex-col space-y-4">
-              <Image
-                src="/parking-availability-map.png"
-                alt="Campus Parking Map"
-                width={800}
-                height={1200}
-                className="w-full h-auto rounded-lg border border-gray-200 flex-1"
+      <main className="flex-1 container max-w-4xl mx-auto px-4 py-8 mb-20 pt-20">
+        <Card className="bg-white shadow-lg rounded-lg overflow-hidden">
+          <CardContent className="p-8">
+            <div className="flex justify-center mb-8">
+              <ViewToggle
+                activeView={activeView}
+                onViewChange={setActiveView}
               />
-              <div className="mt-auto">
-                <ActionButton
-                  label="Select Location"
-                  onClick={() => setActiveView("list")}
-                />
-              </div>
             </div>
-          ) : (
-            <div className="rounded-lg overflow-hidden border border-gray-200 flex-1">
-              {parkingLocations.map((location) => (
-                <ParkingLocation
-                  key={location.name}
-                  location={location}
-                  isSelected={selectedLocation === location.name}
-                  onSelect={() => {
-                    if (location.status !== "Full") {
-                      setSelectedLocation(location.name);
-                    }
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
 
-        <div className="mt-auto">
-          <PassActionButton
-            label="Checkout"
-            onClick={handleCheckout}
-            disabled={!selectedLocation}
-            className={cn(!selectedLocation && "opacity-50 cursor-not-allowed")}
-          />
-        </div>
+            <div className="mb-8">
+              {activeView === "map" ? (
+                <div className="space-y-6">
+                  <Image
+                    src="/parking-availability-map.png"
+                    alt="Campus Parking Map"
+                    width={1000}
+                    height={750}
+                    className="w-full h-auto rounded-lg border border-gray-200"
+                  />
+                  <Button
+                    onClick={() => setActiveView("list")}
+                    className="w-full bg-[#841414] hover:bg-[#9a1818] text-white py-3"
+                  >
+                    Select Location
+                  </Button>
+                </div>
+              ) : (
+                <div className="rounded-lg overflow-hidden border border-gray-200">
+                  {parkingLocations.map((location) => (
+                    <ParkingLocation
+                      key={location.name}
+                      location={location}
+                      isSelected={selectedLocation === location.name}
+                      onSelect={() => {
+                        if (location.status !== "Full") {
+                          setSelectedLocation(location.name);
+                        }
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Button
+              onClick={handleCheckout}
+              disabled={!selectedLocation}
+              className={cn(
+                "w-full bg-[#841414] hover:bg-[#9a1818] text-white text-lg py-6 rounded-full transition-all",
+                !selectedLocation && "opacity-50 cursor-not-allowed"
+              )}
+            >
+              {selectedLocation
+                ? `Checkout - ${selectedLocation}`
+                : "Select a location"}
+            </Button>
+          </CardContent>
+        </Card>
       </main>
 
       <NavBar />
