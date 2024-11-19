@@ -50,7 +50,7 @@ const StudentIDPage: React.FC = () => {
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
-          photoUrl="/placeholder.svg?height=100&width=100"
+          photoUrl="/Student_ID_Photo.jpg"
         />
 
         <div className="flex flex-col gap-6 mt-6">

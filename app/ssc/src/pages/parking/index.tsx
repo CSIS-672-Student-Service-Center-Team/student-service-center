@@ -18,7 +18,7 @@ export default function ParkingPage() {
             onClick={onClick}
             className={cn(
                 "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl",
-                "shadow-lg hover:shadow-xl transition-shadow",
+                "shadow-lg hover:shadow-xl transition-shadow drop-shadow",
                 "flex flex-col items-center justify-center gap-2",
                 "p-4"
             )}
