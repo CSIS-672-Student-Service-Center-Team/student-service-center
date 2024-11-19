@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({
           <ArrowLeft size={24} />
         </button>
       )}
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1 className="text-2xl font-bold">{title.toUpperCase()}</h1>
       <div className="w-6"></div>
     </header>
   );

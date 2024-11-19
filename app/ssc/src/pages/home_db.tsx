@@ -6,6 +6,7 @@ import NavBar from "@/components/ui/navBar"
 import IdCard_db from "@/components/ui/idCard_db"
 import {Car, Utensils, CreditCard} from "lucide-react"
 import {cn} from "@/lib/utils"
+import ButtonWrapper from "@/components/ui/ButtonWrapper";
 
 export default function HomeScreen({onLogout}: { onLogout: () => void }) {
     const router = useRouter()
@@ -14,19 +15,6 @@ export default function HomeScreen({onLogout}: { onLogout: () => void }) {
         router.push(path)
     }
 
-    const ButtonWrapper = ({children, onClick}: { children: React.ReactNode, onClick: () => void }) => (
-        <button
-            onClick={onClick}
-            className={cn(
-                "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl",
-                "shadow-lg hover:shadow-xl transition-shadow",
-                "flex flex-col items-center justify-center gap-2",
-                "p-4"
-            )}
-        >
-            {children}
-        </button>
-    )
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">

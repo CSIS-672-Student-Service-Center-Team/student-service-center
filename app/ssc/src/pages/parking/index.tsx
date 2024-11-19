@@ -5,6 +5,7 @@ import Header from "@/components/ui/pageHeader"
 import NavBar from "@/components/ui/navBar"
 import { Car, Ticket, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
+import ButtonWrapper from "@/components/ui/ButtonWrapper";
 
 export default function ParkingPage() {
     const router = useRouter()
@@ -12,20 +13,6 @@ export default function ParkingPage() {
     const handleNavigation = (path: string) => {
         router.push(path)
     }
-
-    const ButtonWrapper = ({ children, onClick }: { children: React.ReactNode, onClick: () => void }) => (
-        <button
-            onClick={onClick}
-            className={cn(
-                "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl",
-                "shadow-lg hover:shadow-xl transition-shadow drop-shadow",
-                "flex flex-col items-center justify-center gap-2",
-                "p-4"
-            )}
-        >
-            {children}
-        </button>
-    )
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">

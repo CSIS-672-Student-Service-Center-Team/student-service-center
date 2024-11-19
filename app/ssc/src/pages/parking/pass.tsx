@@ -56,7 +56,7 @@ export default function ParkingPassPage() {
 
       <main className="flex-1 container max-w-4xl mx-auto px-4 py-8 mb-20 pt-20">
         <h2 className="text-3xl font-bold mb-6 text-[#841414]">
-          MANAGE YOUR PARKING PASSES
+          Manage Your Parking Passes
         </h2>
 
         <div className="grid gap-6 md:grid-cols-2">
