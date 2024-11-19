@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface IdCardProps {
   name: string;
@@ -10,29 +12,37 @@ interface IdCardProps {
 
 const IdCard: React.FC<IdCardProps> = ({ name, idNumber, email, photoUrl }) => {
   return (
-    <div className="bg-red-800 p-4 rounded-2xl flex items-center w-full h-[190px]">
-      <Image
-        src={photoUrl}
-        alt="Student Photo"
-        width={120}
-        height={120}
-        className="rounded-full mr-4"
-      />
-      <div className="flex flex-col justify-center">
-        <p className="text-white text-xl font-semibold">{name}</p>
-        <p className="text-white">{idNumber}</p>
-        <p className="text-white">{email}</p>
-      </div>
-    </div>
+    <Card className="w-full overflow-hidden">
+      <CardContent className="p-0">
+        <div className="bg-gradient-to-r from-red-800 to-red-900 p-4 flex items-center">
+          <div className="relative w-24 h-24 mr-4">
+            <Image
+              src={photoUrl}
+              alt="Student Photo"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg border-2 border-white shadow-lg"
+            />
+          </div>
+          <div className="flex flex-col justify-center">
+            <h2 className="text-white text-xl font-bold mb-1">{name}</h2>
+            <Badge variant="secondary" className="mb-1 w-fit text-xs">
+              {idNumber}
+            </Badge>
+            <p className="text-red-100 text-xs">{email}</p>
+          </div>
+        </div>
+        <div className="bg-white p-3">
+          <p className="text-red-800 text-xs font-semibold mb-0.5">
+            Student Services Center
+          </p>
+          <p className="text-gray-600 text-[10px]">
+            Valid for the current academic year
+          </p>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
 export default IdCard;
-
-// Note: This component currently uses placeholder data.
-// In the future, it will display the logged-in user's actual information:
-// - name
-// - ID number
-// - email
-// - student ID photo
-// Remove the placeholder data when implementing the actual user data fetching logic.
