@@ -24,7 +24,7 @@ export default function ProfilePage() {
     email: "johndoe@cofc.edu",
     address: "123 Sesame Street",
     phoneNumber: "(678) 999-8212",
-    photoUrl: "/ssc-logo.png",
+    photoUrl: "/Student_ID_Photo.jpg",
   };
 
   return (
