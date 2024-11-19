@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import Header from "@/components/ui/pageHeader";
 import BottomNavBar from "@/components/ui/navBar";
 import { useRouter } from "next/navigation";
-import { CreditCard, Check } from "lucide-react";
+import { CreditCard, Check, Info } from "lucide-react";
 
 interface MealPlanOption {
   id: string;
@@ -87,89 +87,96 @@ export default function OfferedMealPlansPage() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="Meal Plans" isHomeScreen={false} />
 
-      <main className="flex-1 p-4 space-y-6 pt-16">
-        <Card className="bg-white shadow-sm border">
+      <main className="flex-1 p-4 space-y-6 pt-20 pb-24">
+        <Card className="bg-white shadow-sm border rounded-xl">
           <CardContent className="p-4">
-            <h2 className="text-[#8B1A1A] font-semibold text-lg mb-2">
+            <h2 className="text-[#8B1A1A] font-semibold text-xl mb-3">
               Your Current Meal Plan
             </h2>
-            <p className="text-gray-600">
-              Some information about your meal plan.
-            </p>
-            <p className="text-gray-600">
-              Here you can review and select your preferred meal plan options
-              for the year or semester.
+            <div className="space-y-2">
+              <p className="text-gray-700">
+                <span className="font-medium">Plan:</span> 12 Meals Per Week
+              </p>
+              <p className="text-gray-700">
+                <span className="font-medium">Remaining Balance:</span> $750.25
+              </p>
+              <p className="text-gray-700">
+                <span className="font-medium">Meals Left This Week:</span> 8
+              </p>
+              <p className="text-gray-700">
+                <span className="font-medium">Plan Expires:</span> May 15, 2025
+              </p>
+            </div>
+            <p className="mt-4 text-sm text-gray-600">
+              Visit the dining hall or use the mobile app to check your daily
+              meal credits and special offers.
             </p>
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="space-y-4">
           {mealPlans.map((plan) => (
             <Card
               key={plan.id}
-              className="bg-[#8B1A1A] text-white shadow-lg hover:shadow-xl transition-shadow"
+              className="bg-[#841414] text-white shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-3xl overflow-hidden"
             >
-              <CardContent className="p-6 flex flex-col h-full">
-                <div className="mb-4">
-                  <h3
-                    className="text-lg font-semibold"
-                    id={`meal-plan-title-${plan.id}`}
-                  >
-                    Meals
-                  </h3>
-                  <p
-                    className="text-2xl font-bold"
-                    aria-labelledby={`meal-plan-title-${plan.id}`}
-                  >
-                    ${getPrice(plan).toFixed(2)}
-                  </p>
+              <CardContent className="p-0">
+                <div className="p-6 pb-0">
+                  <div className="flex justify-between items-start mb-6">
+                    <div>
+                      <h3 className="text-2xl font-bold mb-1">Meals</h3>
+                      <p className="text-4xl font-bold">
+                        ${getPrice(plan).toFixed(2)}
+                      </p>
+                    </div>
+                    <div className="flex items-center text-lg">
+                      <CreditCard className="w-6 h-6 mr-3" />
+                      <span>{plan.mealsPerWeek} Meals Per Week</span>
+                    </div>
+                  </div>
+                  <div className="flex items-start mb-4">
+                    <Info className="w-5 h-5 mr-2 flex-shrink-0 mt-1" />
+                    <p className="text-sm">{plan.description}</p>
+                  </div>
                 </div>
 
-                <div className="flex items-center mb-4">
-                  <CreditCard className="w-5 h-5 mr-2" aria-hidden="true" />
-                  <span>{plan.mealsPerWeek} Meals Per Week</span>
-                </div>
-
-                <p className="text-sm mb-4">{plan.description}</p>
-
-                <div className="flex mb-4 bg-[#6B1414] rounded-lg p-1">
-                  <Button
-                    variant="ghost"
-                    className={`flex-1 ${
-                      selectedTypes[plan.id] === "Year"
-                        ? "bg-[#4C0F0F] text-white"
-                        : "text-white"
-                    } transition-colors`}
+                <div className="flex border-t border-b border-white">
+                  <button
                     onClick={() => handleTypeChange(plan.id, "Year")}
-                    aria-pressed={selectedTypes[plan.id] === "Year"}
-                    aria-label={`Select Year plan for ${plan.mealsPerWeek} meals per week`}
+                    className={`flex-1 py-4 px-6 text-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 ease-in-out text-white
+                      ${
+                        selectedTypes[plan.id] === "Year"
+                          ? "bg-[#BFA87C]"
+                          : "bg-[#841414] hover:bg-[#9a1818]"
+                      }`}
                   >
                     Year
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className={`flex-1 ${
-                      selectedTypes[plan.id] === "Semester"
-                        ? "bg-[#4C0F0F] text-white"
-                        : "text-white"
-                    } transition-colors`}
+                    {selectedTypes[plan.id] === "Year" && (
+                      <Check className="h-5 w-5 ml-2" />
+                    )}
+                  </button>
+                  <button
                     onClick={() => handleTypeChange(plan.id, "Semester")}
-                    aria-pressed={selectedTypes[plan.id] === "Semester"}
-                    aria-label={`Select Semester plan for ${plan.mealsPerWeek} meals per week`}
+                    className={`flex-1 py-4 px-6 text-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 ease-in-out border-l border-white text-white
+                      ${
+                        selectedTypes[plan.id] === "Semester"
+                          ? "bg-[#BFA87C]"
+                          : "bg-[#841414] hover:bg-[#9a1818]"
+                      }`}
                   >
                     Semester
-                  </Button>
+                    {selectedTypes[plan.id] === "Semester" && (
+                      <Check className="h-5 w-5 ml-2" />
+                    )}
+                  </button>
                 </div>
 
-                <Button
-                  className="mt-auto bg-[#4C0F0F] hover:bg-[#5F1212] text-white transition-all"
+                <button
+                  className="w-full bg-[#841414] hover:bg-[#9a1818] text-white text-xl py-4 px-6 border-t border-white transition-all duration-300 ease-in-out flex items-center justify-center rounded-b-3xl"
                   onClick={() => handleCheckout(plan)}
-                  aria-label={`Proceed to checkout for ${
-                    plan.mealsPerWeek
-                  } meals per week, priced at $${getPrice(plan).toFixed(2)}`}
                 >
                   Checkout
-                </Button>
+                </button>
               </CardContent>
             </Card>
           ))}
