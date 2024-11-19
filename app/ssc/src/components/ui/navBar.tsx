@@ -26,7 +26,7 @@ const NavBar: React.FC = () => {
       >
         <Bell size={32} />
         {unreadCount > 0 && (
-          <span className="absolute bottom-5 right-11 bg-yellow-400 text-red-800 rounded-full w-4 h-4 flex items-center justify-center text-xs font-bold">
+          <span className="absolute bottom-5 right-11 bg-yellow-400 text-red-800 rounded-full w-4 h-4 flex items-center justify-center text-xs font-bold animate-bounce">
             {unreadCount}
           </span>
         )}
