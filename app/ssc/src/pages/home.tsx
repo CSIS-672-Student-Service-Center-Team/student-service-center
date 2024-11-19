@@ -24,7 +24,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
     <button
       onClick={onClick}
       className={cn(
-        "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl",
+        "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl drop-shadow-lg",
         "shadow-lg hover:shadow-xl transition-shadow",
         "flex flex-col items-center justify-center gap-2",
         "p-4"
@@ -38,12 +38,13 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="Home" isHomeScreen={true} onLogout={onLogout} />
 
-      <main className="flex-1 p-6 pt-20 pb-24">
+      <main className={cn("flex-1 p-6 pt-20 pb-24", "")}>
         <IdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
           photoUrl="/Student_ID_Photo.jpg"
+          
         />
 
         <div className="flex flex-col gap-6 mt-6">
