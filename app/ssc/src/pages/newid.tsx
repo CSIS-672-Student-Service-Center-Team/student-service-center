@@ -48,7 +48,7 @@ const NewStudentIDPage: React.FC = () => {
             name="John Doe"
             idNumber="#123456789"
             email="johndoe@cofc.edu"
-            photoUrl={selectedImage || "/ssc-logo.png"}
+            photoUrl={selectedImage || "/Student_ID_Photo.jpg"}
           />
         </div>
 
