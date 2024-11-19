@@ -4,13 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/ui/navBar";
 import Header from "@/components/ui/pageHeader";
-
-interface Notification {
-  id: string;
-  type: "warning" | "info" | "success";
-  message: string;
-  dismissible?: boolean;
-}
+import { Notification } from "@/components/notifications/notification"
 
 export default function Component() {
   const [notifications, setNotifications] = useState<Notification[]>([

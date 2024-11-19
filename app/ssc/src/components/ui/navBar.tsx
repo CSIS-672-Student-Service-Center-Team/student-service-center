@@ -1,9 +1,20 @@
 import React from "react";
 import { Home, Bell, User } from "lucide-react";
 import { useRouter } from "next/router";
+import { Notification } from "@/components/notifications/notification";
+import { mockNotifications } from "@/mocks/mockNotes";
 
-const NavBar: React.FC = () => {
+interface NavBarProps {
+  notifications?: Array<Notification>;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ notifications }) => {
   const router = useRouter();
+
+  // Boilerplate for notes
+  if (!notifications) {
+    notifications = mockNotifications;
+  }
 
   const handleNavigation = (path: string) => {
     router.push(path);
@@ -22,7 +33,12 @@ const NavBar: React.FC = () => {
         className="text-white flex-1 flex justify-center"
         onClick={() => handleNavigation("/notification")}
       >
-        <Bell size={32} />
+        <Bell size={32} /><div className="relative">
+        {notifications && (<span className="absolute -top-4 -right-4  bg-blue-500 text-white text-xs rounded-full h-7 w-7 flex items-center justify-center">
+          {notifications.length}
+        </span>
+        )}
+        </div>
       </button>
       <div className="w-px h-12 bg-white"></div>
       <button
