@@ -12,7 +12,7 @@ interface IdCardProps {
 
 const IdCard: React.FC<IdCardProps> = ({ name, idNumber, email, photoUrl }) => {
   return (
-    <Card className="w-full overflow-hidden">
+    <Card className="w-full overflow-hidden border-2 border-[#8B1A1A] drop-shadow-lg">
       <CardContent className="p-0">
         <div className="bg-gradient-to-r from-red-800 to-red-900 p-4 flex items-center">
           <div className="relative w-24 h-24 mr-4">
