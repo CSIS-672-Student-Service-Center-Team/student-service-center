@@ -1,9 +1,11 @@
 import React from "react";
 import { Home, Bell, User } from "lucide-react";
 import { useRouter } from "next/router";
+import { useNotification } from "@/context/NotificationContext";
 
 const NavBar: React.FC = () => {
   const router = useRouter();
+  const { unreadCount } = useNotification();
 
   const handleNavigation = (path: string) => {
     router.push(path);
@@ -19,10 +21,15 @@ const NavBar: React.FC = () => {
       </button>
       <div className="w-px h-12 bg-white"></div>
       <button
-        className="text-white flex-1 flex justify-center"
+        className="text-white flex-1 flex justify-center relative"
         onClick={() => handleNavigation("/notification")}
       >
         <Bell size={32} />
+        {unreadCount > 0 && (
+          <span className="absolute bottom-5 right-11 bg-yellow-400 text-red-800 rounded-full w-4 h-4 flex items-center justify-center text-xs font-bold animate-bounce">
+            {unreadCount}
+          </span>
+        )}
       </button>
       <div className="w-px h-12 bg-white"></div>
       <button

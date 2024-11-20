@@ -1,226 +1,394 @@
-'use client'
+"use client";
 
-import React, { useState, useCallback, useEffect } from 'react'
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
-import Header from "@/components/ui/pageHeader"
-import BottomNavBar from "@/components/ui/navBar"
-import { ChevronDown, ChevronUp, X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-
-import {
-    MealCategory,
-    MealSection,
-    DietaryPreference,
-} from '@/lib/dining-utils';
-import DietaryOverlay, {
-    DietaryOverlayProps
-} from '@/components/ui/dietaryOverlay'
-import { Card } from '@/components/ui/card'
-
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import Header from "@/components/ui/pageHeader";
+import NavBar from "@/components/ui/navBar";
+import { ChevronDown, ChevronUp, Leaf, Wheat, Milk, Nut } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface Meal {
-    mealType: string
-    menu: string
+  mealType: string;
+  menu: string;
+  dietaryInfo: string[];
 }
 
 interface LocationMenu {
-    [key: string]: Meal[] // Key will be the day, value is an array of meals for that day
+  [key: string]: Meal[];
+}
+
+interface DietaryPreference {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
 }
 
 export default function WeeklyMealsPage() {
-    const router = useRouter()
-    const [preferences, setPreferences] = useState<string[]>([])
-    const [isDietaryOverlayOpen, setDietaryOverlay] = useState(false);
-    const [selectedLocation, setSelectedLocation] = useState<string>('Bistro')
-    const [menu, setMenu] = useState<LocationMenu>({});
+  const router = useRouter();
+  const [selectedLocation, setSelectedLocation] = useState<string>("Bistro");
+  const [menu, setMenu] = useState<LocationMenu>({});
+  const [expandedDays, setExpandedDays] = useState<string[]>([]);
+  const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
 
-    const [expandedDays, setExpandedDays] = useState<string[]>([])
-    const [isOverlayOpen, setIsOverlayOpen] = useState(false)
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-    const dietaryOptions: DietaryPreference[] = [
-        { id: "gluten-free", label: "Gluten-free" },
-        { id: "vegetarian", label: "Vegetarian" },
-        { id: "vegan", label: "Vegan" },
-        { id: "halal", label: "Halal" },
-        { id: "dairy-free", label: "Dairy-free" },
-        { id: "nut-free", label: "Nut-free" }
-    ]
+  const dietaryOptions: DietaryPreference[] = [
+    {
+      id: "vegetarian",
+      label: "Vegetarian",
+      icon: <Leaf className="h-4 w-4" />,
+    },
+    {
+      id: "vegan",
+      label: "Vegan",
+      icon: <Leaf className="h-4 w-4 fill-current" />,
+    },
+    {
+      id: "gluten-free",
+      label: "Gluten-free",
+      icon: <Wheat className="h-4 w-4" />,
+    },
+    {
+      id: "dairy-free",
+      label: "Dairy-free",
+      icon: <Milk className="h-4 w-4" />,
+    },
+    { id: "nut-free", label: "Nut-free", icon: <Nut className="h-4 w-4" /> },
+  ];
 
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-
-    useEffect(() => {
-        const today = new Date().getDay()
-        const currentDay = days[today - 1] // Adjust for 0-indexed array
-        if (currentDay) {
-            setExpandedDays([currentDay.toLowerCase()])
-        }
-    }, [])
-
-    const handlePreferenceChange = (id: string, checked: boolean) => {
-        setPreferences(prev =>
-            checked
-                ? [...prev, id]
-                : prev.filter(p => p !== id)
-        )
+  useEffect(() => {
+    const today = new Date().getDay();
+    const currentDay = days[today - 1];
+    if (currentDay) {
+      setExpandedDays([currentDay.toLowerCase()]);
     }
+  }, []);
 
-    const handleToggleAll = useCallback(() => {
-        setExpandedDays(prev =>
-            prev.length === days.length ? [] : days.map(day => day.toLowerCase())
-        )
-    }, [days])
+  const bistroMenu: LocationMenu = {
+    Monday: [
+      {
+        mealType: "Breakfast",
+        menu: "Bistro Pancakes, Bacon",
+        dietaryInfo: ["dairy-free"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Bistro Chicken Salad, Soup",
+        dietaryInfo: ["gluten-free"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Bistro Grilled Salmon",
+        dietaryInfo: ["gluten-free", "dairy-free"],
+      },
+    ],
+    Tuesday: [
+      {
+        mealType: "Breakfast",
+        menu: "Bistro Scrambled Eggs, Toast",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Bistro Veggie Wrap",
+        dietaryInfo: ["vegetarian", "vegan"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Bistro Pasta Primavera",
+        dietaryInfo: ["vegetarian"],
+      },
+    ],
+    Wednesday: [
+      {
+        mealType: "Breakfast",
+        menu: "Bistro Oatmeal, Fresh Fruit",
+        dietaryInfo: ["vegan", "gluten-free"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Bistro Turkey Club, Chips",
+        dietaryInfo: ["nut-free"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Bistro Steak, Mashed Potatoes",
+        dietaryInfo: ["gluten-free"],
+      },
+    ],
+    Thursday: [
+      {
+        mealType: "Breakfast",
+        menu: "Bistro Yogurt Parfait, Granola",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Bistro Caesar Salad, Breadsticks",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Bistro Chicken Stir Fry, Rice",
+        dietaryInfo: ["dairy-free"],
+      },
+    ],
+    Friday: [
+      {
+        mealType: "Breakfast",
+        menu: "Bistro Belgian Waffles, Syrup",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Bistro Grilled Cheese, Tomato Soup",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Bistro Fish Tacos, Coleslaw",
+        dietaryInfo: ["dairy-free"],
+      },
+    ],
+  };
 
-    
+  const libertyMenu: LocationMenu = {
+    Monday: [
+      {
+        mealType: "Breakfast",
+        menu: "Liberty Bagels, Coffee",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Liberty Turkey Sandwich",
+        dietaryInfo: ["nut-free"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Liberty Veggie Stir-Fry",
+        dietaryInfo: ["vegan", "gluten-free"],
+      },
+    ],
+    Tuesday: [
+      {
+        mealType: "Breakfast",
+        menu: "Liberty Oatmeal, Fruit",
+        dietaryInfo: ["vegan", "gluten-free"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Liberty Veggie Burger",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Liberty BBQ Chicken",
+        dietaryInfo: ["gluten-free"],
+      },
+    ],
+    Wednesday: [
+      {
+        mealType: "Breakfast",
+        menu: "Liberty Breakfast Burrito",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Liberty Cobb Salad",
+        dietaryInfo: ["gluten-free"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Liberty Spaghetti and Meatballs",
+        dietaryInfo: [],
+      },
+    ],
+    Thursday: [
+      {
+        mealType: "Breakfast",
+        menu: "Liberty French Toast, Bacon",
+        dietaryInfo: ["nut-free"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Liberty Chicken Caesar Wrap",
+        dietaryInfo: ["nut-free"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Liberty Beef Stir Fry",
+        dietaryInfo: ["dairy-free"],
+      },
+    ],
+    Friday: [
+      {
+        mealType: "Breakfast",
+        menu: "Liberty Breakfast Sandwich",
+        dietaryInfo: ["vegetarian"],
+      },
+      {
+        mealType: "Lunch",
+        menu: "Liberty Tuna Salad",
+        dietaryInfo: ["gluten-free"],
+      },
+      {
+        mealType: "Dinner",
+        menu: "Liberty Pizza Night",
+        dietaryInfo: ["vegetarian"],
+      },
+    ],
+  };
 
+  useEffect(() => {
+    const selectedMenu =
+      selectedLocation === "Bistro" ? bistroMenu : libertyMenu;
+    const filteredMenu = Object.fromEntries(
+      Object.entries(selectedMenu).map(([day, meals]) => [
+        day,
+        meals.filter(
+          (meal) =>
+            dietaryPreferences.length === 0 ||
+            dietaryPreferences.some((pref) => meal.dietaryInfo.includes(pref))
+        ),
+      ])
+    );
+    setMenu(filteredMenu);
+  }, [selectedLocation, dietaryPreferences]);
 
-    const toggleDietaryPreferences = () => {
-        setDietaryOverlay(!isDietaryOverlayOpen);
-    };
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedLocation(e.target.value);
+  };
 
-    const handleSavePreferences = () => {
-        console.log('Preferences saved:', preferences)
-        setDietaryOverlay(false);
-        // Replace this with actual API or localStorage call to persist user preferences
-    }
+  const toggleDay = (day: string) => {
+    setExpandedDays((prev) =>
+      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
+    );
+  };
 
-    const handleCloseOverlay = () => {
-        setDietaryOverlay(false);
-    }
+  const handleDietaryPreferenceChange = (
+    preference: string,
+    checked: boolean
+  ) => {
+    setDietaryPreferences((prev) =>
+      checked ? [...prev, preference] : prev.filter((p) => p !== preference)
+    );
+  };
 
-    // Mock data for Bistro and Liberty menus
-    const bistroMenu: LocationMenu = {
-        Monday: [
-            { mealType: 'Breakfast', menu: 'Bistro Pancakes, Bacon' },
-            { mealType: 'Lunch', menu: 'Bistro Chicken Salad, Soup' },
-            { mealType: 'Dinner', menu: 'Bistro Grilled Salmon' },
-        ],
-        Tuesday: [
-            { mealType: 'Breakfast', menu: 'Bistro Scrambled Eggs, Toast' },
-            { mealType: 'Lunch', menu: 'Bistro Veggie Wrap' },
-            { mealType: 'Dinner', menu: 'Bistro Pasta Primavera' },
-        ],
-        // Add more days...
-    }
+  const getDietaryIcon = (preference: string) => {
+    const option = dietaryOptions.find((opt) => opt.id === preference);
+    return option ? option.icon : null;
+  };
 
-    const libertyMenu: LocationMenu = {
-        Monday: [
-            { mealType: 'Breakfast', menu: 'Liberty Bagels, Coffee' },
-            { mealType: 'Lunch', menu: 'Liberty Turkey Sandwich' },
-            { mealType: 'Dinner', menu: 'Liberty Veggie Stir-Fry' },
-        ],
-        Tuesday: [
-            { mealType: 'Breakfast', menu: 'Liberty Oatmeal, Fruit' },
-            { mealType: 'Lunch', menu: 'Liberty Veggie Burger' },
-            { mealType: 'Dinner', menu: 'Liberty BBQ Chicken' },
-        ],
-        // Add more days...
-    }
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header title="Weekly Meals" isHomeScreen={false} />
 
-    useEffect(() => {
-        // Set the menu based on selected location
-        if (selectedLocation === 'Bistro') {
-            setMenu(bistroMenu)
-        } else if (selectedLocation === 'Liberty') {
-            setMenu(libertyMenu)
-        }
-    }, [selectedLocation])
+      <main className="flex-1 p-6 space-y-6 pt-20 pb-24">
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Select Location</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <select
+              id="location"
+              value={selectedLocation}
+              onChange={handleLocationChange}
+              className="w-full p-2 border border-gray-300 rounded-md"
+            >
+              <option value="Bistro">Bistro</option>
+              <option value="Liberty">Liberty</option>
+            </select>
+          </CardContent>
+        </Card>
 
-    const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedLocation(e.target.value)
-    }
-
-    const handleCheckout = () => {
-        // Placeholder for checkout logic
-        // You can route to the checkout page with the selected location and preferences
-        router.push(`/checkout?location=${selectedLocation}&preferences=${preferences.join(',')}`)
-    }
-
-    return (
-        <div className="flex flex-col min-h-screen bg-gray-50">
-            <Header title="Meals For The Week" isHomeScreen={false} />
-
-            <main className="flex-1 p-4 space-y-6 pt-16">
-                {/* Dietary Preferences Section */}
-                <Card className="bg-white shadow-sm border flex justify-center items-center">
-
-                        <Button
-                            className="w-full h-[4rem] text-3xl bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white "
-                            onClick={toggleDietaryPreferences}
-                            aria-expanded={isDietaryOverlayOpen ? "true" : "false"}
-                            aria-controls="dietary-preferences"
-                            aria-label="Toggle dietary preferences"
-                        >
-                            Dietary Preferences
-                        </Button>
-                </Card>
-
-                {isDietaryOverlayOpen && 
-                    <DietaryOverlay 
-                        preferences={preferences}
-                        dietaryPreferences={dietaryOptions}
-                        onClose={handleCloseOverlay}
-                        onPreferenceChange={handlePreferenceChange}
-                        onSave={handleSavePreferences}
-                    />
-                }
-                {/* Location Dropdown */}
-                <div className="mb-6">
-                    <label htmlFor="location" className="block text-lg font-medium">Select Location</label>
-                    <select
-                        id="location"
-                        value={selectedLocation}
-                        onChange={handleLocationChange}
-                        className="mt-2 p-2 w-full border border-gray-300 rounded-md"
-                    >
-                        <option value="Bistro">Bistro</option>
-                        <option value="Liberty">Liberty</option>
-                    </select>
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Dietary Preferences</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-4">
+              {dietaryOptions.map((option) => (
+                <div key={option.id} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={option.id}
+                    checked={dietaryPreferences.includes(option.id)}
+                    onCheckedChange={(checked) =>
+                      handleDietaryPreferenceChange(
+                        option.id,
+                        checked as boolean
+                      )
+                    }
+                  />
+                  <label
+                    htmlFor={option.id}
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    {option.label}
+                  </label>
+                  {option.icon}
                 </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-                {/* Weekly Meals Accordion Section */}
-                <Accordion type="single" collapsible className="space-y-4">
-                    {days.map((day) => (
-                        <AccordionItem
-                            key={day}
-                            value={day.toLowerCase()}
-                            trigger={
-                                <AccordionTrigger className="bg-[#8B1A1A] w-[60%] text-center h-[3rem] text-white p-2 rounded-md">
-                                    <span className="text-2xl font-semibold">{day}</span>
-                                </AccordionTrigger>
-                            }
-                        >
-
-                            <AccordionContent>
-                                <div className="space-y-4 p-2">
-                                    {menu[day]?.map((meal, index) => (
-                                        <div key={index}>
-                                            <h4 className="font-medium">{meal.mealType}</h4>
-                                            <p className="text-lg text-muted-foreground">{meal.menu}</p>
-                                        </div>
-                                    )) || <p className="text-lg text-muted-foreground">Menu not yet available</p>}
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-
-                {/* Checkout Button */}
-                {/* <Button
-                    className="w-full bg-[#8B1A1A] hover:bg-[#8B1A1A]/90 text-white mt-4"
-                    onClick={handleCheckout}
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Weekly Menu</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {days.map((day) => (
+              <div key={day} className="border rounded-md overflow-hidden">
+                <button
+                  className="w-full p-4 text-left font-semibold flex justify-between items-center bg-[#8B1A1A] text-white"
+                  onClick={() => toggleDay(day.toLowerCase())}
                 >
-                    Proceed to Checkout
-                </Button> */}
-            </main>
+                  <span>{day}</span>
+                  {expandedDays.includes(day.toLowerCase()) ? (
+                    <ChevronUp className="h-5 w-5" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5" />
+                  )}
+                </button>
+                {expandedDays.includes(day.toLowerCase()) && (
+                  <div className="p-4 space-y-2 bg-white">
+                    {menu[day]?.map((meal, index) => (
+                      <div
+                        key={index}
+                        className="border-b pb-2 last:border-b-0 last:pb-0"
+                      >
+                        <h4 className="font-medium">{meal.mealType}</h4>
+                        <p className="text-sm text-gray-600">{meal.menu}</p>
+                        <div className="flex gap-1 mt-1">
+                          {meal.dietaryInfo.map((info) => (
+                            <span
+                              key={info}
+                              className="text-xs bg-gray-100 px-1 py-0.5 rounded flex items-center"
+                            >
+                              {getDietaryIcon(info)}
+                              <span className="ml-1">{info}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )) || (
+                      <p className="text-sm text-gray-600">
+                        Menu not yet available
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </main>
 
-            <BottomNavBar />
-        </div>
-    )
+      <NavBar />
+    </div>
+  );
 }
