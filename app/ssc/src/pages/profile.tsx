@@ -21,6 +21,7 @@ interface ProfileData {
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -54,7 +55,8 @@ export default function ProfilePage() {
       });
 
       if (response.ok) {
-        console.log('Profile updated successfully');
+        setShowSuccessMessage(true);
+        setTimeout(() => setShowSuccessMessage(false), 3000); // Hide after 3 seconds
       } else {
         console.error('Failed to update profile');
       }
@@ -155,6 +157,11 @@ export default function ProfilePage() {
                 Save Changes
               </Button>
             </form>
+            {showSuccessMessage && (
+              <div className="mt-4 text-green-600">
+                Profile updated successfully!
+              </div>
+            )}
           </CardContent>
         </Card>
       </main>

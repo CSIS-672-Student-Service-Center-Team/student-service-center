@@ -89,6 +89,11 @@ export default function Checkout() {
         if (typeParam) setPaymentType(typeParam);
         if (fromParam) setFromURL(fromParam);
 
+      // Skip to billing form if type is pickup
+      if (typeParam === "pickup") {
+        setStep(2);
+      }
+
         // Fetch shipping and billing addresses
         const resShipping = await fetch(`/api/addresses?userId=${currentUserId}&type=shipping`);
         if (!resShipping.ok) throw new Error("Failed to fetch shipping data");
