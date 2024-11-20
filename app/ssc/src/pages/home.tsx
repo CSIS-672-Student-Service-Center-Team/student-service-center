@@ -1,19 +1,51 @@
 "use client";
 
-import {useRouter} from "next/navigation"
-import Header from "@/components/ui/pageHeader"
-import NavBar from "@/components/ui/navBar"
-import IdCard from "@/components/ui/idCard"
-import {Car, Utensils, CreditCard} from "lucide-react"
-import ButtonWrapper from "@/components/ui/ButtonWrapper"
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Header from "@/components/ui/pageHeader";
+import NavBar from "@/components/ui/navBar";
+import IdCard from "@/components/ui/idCard";
+import { Car, Utensils, CreditCard } from "lucide-react";
+import ButtonWrapper from "@/components/ui/ButtonWrapper";
+import { currentUserId } from "@/lib/currentUser";
+
+interface UserData {
+  id: number;
+  name: string;
+  idNumber: string;
+  email: string;
+  photoUrl: string;
+}
 
 export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const router = useRouter();
+  const [userData, setUserData] = useState<UserData | null>(null);
 
-    const handleNavigation = (path: string) => {
-        router.push(path)
-    }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/users?userId=${currentUserId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data);
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
 
+    fetchUserData();
+  }, []);
+
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -21,11 +53,10 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
 
       <main className="flex-1 p-6 pt-20 pb-24">
         <IdCard
-          name="John Doe"
-          idNumber="#123456789"
-          email="johndoe@cofc.edu"
-          photoUrl="/Student_ID_Photo.jpg"
-          
+          name={userData.name}
+          idNumber={userData.idNumber}
+          email={userData.email}
+          photoUrl={userData.photoUrl}
         />
 
         <div className="flex flex-col gap-6 mt-6">
@@ -34,9 +65,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
             <span className="text-lg font-medium text-[#8B1A1A]">PARKING</span>
           </ButtonWrapper>
 
-          <ButtonWrapper
-            onClick={() => handleNavigation("/dining/dining-page")}
-          >
+          <ButtonWrapper onClick={() => handleNavigation("/dining/dining-page")}>
             <Utensils className="w-12 h-12 text-[#8B1A1A]" />
             <span className="text-lg font-medium text-[#8B1A1A]">DINING</span>
           </ButtonWrapper>

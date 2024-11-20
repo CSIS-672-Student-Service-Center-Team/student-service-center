@@ -5,36 +5,32 @@ import NavBar from "@/components/ui/navBar"
 import { ArrowLeft, Home, Bell, User } from "lucide-react"
 import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
+import { currentUserId } from "@/lib/currentUser"
 
 const ViewBalancePage: React.FC = () => {
   const router = useRouter()
-  //  TODO: add some user values here
-  //  
   const [displayBalance, setDisplayBalance] = useState(0)
-  const targetBalance = 123.99
-  
+
   useEffect(() => {
-    // Animate the balance counting up
-    const duration = 1000 // 1 second animation
-    const steps = 60 // 60 steps (for smooth animation)
-    const increment = targetBalance / steps
-    let current = 0
-    
-    const timer = setInterval(() => {
-      current += increment
-      if (current >= targetBalance) {
-        setDisplayBalance(targetBalance)
-        clearInterval(timer)
-      } else {
-        setDisplayBalance(current)
+    const fetchBalance = async () => {
+      try {
+        const response = await fetch(`/api/users?userId=${currentUserId}`)
+        if (response.ok) {
+          const data = await response.json()
+          setDisplayBalance(data.balance)
+        } else {
+          console.error('Failed to fetch balance')
+        }
+      } catch (error) {
+        console.error('Error fetching balance:', error)
       }
-    }, duration / steps)
-    
-    return () => clearInterval(timer)
+    }
+
+    fetchBalance()
   }, [])
 
   return (
-<div className="flex flex-col h-screen bg-white">
+    <div className="flex flex-col h-screen bg-white">
       <Header title="Student ID" isHomeScreen={false} />
       {/* Main Content */}
       <main className="flex-1 flex flex-col items-center px-4 pt-12">
@@ -50,6 +46,6 @@ const ViewBalancePage: React.FC = () => {
       <NavBar />
     </div>
   )
-};
+}
 
-export default ViewBalancePage;
+export default ViewBalancePage

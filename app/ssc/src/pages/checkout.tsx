@@ -11,6 +11,7 @@ import BottomNavBar from "@/components/ui/navBar";
 import { useRouter } from "next/router";
 import ProgressBar from "@/components/ui/ProgressBar";
 import { Card, CardContent } from "@/components/ui/card";
+import { currentUserId } from "@/lib/currentUser";
 
 export interface CheckoutData {
   shipping?: {
@@ -75,23 +76,39 @@ export default function Checkout() {
     },
   });
 
+  // Fetch data on component mount
   useEffect(() => {
-    const priceParam = searchParams.get("price");
-    const typeParam = searchParams.get("type");
-    const fromURL = searchParams.get("from");
-    const checkoutData = sessionStorage.getItem("checkoutData");
-    if (checkoutData) {
-      setFormData(JSON.parse(checkoutData));
-    }
-    if (priceParam) {
-      setPrice(parseFloat(priceParam));
-    }
-    if (typeParam) {
-      setPaymentType(typeParam);
-    }
-    if (fromURL) {
-      setFromURL(fromURL);
-    }
+    const fetchData = async () => {
+      try {
+        // Parse URL parameters
+        const priceParam = searchParams.get("price");
+        const typeParam = searchParams.get("type");
+        const fromParam = searchParams.get("from");
+
+        if (priceParam) setPrice(parseFloat(priceParam));
+        if (typeParam) setPaymentType(typeParam);
+        if (fromParam) setFromURL(fromParam);
+
+        // Fetch shipping and billing addresses
+        const resShipping = await fetch(`/api/addresses?userId=${currentUserId}&type=shipping`);
+        if (!resShipping.ok) throw new Error("Failed to fetch shipping data");
+        const shippingData = await resShipping.json();
+
+        const resBilling = await fetch(`/api/addresses?userId=${currentUserId}&type=billing`);
+        if (!resBilling.ok) throw new Error("Failed to fetch billing data");
+        const billingData = await resBilling.json();
+
+        setFormData((prev) => ({
+          ...prev,
+          shipping: shippingData[0] || prev.shipping,
+          billing: billingData[0] || prev.billing,
+        }));
+      } catch (error) {
+        console.error("Error loading data:", error);
+      }
+    };
+
+    fetchData();
   }, [searchParams]);
 
   const handleInputChange = (
@@ -116,7 +133,25 @@ export default function Checkout() {
     }));
   };
 
-  const handleConfirmation = () => {
+  const handleConfirmation = async () => {
+  try {
+    const response = await fetch(`/api/users`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: currentUserId,
+        amount: price, // Adjust balance by the price amount
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to update balance: ${response.status} ${errorText}`);
+    }
+
+    // Redirect to confirmation page
     router.replace({
       pathname: `/confirmation`,
       query: {
@@ -125,7 +160,12 @@ export default function Checkout() {
         fromURL: `${fromURL}`,
       },
     });
-  };
+  } catch (error) {
+    console.error("Error during confirmation:", error);
+    alert("Failed to process your request. Please try again.");
+  }
+};
+
 
   const calculateProgress = () => {
     return (step / 4) * 100;
@@ -466,7 +506,7 @@ export default function Checkout() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="Checkout" isHomeScreen={false} />
 
-      <main className="flex-1 p-4 space-y-6 pt-20">
+      <main className="flex-1 p-4 space-y-6 pt-20 pb-24 overflow-y-auto">
         <Card className="bg-white shadow-lg">
           <CardContent className="p-6">
             <h2 className="text-xl font-semibold mb-2 text-[#841414]">

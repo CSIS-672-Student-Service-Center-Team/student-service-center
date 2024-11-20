@@ -9,6 +9,7 @@ export default function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState("");
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -16,11 +17,31 @@ export default function App() {
     setPassword("");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();// prevent page reload
-    // Handle login logic here
-    console.log("Login attempted with:", email, password);
-    setIsLoggedIn(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // prevent page reload
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const user = await response.json();
+        console.log("Login successful:", user);
+        setIsLoggedIn(true);
+        setError("");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("An unexpected error occurred");
+    }
   };
 
   return (
@@ -60,6 +81,11 @@ export default function App() {
                       required
                     />
                   </div>
+                  {error && (
+                    <div className="text-red-600 text-sm text-center">
+                      {error}
+                    </div>
+                  )}
                   <Button
                     type="submit"
                     className="w-full bg-red-800 hover:bg-red-700"
