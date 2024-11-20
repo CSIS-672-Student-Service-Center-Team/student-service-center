@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import BottomNavBar from "@/components/ui/navBar";
 import IdCard from "@/components/ui/idCard";
@@ -10,16 +10,36 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const ConfirmStudentIDPage: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [deliveryOption, setDeliveryOption] = useState<"pickup" | "delivery">(
     "pickup"
   );
+  const [userData, setUserData] = useState<UserData | null>(null);
+  
 
-  const studentDetails = {
-    name: "John Doe",
-    idNumber: "#123456789",
-    email: "johndoe@cofc.edu",
-    photoUrl: "/uploaded-photo.jpg",
-  };
+  interface UserData {
+    name: string;
+    id_number: string;
+    email: string;
+    photo_url?: string;
+  }
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/users?userId=123456789`); // Replace with dynamic userId if needed
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleCheckout = () => {
     console.log(`Processing ${deliveryOption} order`);
@@ -33,12 +53,16 @@ const ConfirmStudentIDPage: React.FC = () => {
 
       <main className="flex-grow p-4 space-y-6 pt-20 pb-24">
         <div className="w-full max-w-md mx-auto">
-          <IdCard
-            name={studentDetails.name}
-            idNumber={studentDetails.idNumber}
-            email={studentDetails.email}
-            photoUrl={studentDetails.photoUrl}
-          />
+          {userData ? (
+            <IdCard
+              name={userData.name}
+              idNumber={`#${userData.id_number}`}
+              email={userData.email}
+              photoUrl={userData.photo_url || "/Student_ID_Photo.jpg"}
+            />
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
 
         <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-3xl overflow-hidden">

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
@@ -10,6 +10,31 @@ import { cn } from "@/lib/utils";
 
 const StudentIDPage: React.FC = () => {
   const router = useRouter();
+  interface UserData {
+    name: string;
+    id_number: string;
+    email: string;
+    photo_url: string;
+  }
+
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/users?userId=123456789`); // Replace with dynamic userId if needed
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleGetNewID = () => {
     console.log("Get New ID clicked");
@@ -46,12 +71,16 @@ const StudentIDPage: React.FC = () => {
       <Header title="Student ID" isHomeScreen={false} />
 
       <main className="flex-1 p-6 pt-20 pb-24">
-        <IdCard
-          name="John Doe"
-          idNumber="#123456789"
-          email="johndoe@cofc.edu"
-          photoUrl="/Student_ID_Photo.jpg"
-        />
+        {userData ? (
+          <IdCard
+            name={userData.name}
+            idNumber={`#${userData.id_number}`}
+            email={userData.email}
+            photoUrl={userData.photo_url}
+          />
+        ) : (
+          <p>Loading...</p>
+        )}
 
         <div className="flex flex-col gap-6 mt-6">
           <ButtonWrapper onClick={handleGetNewID}>

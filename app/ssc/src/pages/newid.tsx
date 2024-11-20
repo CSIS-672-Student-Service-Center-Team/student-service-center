@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
@@ -12,8 +12,33 @@ import { Input } from "@/components/ui/input";
 const NewStudentIDPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  interface UserData {
+    name: string;
+    id_number: string;
+    email: string;
+    photo_url?: string;
+  }
+
+  const [userData, setUserData] = useState<UserData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/users?userId=123456789`); // Replace with dynamic userId if needed
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -44,12 +69,16 @@ const NewStudentIDPage: React.FC = () => {
 
       <main className="flex-grow p-4 space-y-6 pt-20 pb-24">
         <div className="w-full max-w-md mx-auto">
-          <IdCard
-            name="John Doe"
-            idNumber="#123456789"
-            email="johndoe@cofc.edu"
-            photoUrl={selectedImage || "/Student_ID_Photo.jpg"}
-          />
+          {userData ? (
+            <IdCard
+              name={userData.name}
+              idNumber={`#${userData.id_number}`}
+              email={userData.email}
+              photoUrl={selectedImage || userData.photo_url || "/Student_ID_Photo.jpg"}
+            />
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
 
         <div className="space-y-4">
