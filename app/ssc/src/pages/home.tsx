@@ -6,7 +6,7 @@ import NavBar from "@/components/ui/navBar"
 import IdCard from "@/components/ui/idCard"
 import {Car, Utensils, CreditCard} from "lucide-react"
 import ButtonWrapper from "@/components/ui/ButtonWrapper"
-
+import InteractiveIdCard from "@/components/ui/interactive-id-card"
 export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const router = useRouter();
 
@@ -20,7 +20,7 @@ export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
       <Header title="Home" isHomeScreen={true} onLogout={onLogout} />
 
       <main className="flex-1 p-6 pt-20 pb-24">
-        <IdCard
+        <InteractiveIdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
