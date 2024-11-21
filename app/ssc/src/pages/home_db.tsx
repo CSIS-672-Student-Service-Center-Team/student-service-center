@@ -8,6 +8,7 @@ import IdCard from "@/components/ui/idCard";
 import { Car, Utensils, CreditCard } from "lucide-react";
 import ButtonWrapper from "@/components/ui/ButtonWrapper";
 import { currentUserId } from "@/lib/currentUser";
+import InteractiveIdCardDb from "@/components/ui/interactive-id-card_db";
 
 interface UserData {
   id: number;
