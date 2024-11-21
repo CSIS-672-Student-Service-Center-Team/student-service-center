@@ -10,7 +10,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
         <div className="w-full h-2 bg-gray-300 rounded-md overflow-hidden">
             <div
                 style={{ width: `${progress}%` }}
-                className="h-full bg-[#98D8AA] transition-all duration-300"
+                className="h-full bg-[#841414] transition-all duration-300"
             />
         </div>
     );

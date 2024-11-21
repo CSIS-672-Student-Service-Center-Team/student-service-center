@@ -20,9 +20,9 @@ export default function TransactionConfirmation() {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <CheckCircle className="h-16 w-16 text-green-500" />
+              <CheckCircle className="h-16 w-16 text-[#841414]" />
             </div>
-            <CardTitle className="text-2xl font-bold text-green-700">Transaction Successful</CardTitle>
+            <CardTitle className="text-2xl font-bold text-[#841414]">Transaction Successful</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="text-center">
@@ -37,7 +37,7 @@ export default function TransactionConfirmation() {
           <CardFooter className="flex justify-center">
             <Button 
               onClick={() => router.push(`/${fromURL}`)}
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-[#841414] hover:bg-[#841414] text-white"
             >
               Back to {fromURL}
             </Button>

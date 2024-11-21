@@ -48,7 +48,7 @@ const StudentIDPage: React.FC = () => {
       <Header title="Student ID" isHomeScreen={false} />
 
       <main className="flex-1 p-6 pt-20 pb-24">
-        <IdCard
+        <InteractiveIdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"

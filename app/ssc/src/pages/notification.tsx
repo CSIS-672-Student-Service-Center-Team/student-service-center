@@ -44,7 +44,7 @@ export default function Component() {
       case "info":
         return <Info className="h-5 w-5 text-blue-500" />;
       case "success":
-        return <CheckCircle className="h-5 w-5 text-green-500" />;
+        return <CheckCircle className="h-5 w-5 text-[#841414]" />;
       default:
         return <Bell className="h-5 w-5 text-gray-500" />;
     }
@@ -65,7 +65,7 @@ export default function Component() {
                   notification.type === "warning" && "bg-red-50 text-red-800",
                   notification.type === "info" && "bg-blue-50 text-blue-800",
                   notification.type === "success" &&
-                    "bg-green-50 text-green-800",
+                    "bg-[#841414] text-[#841414]",
                   !notification.isRead && "border-l-4 border-red-800",
                   notification.link && "cursor-pointer"
                 )}
