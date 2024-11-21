@@ -1,96 +1,80 @@
-'use client'
-
-import React from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import Header from "@/components/ui/pageHeader"
-import BottomNavBar from "@/components/ui/navBar"
-import { useRouter } from 'next/navigation'
-
-interface MenuItem {
-    name: string
-}
-
-interface MealSection {
-    title: string
-    items: MenuItem[]
-}
+import React from "react";
+import { useRouter } from "next/navigation";
+import Header from "@/components/ui/pageHeader";
+import NavBar from "@/components/ui/navBar";
+import { Utensils, Calendar, CreditCard, History } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function DiningPage() {
-    const router = useRouter()
+  const router = useRouter();
 
-    const meals: MealSection[] = [
-        {
-            title: "Breakfast",
-            items: [
-                { name: "Scrambled Eggs" },
-                { name: "Pancakes" },
-                { name: "Fresh Fruit" },
-                { name: "Yogurt" }
-            ]
-        },
-        {
-            title: "Lunch",
-            items: [
-                { name: "Salad Bar" },
-                { name: "Sandwich Bar" },
-                { name: "Cheeseburger & Fries" },
-                { name: "Rice & Pulled Pork" }
-            ]
-        },
-        {
-            title: "Dinner",
-            items: [
-                { name: "Salad Bar" },
-                { name: "Pasta with Red Sauce" },
-                { name: "Chicken Parm" },
-                { name: "Beef Meatballs" }
-            ]
-        }
-    ]
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
 
-    return (
-        <div className="flex flex-col min-h-screen bg-gray-50">
-            <Header title="Dining" isHomeScreen={false} />
+  const ButtonWrapper = ({
+    children,
+    onClick,
+  }: {
+    children: React.ReactNode;
+    onClick: () => void;
+  }) => (
+    <button
+      onClick={onClick}
+      className={cn(
+        "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl drop-shadow-lg",
+        "shadow-lg hover:shadow-xl transition-shadow",
+        "flex flex-col items-center justify-center gap-2",
+        "p-4"
+      )}
+    >
+      {children}
+    </button>
+  );
 
-            <main className="flex-1 p-4 space-y-6 pt-16">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Today&apos;s Meals</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        {meals.map((section) => (
-                            <div key={section.title} className="space-y-2">
-                                <h3 className="font-semibold">{section.title}</h3>
-                                <ul className="space-y-1">
-                                    {section.items.map((item) => (
-                                        <li key={item.name} className="text-sm">
-                                            {item.name}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </CardContent>
-                </Card>
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header title="Dining Services" isHomeScreen={false} />
 
-                <div className="grid grid-cols-2 gap-4">
-                    <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                        onClick={() => router.push('/dining/weekly-meals')}
-                    >
-                        Weekly Meals
-                    </Button>
-                    <Button
-                        className="bg-[#8B1A1A] hover:bg-[#8B1A1A]/90"
-                        onClick={() => router.push('/dining/meal-plan')}
-                    >
-                        Meal Plan
-                    </Button>
-                </div>
-            </main>
+      <main className="flex-1 p-6 pt-20 pb-24">
+        <div className="flex flex-col gap-6">
+          <ButtonWrapper
+            onClick={() => handleNavigation("/dining/weekly-meals")}
+          >
+            <Calendar className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">
+              WEEKLY MENU
+            </span>
+          </ButtonWrapper>
 
-            <BottomNavBar />
+          <ButtonWrapper onClick={() => handleNavigation("/dining/meal-plan")}>
+            <CreditCard className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">
+              MEAL PLAN
+            </span>
+          </ButtonWrapper>
+
+          <ButtonWrapper
+            onClick={() => handleNavigation("/dining/offered-meal-plans")}
+          >
+            <Utensils className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">
+              OFFERED MEAL PLANS
+            </span>
+          </ButtonWrapper>
+
+          <ButtonWrapper
+            onClick={() => handleNavigation("/dining/meal-plan-history")}
+          >
+            <History className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">
+              MEAL PLAN HISTORY
+            </span>
+          </ButtonWrapper>
         </div>
-    )
+      </main>
+
+      <NavBar />
+    </div>
+  );
 }

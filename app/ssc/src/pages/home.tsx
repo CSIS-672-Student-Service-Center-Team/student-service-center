@@ -1,85 +1,50 @@
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import SquareButton from "@/components/ui/sqButton";
-import NavBar from "@/components/ui/navBar";
-import Header from "@/components/ui/pageHeader";
-import IdCard from "@/components/ui/idCard";
+"use client";
 
+import {useRouter} from "next/navigation"
+import Header from "@/components/ui/pageHeader"
+import NavBar from "@/components/ui/navBar"
+import IdCard from "@/components/ui/idCard"
+import {Car, Utensils, CreditCard} from "lucide-react"
+import ButtonWrapper from "@/components/ui/ButtonWrapper"
+import InteractiveIdCard from "@/components/ui/interactive-id-card"
 export default function HomeScreen({ onLogout }: { onLogout: () => void }) {
   const router = useRouter();
 
-  const handleParking = () => {
-    console.log("Parking clicked");
-    // TODO: Implement parking navigation logic
-    router.push("/parking");
-  };
+    const handleNavigation = (path: string) => {
+        router.push(path)
+    }
 
-  const handleDining = () => {
-    console.log("Dining clicked");
-    // TODO: Implement dining navigation logic
-    router.push("/dining/dining-page");
-  };
-
-  const handleID = () => {
-    console.log("ID clicked");
-    router.push("/id"); // Updated to match the correct route
-  };
 
   return (
-    <div className="flex flex-col h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="Home" isHomeScreen={true} onLogout={onLogout} />
 
-      <main className="flex-grow p-4 pt-16 space-y-6">
-        <IdCard
+      <main className="flex-1 p-6 pt-20 pb-24">
+        <InteractiveIdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
-          photoUrl="/ssc-logo.png"
+          photoUrl="/Student_ID_Photo.jpg"
+          
         />
 
-        <div className="flex justify-between pt-16">
-          <SquareButton
-            icon={
-              <Image
-                src="/parking-button.png"
-                alt="parking button logo"
-                width={50}
-                height={50}
-              />
-            }
-            label="Parking"
-            onClick={handleParking}
-            size={120}
-            labelStyle={{ fontSize: "20px" }}
-          />
-          <SquareButton
-            icon={
-              <Image
-                src="/dining-button.png"
-                alt="dining button logo"
-                width={50}
-                height={50}
-              />
-            }
-            label="Dining"
-            onClick={handleDining}
-            size={120}
-            labelStyle={{ fontSize: "20px" }}
-          />
-          <SquareButton
-            icon={
-              <Image
-                src="/id-button.png"
-                alt="id button logo"
-                width={50}
-                height={50}
-              />
-            }
-            label="ID"
-            onClick={handleID}
-            size={120}
-            labelStyle={{ fontSize: "20px" }}
-          />
+        <div className="flex flex-col gap-6 mt-6">
+          <ButtonWrapper onClick={() => handleNavigation("/parking")}>
+            <Car className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">PARKING</span>
+          </ButtonWrapper>
+
+          <ButtonWrapper
+            onClick={() => handleNavigation("/dining/dining-page")}
+          >
+            <Utensils className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">DINING</span>
+          </ButtonWrapper>
+
+          <ButtonWrapper onClick={() => handleNavigation("/id")}>
+            <CreditCard className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">ID</span>
+          </ButtonWrapper>
         </div>
       </main>
 

@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
-import NavBar from "@/components/ui/navBar";
+import BottomNavBar from "@/components/ui/navBar";
 import IdCard from "@/components/ui/idCard";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const ConfirmStudentIDPage: React.FC = () => {
@@ -28,49 +28,52 @@ const ConfirmStudentIDPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      <Header title="Student ID" />
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header title="Confirm Student ID" isHomeScreen={false} />
 
-      <main className="flex-grow p-4 space-y-8 pt-16">
-        <IdCard
-          name={studentDetails.name}
-          idNumber={studentDetails.idNumber}
-          email={studentDetails.email}
-          photoUrl={studentDetails.photoUrl}
-        />
+      <main className="flex-grow p-4 space-y-6 pt-20 pb-24">
+        <div className="w-full max-w-md mx-auto">
+          <IdCard
+            name={studentDetails.name}
+            idNumber={studentDetails.idNumber}
+            email={studentDetails.email}
+            photoUrl={studentDetails.photoUrl}
+          />
+        </div>
 
-        <div className="space-y-8">
-          <div className="flex justify-center gap-16">
-            <label className="flex items-center space-x-2 cursor-pointer">
+        <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-3xl overflow-hidden">
+          <CardContent className="p-6">
+            <h2 className="text-2xl font-bold mb-4 text-center text-[#841414]">
+              Delivery Options
+            </h2>
+            <div className="flex justify-center space-x-8">
               <Checkbox
+                id="pickup"
                 checked={deliveryOption === "pickup"}
                 onChange={() => setDeliveryOption("pickup")}
-                className="w-6 h-6 border-2 border-gray-300 rounded-sm"
+                label="Pickup"
               />
-              <span className="text-lg">Pickup</span>
-            </label>
-            <label className="flex items-center space-x-2 cursor-pointer">
               <Checkbox
+                id="delivery"
                 checked={deliveryOption === "delivery"}
                 onChange={() => setDeliveryOption("delivery")}
-                className="w-6 h-6 border-2 border-gray-300 rounded-sm"
+                label="Delivery"
               />
-              <span className="text-lg">Delivery</span>
-            </label>
-          </div>
+            </div>
+          </CardContent>
+        </Card>
 
-          <div className="flex justify-center">
-            <Button
-              onClick={handleCheckout}
-              className="w-[300px] py-6 text-xl font-medium bg-white hover:bg-gray-100 text-black rounded-full border-2 border-black"
-            >
-              Checkout
-            </Button>
-          </div>
+        <div className="w-full max-w-md mx-auto h-16 rounded-full bg-[#841414] hover:bg-[#9a1818] transition-colors overflow-hidden">
+          <button
+            onClick={handleCheckout}
+            className="w-full h-full flex items-center justify-center text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#841414]"
+          >
+            Checkout
+          </button>
         </div>
       </main>
 
-      <NavBar />
+      <BottomNavBar />
     </div>
   );
 };

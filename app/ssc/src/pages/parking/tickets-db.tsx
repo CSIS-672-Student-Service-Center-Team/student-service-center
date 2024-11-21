@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/ui/pageHeader";
 import NavBar from "@/components/ui/navBar";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { CheckoutData } from "@/pages/checkout";
 import { CalendarIcon, CreditCardIcon, TicketIcon } from "lucide-react";
+import { currentUserId } from "@/lib/currentUser";
 
 interface TicketEntryProps {
   ticketNumber: string;
@@ -60,22 +61,34 @@ const TicketEntry: React.FC<TicketEntryProps> = ({
   </Card>
 );
 
+interface Ticket {
+  ticketNumber: string;
+  issueDate: string;
+  amount: number;
+}
+
 export default function ParkingTicketsPage() {
   const router = useRouter();
   const [selectedTickets, setSelectedTickets] = useState<string[]>([]);
+  const [outstandingTickets, setOutstandingTickets] = useState<Ticket[]>([]);
 
-  const outstandingTickets = [
-    {
-      ticketNumber: "12345",
-      issueDate: "01/12/2024",
-      amount: 20,
-    },
-    {
-      ticketNumber: "123456",
-      issueDate: "01/15/2024",
-      amount: 15,
-    },
-  ];
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const response = await fetch(`/api/parking_tickets?userId=${currentUserId}`);
+        if (response.ok) {
+          const data = await response.json();
+          setOutstandingTickets(data);
+        } else {
+          console.error("Failed to fetch tickets");
+        }
+      } catch (error) {
+        console.error("Error fetching tickets:", error);
+      }
+    };
+
+    fetchTickets();
+  }, []);
 
   const totalAmount = outstandingTickets
     .filter((ticket) => selectedTickets.includes(ticket.ticketNumber))
@@ -170,4 +183,3 @@ export default function ParkingTicketsPage() {
     </div>
   );
 }
-

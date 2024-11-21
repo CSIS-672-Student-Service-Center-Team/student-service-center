@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowLeft, LogOut } from "lucide-react";
+import { ArrowLeft, LogOutIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface HeaderProps {
@@ -13,32 +13,31 @@ const Header: React.FC<HeaderProps> = ({
   title,
   isHomeScreen = false,
   onLogout,
-  onBackClick
+  onBackClick,
 }) => {
   const router = useRouter();
 
   const handleBackClick = () => {
-    // if we have this argument
     if (onBackClick) {
-      onBackClick(); // Use the behavior
+      onBackClick();
     } else {
-      router.back(); // Navigate to home screen
+      router.back();
     }
   };
 
   return (
-    <header className="bg-red-800 text-white p-4 flex items-center justify-between rounded-b-3xl">
+    <header className="fixed top-0 left-0 right-0 z-10 bg-red-800 text-white p-4 flex items-center justify-between rounded-b-3xl">
       {isHomeScreen ? (
         <button onClick={onLogout} className="text-white">
-          <LogOut size={24} />
+          <LogOutIcon size={24} className="transform scale-x-[-1]" />
         </button>
       ) : (
         <button onClick={handleBackClick} className="text-white">
           <ArrowLeft size={24} />
         </button>
       )}
-      <h1 className="text-2xl font-bold">{title}</h1>
-      <div className="w-6"></div> {/* Spacer for alignment */}
+      <h1 className="text-2xl font-bold">{title.toUpperCase()}</h1>
+      <div className="w-6"></div>
     </header>
   );
 };

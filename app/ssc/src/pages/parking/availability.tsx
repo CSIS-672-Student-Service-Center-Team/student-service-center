@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import ActionButton from "@/components/ui/actionButton";
+import { Space } from "lucide-react";
 
 interface ViewToggleProps {
   activeView: "map" | "list";
@@ -96,6 +97,8 @@ export default function ParkingAvailabilityPage() {
   const [selectedGarage, setSelectedGarage] = useState("");
   const router = useRouter();
 
+
+
   const garages: GarageLotProps[] = [
     {
       name: "St. Philip's Street Garage",
@@ -144,14 +147,17 @@ export default function ParkingAvailabilityPage() {
     setActiveView("map");
   };
 
+
+
   const selectedGarageData =
     garages.find((garage) => garage.name === selectedGarage) || null;
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <Header title="Parking Availability" />
+      <Header title="Parking Availability"  />
 
-      <main className="flex-1 flex flex-col p-6 mb-20">
+      <main className="flex-1  flex-col p-6 mb-20">
+        <div className="h-36" />
         <ViewToggle activeView={activeView} onViewChange={setActiveView} />
 
         {activeView === "map" && (

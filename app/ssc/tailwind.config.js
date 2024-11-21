@@ -51,12 +51,19 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      animation: {
+        'bounce-once': 'bounce 0.5s ease-in-out'
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        "bounce" : {
+          '0%, 100%': {transform: 'translateY(0)'},
+          '50%'     : {transform: 'translateY(5px)'},
+        },
         "accordion-down": {
           from: { height: 0 },
           to: { height: "var(--radix-accordion-content-height)" },

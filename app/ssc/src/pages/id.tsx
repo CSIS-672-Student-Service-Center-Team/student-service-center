@@ -1,12 +1,13 @@
-import React from "react";
-import Image from "next/image";
-import { UserSquare2, Mail, Banknote } from "lucide-react";
-import Header from "@/components/ui/pageHeader";
-import IdCard from "@/components/ui/idCard";
-import SquareButton from "@/components/ui/sqButton";
-import NavBar from "@/components/ui/navBar";
-import { useRouter } from "next/router";
+"use client";
 
+import React from "react";
+import { useRouter } from "next/navigation";
+import Header from "@/components/ui/pageHeader";
+import NavBar from "@/components/ui/navBar";
+import IdCard from "@/components/ui/idCard";
+import { CreditCard, Wallet } from "lucide-react";
+import { cn } from "@/lib/utils";
+import InteractiveIdCard from "@/components/ui/interactive-id-card";
 const StudentIDPage: React.FC = () => {
   const router = useRouter();
 
@@ -15,73 +16,60 @@ const StudentIDPage: React.FC = () => {
     router.push("/newid");
   };
 
-  const handleReplaceID = () => {
-    console.log("Replace ID clicked");
-    // TODO: Implement logic for replacing ID
-  };
-
   const handleCardBalance = () => {
     console.log("Card Balance clicked");
-    // TODO: Implement logic for checking card balance
     router.push("/balance");
   };
 
+  const ButtonWrapper = ({
+    children,
+    onClick,
+  }: {
+    children: React.ReactNode;
+    onClick: () => void;
+  }) => (
+    <button
+      onClick={onClick}
+      className={cn(
+        "w-full h-40 bg-white border-2 border-[#8B1A1A] rounded-2xl",
+        "shadow-lg hover:shadow-xl transition-shadow",
+        "flex flex-col items-center justify-center gap-2",
+        "p-4"
+      )}
+    >
+      {children}
+    </button>
+  );
+
   return (
-    <div className="flex flex-col h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Header title="Student ID" isHomeScreen={false} />
 
-      <main className="flex-grow p-4 space-y-6 pt-16">
-        <IdCard
+      <main className="flex-1 p-6 pt-20 pb-24">
+        <InteractiveIdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
-          photoUrl="/ssc-logo.png"
+          photoUrl="/Student_ID_Photo.jpg"
         />
-        <div className="flex justify-between">
-          <SquareButton
-            icon={
-              <Image
-                src="/id-button.png"
-                alt="id button logo"
-                width={50}
-                height={50}
-              />
-            }
-            label="Get New ID"
-            onClick={handleGetNewID}
-            size={120}
-            labelStyle={{ fontSize: "20px" }}
-          />
-          <SquareButton
-            icon={
-              <Image
-                src="/mail-button.png"
-                alt="mail button logo"
-                width={50}
-                height={50}
-              />
-            }
-            label="Replace ID"
-            onClick={handleReplaceID}
-            size={120}
-            labelStyle={{ fontSize: "20px" }}
-          />
-          <SquareButton
-            icon={
-              <Image
-                src="/cash-button.png"
-                alt="cash button logo"
-                width={50}
-                height={50}
-              />
-            }
-            label="Card Balance"
-            onClick={handleCardBalance}
-            size={120}
-            labelStyle={{ fontSize: "20px" }}
-          />
+
+        <div className="flex flex-col gap-6 mt-6">
+          <ButtonWrapper onClick={handleGetNewID}>
+            <CreditCard className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">
+              Get New ID
+            </span>
+          </ButtonWrapper>
+
+          <ButtonWrapper onClick={handleCardBalance}>
+            <Wallet className="w-12 h-12 text-[#8B1A1A]" />
+            <span className="text-lg font-medium text-[#8B1A1A]">
+              Card Balance
+            </span>
+          </ButtonWrapper>
         </div>
       </main>
+
       <NavBar />
     </div>
   );
