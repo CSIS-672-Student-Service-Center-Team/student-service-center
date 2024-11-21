@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Home, Bell, User } from "lucide-react";
 import { useRouter } from "next/router";
 import { useNotification } from "@/context/NotificationContext";
+import { mockNotifications } from "@/mocks/mockNotifications";
+import { Notification } from "@/lib/notification"
 
 const NavBar: React.FC = () => {
   const router = useRouter();
-  const { unreadCount } = useNotification();
+  const { unreadCount, setUnreadCount } = useNotification();
+  const [ notifications, setNotifications] = useState<Notification[]>(mockNotifications);  
 
+  useEffect(() => {
+    const newUnreadCount = notifications.filter((n) => !n.isRead).length;
+    setUnreadCount(newUnreadCount);
+  }, [notifications, setUnreadCount]);
+  
   const handleNavigation = (path: string) => {
     router.push(path);
   };
