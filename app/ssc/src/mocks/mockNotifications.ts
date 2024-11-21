@@ -6,7 +6,7 @@ export const mockNotifications: Notification[] = [
       type: "warning",
       message: "You have received a parking ticket!",
       dismissible: false,
-      link: "/parking",
+      link: "/parking/tickets",
       isRead: false,
     },
     {
@@ -14,7 +14,7 @@ export const mockNotifications: Notification[] = [
       type: "info",
       message: "New meal plans are available!",
       dismissible: true,
-      link: "/dining",
+      link: "/dining/meal-plan",
       isRead: false,
     },
     {

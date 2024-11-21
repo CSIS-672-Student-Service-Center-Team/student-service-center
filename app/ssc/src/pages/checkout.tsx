@@ -510,7 +510,7 @@ export default function Checkout() {
         )}
 
         <Button
-          className="w-full bg-[#98D8AA] hover:bg-[#98D8AA]/90 text-black"
+          className="w-full bg-[#841414] hover:bg-[#841414]/90 text-white"
           onClick={() => {
             if (step < 4) {
               setStep(step + 1);
