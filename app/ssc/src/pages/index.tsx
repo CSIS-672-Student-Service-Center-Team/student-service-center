@@ -64,7 +64,7 @@ export default function App() {
                     type="submit"
                     className="w-full bg-red-800 hover:bg-red-700"
                   >
-                    Sign In
+                    SIGN IN
                   </Button>
                 </form>
                 <div className="text-center mt-4">
