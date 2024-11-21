@@ -88,10 +88,6 @@ export default function ParkingTicketsPage() {
         cardNumber: "",
         expDate: "",
         csv: "",
-        cardName: "",
-        cardNumber: "",
-        expDate: "",
-        csv: "",
       },
     };
     sessionStorage.setItem("checkoutData", JSON.stringify(checkoutData));
