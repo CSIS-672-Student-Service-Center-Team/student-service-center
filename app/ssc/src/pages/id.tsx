@@ -8,6 +8,8 @@ import IdCard from "@/components/ui/idCard";
 import { CreditCard, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 import InteractiveIdCard from "@/components/ui/interactive-id-card";
+import ButtonWrapper from "@/components/ui/ButtonWrapper";
+
 const StudentIDPage: React.FC = () => {
   const router = useRouter();
 
@@ -46,7 +48,7 @@ const StudentIDPage: React.FC = () => {
       <Header title="Student ID" isHomeScreen={false} />
 
       <main className="flex-1 p-6 pt-20 pb-24">
-        <InteractiveIdCard
+        <IdCard
           name="John Doe"
           idNumber="#123456789"
           email="johndoe@cofc.edu"
