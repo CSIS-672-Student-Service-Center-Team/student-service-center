@@ -7,52 +7,13 @@ import NavBar from "@/components/ui/navBar";
 import Header from "@/components/ui/pageHeader";
 import { useRouter } from "next/navigation";
 import { useNotification } from "@/context/NotificationContext";
-
-interface Notification {
-  id: string;
-  type: "warning" | "info" | "success";
-  message: string;
-  dismissible?: boolean;
-  link?: string;
-  isRead: boolean;
-}
+import { Notification } from "@/lib/notification";
+import { mockNotifications } from "@/mocks/mockNotifications"
 
 export default function Component() {
   const router = useRouter();
   const { unreadCount, setUnreadCount } = useNotification();
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: "1",
-      type: "warning",
-      message: "You have received a parking ticket!",
-      dismissible: false,
-      link: "/parking",
-      isRead: false,
-    },
-    {
-      id: "2",
-      type: "info",
-      message: "New meal plans are available!",
-      dismissible: true,
-      link: "/dining",
-      isRead: false,
-    },
-    {
-      id: "3",
-      type: "warning",
-      message: "Your card balance is low!",
-      dismissible: true,
-      link: "/balance",
-      isRead: true,
-    },
-    {
-      id: "4",
-      type: "success",
-      message: "Your new student ID has been delivered!",
-      dismissible: true,
-      isRead: true,
-    },
-  ]);
+  const [notifications, setNotifications] = useState<Notification[]>(mockNotifications);
 
   useEffect(() => {
     const newUnreadCount = notifications.filter((n) => !n.isRead).length;
